@@ -2,9 +2,35 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import Link from 'next/link'
 import Layout from '../components/atoms/Layout';
-import { getSortedPostsData } from '../lib/posts';
+import { useCallback, useEffect, useState } from 'react';
 
-export default function Home({ allPostsData }) {
+export default function Home() {
+  const [posts, setPosts] = useState([]);
+  const [lastEvaluatedKey, setLastEvaluatedKey] = useState(undefined);
+
+  const getPosts = useCallback(async () => {
+    console.log(`/api/get-posts${lastEvaluatedKey ? `?lastEvaluatedKey=${JSON.stringify(lastEvaluatedKey)}` : ''}`)
+    const fetchData = await fetch(`/api/get-posts${lastEvaluatedKey ? `?lastEvaluatedKey=${JSON.stringify(lastEvaluatedKey)}` : ''}`, {
+      method: 'GET',
+    });
+    const result = await fetchData.json();
+    setPosts([...posts, ...result.Items]);
+    setLastEvaluatedKey(result.LastEvaluatedKey);
+    console.log(result);
+  }, [lastEvaluatedKey]);
+
+  const rssUpdate = async () => {
+    console.log(`/api/parse-rss`)
+    const fetchData = await fetch(`/api/parse-rss`);
+    const result = await fetchData.json();
+    console.log(result);
+  };
+
+  useEffect(() => {
+    // console.log('?', Math.floor(Date.now() / 1000));
+    getPosts();
+  }, []);
+
   return (
     <Layout>
       <div className={styles.container}>
@@ -14,65 +40,24 @@ export default function Home({ allPostsData }) {
         </Head>
 
         <main className={styles.main}>
-          <h1 className={styles.title}>
-            Learnz <Link href="/posts"><a>GO POSTS</a></Link>
-          </h1>
-          <p className={styles.description}>
-            Get started by editing <code className={styles.code}>pages/index.js</code>
-          </p>
-
-          <div className={styles.grid}>
-            <a href="https://nextjs.org/docs" className={styles.card}>
-              <h3>Documentation &rarr;</h3>
-              <p>Find in-depth information about Next.js features and API.</p>
-            </a>
-
-            <a href="https://nextjs.org/learn" className={styles.card}>
-              <h3>Learn &rarr;</h3>
-              <p>Learn about Next.js in an interactive course with quizzes!</p>
-            </a>
-
-            <a href="https://github.com/vercel/next.js/tree/master/examples" className={styles.card}>
-              <h3>Examples &rarr;</h3>
-              <p>Discover and deploy boilerplate example Next.js projects.</p>
-            </a>
-
-            <a href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app" className={styles.card}>
-              <h3>Deploy &rarr;</h3>
-              <p>Instantly deploy your Next.js site to a public URL with Vercel.</p>
-            </a>
-          </div>
+          {lastEvaluatedKey && <button onClick={getPosts}>TEST</button>}
+          {posts && posts.map((post) => {
+            return (
+              <h2 key={post.link.S}>{post.title.S}</h2>
+            )
+          })}
+          <button onClick={rssUpdate}>RSS UPDATE</button>
         </main>
-
-        <footer className={styles.footer}>
-          <a href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app" target="_blank" rel="noopener noreferrer">
-            Powered by <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-          </a>
-        </footer>
       </div>
-      <section>
-        <h2>Blog</h2>
-        <ul>
-          {allPostsData.map(({ id, date, title }) => (
-            <li key={id}>
-              {title}
-              <br />
-              {id}
-              <br />
-              {date}
-            </li>
-          ))}
-        </ul>
-      </section>
     </Layout>
   );
 }
 
-export async function getStaticProps() {
-  const allPostsData = getSortedPostsData()
-  return {
-    props: {
-      allPostsData
-    }
-  }
-}
+// export async function getStaticProps() {
+//   const allPostsData = getSortedPostsData()
+//   return {
+//     props: {
+//       allPostsData
+//     }
+//   }
+// }
