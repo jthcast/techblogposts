@@ -22,7 +22,7 @@ const getPosts = async (req: NowRequest, res: NowResponse) => {
         TableName: process.env.DB_TABLE_NAME,
         Limit: 2,
         KeyConditionExpression: 'dataType = :post',
-        IndexName: 'timestamp-index',
+        IndexName: 'publishDate-index',
         ExpressionAttributeValues: {
           ':post': { S: 'post' },
         },

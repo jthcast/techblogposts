@@ -9,25 +9,21 @@ export default function Home() {
   const [lastEvaluatedKey, setLastEvaluatedKey] = useState(undefined);
 
   const getPosts = useCallback(async () => {
-    console.log(`/api/get-posts${lastEvaluatedKey ? `?lastEvaluatedKey=${JSON.stringify(lastEvaluatedKey)}` : ''}`)
     const fetchData = await fetch(`/api/get-posts${lastEvaluatedKey ? `?lastEvaluatedKey=${JSON.stringify(lastEvaluatedKey)}` : ''}`, {
       method: 'GET',
     });
     const result = await fetchData.json();
     setPosts([...posts, ...result.Items]);
     setLastEvaluatedKey(result.LastEvaluatedKey);
-    console.log(result);
   }, [lastEvaluatedKey]);
 
   const rssUpdate = async () => {
-    console.log(`/api/parse-rss`)
     const fetchData = await fetch(`/api/parse-rss`);
     const result = await fetchData.json();
     console.log(result);
   };
 
   useEffect(() => {
-    // console.log('?', Math.floor(Date.now() / 1000));
     getPosts();
   }, []);
 

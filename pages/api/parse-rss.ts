@@ -1,7 +1,5 @@
 import Parser from 'rss-parser';
 import {
-  BatchWriteItemCommand,
-  BatchWriteItemCommandInput,
   DynamoDBClient,
   QueryCommand,
   QueryCommandInput,
@@ -18,48 +16,98 @@ const dbclient = new DynamoDBClient({
   },
 });
 const parser = new Parser({
-  // timeout: 5000,
+  timeout: 3000,
 });
 
-async function getRSS(url: string) {
-  // const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
-  const CORS_PROXY = '';
-  const feed = await parser.parseURL(`${CORS_PROXY}${url}`);
-  const company = feed.title;
-  const items = feed.items.reduce<Array<Record<string, string | number>>>((acc, item) => {
-    acc.push({
-      title: item.title,
-      link: item.link,
-      company,
-      timestamp: new Date(item.pubDate).getTime().toString(),
-    });
-    return acc;
-  }, []);
-
-  return items;
-}
-
-async function getDbItems(company: string | number) {
-  return 'TEMP';
-}
-
-async function checkItems(req: NowRequest, res: NowResponse) {
-  const url = 'https://jthcast.dev/rss.xml';
-  const items = await getRSS(url);
-  // if (items[0].company) {
-  //   await getDbItems(items[0].company);
-  //   //하나씩 비교해서 put, count해서 5개 이상 이면 writeAllRss
-  //   console.log('getDbItems');
-  //   return;
-  // }
-  //데이터가 없으면 writeAllRss
-  await writeAllRSS(items);
-  res.status(200).json('Complete');
-}
-
-async function writeAllRSS(items: Record<string, string | number>[]) {
+export default async function checkItems(req: NowRequest, res: NowResponse) {
   try {
-    // if (req.method === 'POST') {
+    const blogs = await getBlogs();
+    let newItemAdded = 0;
+    for (const blog of blogs.Items) {
+      const url = blog.link.S;
+      const company = blog.company.S;
+      const rssItems = await getRSS(url, company);
+      const companyPostLinks = await getCompanyPostLinks(company);
+      const newRssItems = rssItems.reduce((acc, item) => {
+        const rssItemLink = item.link;
+        if (!companyPostLinks.includes(rssItemLink)) {
+          acc.push(item);
+        }
+        return acc;
+      }, []);
+      while (newRssItems.length > 0) {
+        newItemAdded += await writeItems(newRssItems.splice(0, 25));
+      }
+    }
+    res.status(200).json({
+      newItemAdded,
+    });
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+async function getBlogs() {
+  try {
+    const params: QueryCommandInput = {
+      TableName: process.env.DB_TABLE_NAME,
+      KeyConditionExpression: 'dataType = :blog',
+      ExpressionAttributeValues: {
+        ':blog': { S: 'blog' },
+      },
+    };
+    const results = await dbclient.send(new QueryCommand(params));
+    return results;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+async function getRSS(url: string, company: string) {
+  try {
+    const feed = await parser.parseURL(url);
+    const items = feed.items.reduce<Array<Record<string, string>>>((acc, item) => {
+      acc.push({
+        title: item.title,
+        link: item.link,
+        company,
+        publishDate: new Date(item.pubDate).getTime().toString(),
+      });
+      return acc;
+    }, []);
+
+    return items;
+  } catch (err) {
+    console.log(`${url} is maybe broken.`);
+    console.log(err);
+  }
+}
+
+async function getCompanyPostLinks(company: string) {
+  try {
+    const params: QueryCommandInput = {
+      TableName: process.env.DB_TABLE_NAME,
+      KeyConditionExpression: 'dataType = :post',
+      FilterExpression: 'company = :company',
+      ExpressionAttributeValues: {
+        ':post': { S: 'post' },
+        ':company': { S: company },
+      },
+    };
+    const results = await dbclient.send(new QueryCommand(params));
+    const linkArray = results.Items.reduce((acc, item) => {
+      acc.push(item.link.S);
+      return acc;
+    }, []);
+
+    return linkArray;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+async function writeItems(items: Record<string, string | number>[]) {
+  try {
     const transactItems = items.reduce((acc, item) => {
       acc.push({
         Update: {
@@ -73,16 +121,15 @@ async function writeAllRSS(items: Record<string, string | number>[]) {
           },
           TableName: process.env.DB_TABLE_NAME,
           UpdateExpression: `
-            SET title = if_not_exists(title, :title) AND
-            SET company = if_not_exists(company, :company) AND
-            SET timestamp = if_not_exists(timestamp, :timestamp) AND
-            SET viewCount = if_not_exists(viewCount, :viewCount)
+            SET title = if_not_exists(title, :title),
+            company = if_not_exists(company, :company),
+            publishDate = if_not_exists(publishDate, :publishDate),
+            viewCount = if_not_exists(viewCount, :viewCount)
           `,
           ExpressionAttributeValues: {
-            // ':link': { S: item.link },
             ':title': { S: item.title },
             ':company': { S: item.company },
-            ':timestamp': { N: item.timestamp },
+            ':publishDate': { N: item.publishDate },
             ':viewCount': { N: '0' },
           },
         },
@@ -92,11 +139,10 @@ async function writeAllRSS(items: Record<string, string | number>[]) {
     const params: TransactWriteItemsInput = {
       TransactItems: transactItems,
     };
-    const results = await dbclient.send(new TransactWriteItemsCommand(params));
-    // }
+    await dbclient.send(new TransactWriteItemsCommand(params));
+
+    return items.length;
   } catch (err) {
     console.error(err);
   }
 }
-
-export default checkItems;
