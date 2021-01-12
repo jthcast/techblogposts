@@ -1,10 +1,4 @@
-import {
-  DynamoDBClient,
-  QueryCommand,
-  QueryCommandInput,
-  ScanCommand,
-  ScanCommandInput,
-} from '@aws-sdk/client-dynamodb';
+import { DynamoDBClient, QueryCommand, QueryCommandInput } from '@aws-sdk/client-dynamodb';
 import { NowRequest, NowResponse } from '@vercel/node';
 
 const dbclient = new DynamoDBClient({
