@@ -1,4 +1,5 @@
 import { cx, css } from '@emotion/css';
+import globalCss from '../../styles/global-css';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import HeaderMessage from '../atoms/HeaderMessage';
 import { IconLogoColored } from '../atoms/Icons';
@@ -111,13 +112,13 @@ const cssHeader = css`
   padding: 1.5rem 3rem;
   z-index: 2;
   width: 100%;
-  background-color: $backgroundColorOpacity;
+  background-color: ${globalCss.color.backgroundColorOpacity};
   // font-size: 0.7rem;
-  font-weight: $fontBold;
+  font-weight: ${globalCss.common.fontBold};
   text-transform: uppercase;
 
   a {
-    color: $color;
+    color: ${globalCss.color.color};
     border-bottom: none;
   }
 
@@ -147,7 +148,7 @@ const cssSticky = css`
   position: sticky;
   top: 0;
   z-index: 2;
-  background-color: $backgroundColorOpacity;
+  background-color: ${globalCss.color.backgroundColorOpacity};
 `;
 
 const cssFixed = css`
@@ -169,7 +170,7 @@ const cssHeaderShow = css`
   opacity: 1;
   visibility: visible;
   transform: translateY(0%);
-  background-color: $backgroundColorOpacity;
+  background-color: ${globalCss.color.backgroundColorOpacity};
 `;
 
 const cssGhost = css`
@@ -181,7 +182,7 @@ const cssHeaderItems = css`
   grid-template-columns: repeat(auto-fit, minmax(10%, auto));
   align-items: center;
   margin: auto;
-  max-width: $maxWidthHeader;
+  max-width: ${globalCss.common.maxWidthHeader};
 `;
 
 const cssHeaderItemsLeft = css`
