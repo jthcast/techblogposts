@@ -1,7 +1,8 @@
+import { css } from '@emotion/css';
+import globalCss from '../../styles/global-css';
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import { headerMessageState } from '../../recoilStates';
-import Button from './Button';
 import { IconTimes } from './Icons';
 
 interface HeaderMessageProps {
@@ -13,7 +14,6 @@ interface HeaderMessageProps {
 const HeaderMessage = ({
   allowClose = true,
   children,
-  className,
 }: HeaderMessageProps): React.ReactElement => {
   const [headerMessage, setHeaderMessageState] = useRecoilState(
     headerMessageState
@@ -25,18 +25,17 @@ const HeaderMessage = ({
   return (
     <>
       {children && headerMessage && (
-        <div className={`jth-headerMessage${className ? ` ${className}` : ``}`}>
-          <div className="jth-headerMessage-container">
-            <span className="jth-headerMessage-content">{children}</span>
+        <div className={css`${cssHeaderMessage}`}>
+          <div className={css`${cssContainer}`}>
+            <span className={css`${cssContent}`}>{children}</span>
             {allowClose && (
-              <Button
-                ariaLabel="close"
-                lineType="none"
+              <button
+                aria-label="close"
                 onClick={closeHandling}
-                className="jth-headerMessage-allowClose"
+                className={css`${cssButton}`}
               >
                 <IconTimes />
-              </Button>
+              </button>
             )}
           </div>
         </div>
@@ -46,3 +45,51 @@ const HeaderMessage = ({
 };
 
 export default HeaderMessage;
+
+const cssHeaderMessage = `
+  position: relative;
+  width: 100%;
+  background-color: ${globalCss.color.primaryBrandColor};
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: ${globalCss.color.black};
+  z-index: 2;
+`
+
+const cssContainer = `
+  max-width: ${globalCss.common.maxWidthHeader};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+const cssContent = `
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  letter-spacing: 0.1rem;
+  padding: 0 5vw;
+  text-align: center;
+
+  a {
+    color: ${globalCss.color.black};
+    border-bottom: none;
+    text-decoration: none;
+    font-weight: ${globalCss.common.fontBold};
+  }
+`;
+
+const cssButton = `
+  color: ${globalCss.color.black};
+  background-color: transparent;
+  position: absolute;
+  right: 1.5rem;
+  border: none;
+  cursor: pointer;
+
+  svg {
+    vertical-align: middle;
+  }
+`;
