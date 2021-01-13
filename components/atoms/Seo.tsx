@@ -30,7 +30,7 @@ const SEO = ({ description = '', lang = 'ko', title, image, author, publishDate 
   return (
     <Head>
       <title>{defaultTitle && title ? defaultTitle !== title ? `${defaultTitle} - ${title}` : null : defaultTitle}</title>
-      <meta http-equiv="x-ua-compatible" content="ie=edge"></meta>
+      <meta httpEquiv="x-ua-compatible" content="ie=edge"></meta>
       {/* <link rel="manifest" href="/manifest.json"></link> */}
       {/* <link href='/favicon-16x16.png' rel='icon' type='image/png' sizes='16x16' /> */}
       {/* <link href='/favicon-32x32.png' rel='icon' type='image/png' sizes='32x32' /> */}

@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import unFocus from "../../customHooks/unFocus";
+import Footer from "../organisms/Footer";
+import Header from "../organisms/Header";
 import SEO from "./Seo";
+import config from '../../config'
+import MenuList from "../organisms/MenuList";
 
 interface layoutProps {
   title?: string;
@@ -20,12 +24,10 @@ export default function Layout({ title, description = '', children, image, autho
   return (
     <>
       <SEO title={title} description={description} image={image} author={author} publishDate={publishDate} />
-      {/* <Header ghost showType="top" title={t('Common.title')} /> */}
-      {/* <MenuList /> */}
-      {/* <MDXProvider components={shortcodes}> */}
+      <Header ghost showType="top" title={config.title} />
+      <MenuList />
       <main>{children}</main>
-      {/* </MDXProvider> */}
-      {/* <Footer /> */}
+      <Footer />
     </>
   )
 }
