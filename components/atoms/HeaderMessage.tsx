@@ -8,7 +8,6 @@ import { IconTimes } from './Icons';
 interface HeaderMessageProps {
   allowClose?: boolean;
   children?: React.ReactElement;
-  className?: string;
 }
 
 const HeaderMessage = ({
@@ -25,14 +24,14 @@ const HeaderMessage = ({
   return (
     <>
       {children && headerMessage && (
-        <div className={css`${cssHeaderMessage}`}>
-          <div className={css`${cssContainer}`}>
-            <span className={css`${cssContent}`}>{children}</span>
+        <div className={cssHeaderMessage}>
+          <div className={cssContainer}>
+            <span className={cssContent}>{children}</span>
             {allowClose && (
               <button
                 aria-label="close"
                 onClick={closeHandling}
-                className={css`${cssButton}`}
+                className={cssButton}
               >
                 <IconTimes />
               </button>
@@ -46,7 +45,7 @@ const HeaderMessage = ({
 
 export default HeaderMessage;
 
-const cssHeaderMessage = `
+const cssHeaderMessage = css`
   position: relative;
   width: 100%;
   background-color: ${globalCss.color.primaryBrandColor};
@@ -58,14 +57,14 @@ const cssHeaderMessage = `
   z-index: 2;
 `
 
-const cssContainer = `
+const cssContainer = css`
   max-width: ${globalCss.common.maxWidthHeader};
   display: flex;
   justify-content: center;
   align-items: center;
 `
 
-const cssContent = `
+const cssContent = css`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -81,7 +80,7 @@ const cssContent = `
   }
 `;
 
-const cssButton = `
+const cssButton = css`
   color: ${globalCss.color.black};
   background-color: transparent;
   position: absolute;
