@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import Button from './../atoms/Button';
 
 interface ScrollButtonProps {
   ariaLabel?: string;
@@ -9,6 +8,7 @@ interface ScrollButtonProps {
   onClick?: () => void;
   showType?: 'notTop' | 'notTopAndUp' | 'up';
   tabIndex?: number;
+  id?: string;
 }
 
 const ScrollButton = ({
@@ -19,6 +19,7 @@ const ScrollButton = ({
   onClick,
   showType = 'notTop',
   tabIndex,
+  id,
 }: ScrollButtonProps): React.ReactElement => {
   const [scrollState, setScrollState] = useState(false);
   const [isTopState, setIsTopState] = useState(false);
@@ -67,18 +68,17 @@ const ScrollButton = ({
   }, [scrollHandling]);
 
   return (
-    <Button
+    <button
+      id={id}
       tabIndex={tabIndex}
-      ariaLabel={ariaLabel}
-      lineType="none"
-      aria-label="menu"
+      aria-label={ariaLabel}
       className={`jth-scrollButton${ghost ? ` jth-scrollButton-ghost` : ``}${scrollState ? ` jth-scrollButton-on` : ``
         }${isTopState ? ` jth-scrollButton-top` : ``}${className ? ` ${className}` : ``
         }`}
       onClick={onClick || undefined}
     >
       {children || null}
-    </Button>
+    </button>
   );
 };
 

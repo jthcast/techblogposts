@@ -3,14 +3,14 @@ import DarkModeSwitch from '../molecules/DarkModeSwitch';
 import { IconBars, IconTimes } from '../atoms/Icons';
 import ScrollButton from '../molecules/ScrollButton';
 import InfiniteScrollSwitch from '../molecules/InfiniteScrollSwitch';
+import { css, cx } from '@emotion/css';
+import globalCss from '../../styles/global-css';
 
 interface MenuListProps {
-  className?: string;
   showStartPosition?: 'bottom' | 'left' | 'none' | 'right' | 'top';
 }
 
 const MenuList = ({
-  className,
   showStartPosition = 'none',
 }: MenuListProps): React.ReactElement => {
   let firstTabEl = undefined;
@@ -18,10 +18,10 @@ const MenuList = ({
   const isClient = typeof window !== 'undefined';
   if (isClient) {
     firstTabEl = document.querySelectorAll(
-      '.jth-menuList-items li a'
-    )[0] as HTMLAnchorElement;
+      '#menulist-items li:first-child > :first-child'
+    )[0] as HTMLButtonElement;
     lastTabEl = document.querySelector(
-      '.jth-scrollButton-menuList-menu'
+      '#scrollButton-menuList-menu'
     ) as HTMLLIElement;
   }
   const [menuState, setMenuState] = useState(false);
@@ -59,15 +59,6 @@ const MenuList = ({
   );
 
   useEffect(() => {
-    if (menuState) {
-      document.body.classList.add('jth-menuList-show');
-      firstTabEl.focus();
-    } else {
-      document.body.classList.remove('jth-menuList-show');
-    }
-  }, [menuState, firstTabEl]);
-
-  useEffect(() => {
     window.addEventListener('keydown', (event) => keyDownHandling(event));
 
     return () => {
@@ -78,13 +69,19 @@ const MenuList = ({
   return (
     <>
       <nav
-        className={`jth-menuList${showStartPosition ? ` jth-menuList-${showStartPosition}` : ``
-          }${className ? ` ${className}` : ``}`}
+        className={cx(
+          { [cssMenuList]: true },
+          { [cssShowPositionBottom(menuState)]: showStartPosition === 'bottom' },
+          { [cssShowPositionLeft(menuState)]: showStartPosition === 'left' },
+          { [cssShowPositionNone(menuState)]: showStartPosition === 'none' },
+          { [cssShowPositionRight(menuState)]: showStartPosition === 'right' },
+          { [cssShowPositionTop(menuState)]: showStartPosition === 'top' },
+        )}
         role="dialog"
         aria-modal="true"
       >
-        <div className="jth-menuList-items">
-          <ul className="jth-menuList-links">
+        <div className={cssMenuListItems}>
+          <ul id="menulist-items">
             <li>
               <InfiniteScrollSwitch />
             </li>
@@ -96,14 +93,15 @@ const MenuList = ({
         <div
           role="presentation"
           onClick={menuListHandling}
-          className="jth-menuList-backdrop"
+          className={cssBackdrop}
         />
       </nav>
       <ScrollButton
+        id="scrollButton-menuList-menu"
         ariaLabel="menuButton"
         onClick={menuListHandling}
         showType="up"
-        className="jth-scrollButton-menuList-menu"
+        className={cssScrollButton}
       >
         {menuState ? <IconTimes /> : <IconBars />}
       </ScrollButton>
@@ -112,3 +110,80 @@ const MenuList = ({
 };
 
 export default MenuList;
+
+const cssMenuList = css`
+  z-index: 2;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  // background-color: $primaryBrandColor;
+  background-color: ${globalCss.color.backgroundColorDownOpacity};
+  backdrop-filter: blur(16px);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 200%;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: opacity 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  height: 100%;
+  overflow-y: auto;
+
+  a {
+    color: $color;
+    border-bottom: none;
+  }
+`;
+
+const cssMenuListItems = css`
+  margin: auto;
+
+  ul {
+    padding: 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    li {
+      transition: transform 830ms cubic-bezier(0.19, 1, 0.22, 1);
+      transform: translateY(-30%);
+    }
+  }
+`;
+
+const cssShowPositionBottom = (menuState: boolean) => css`
+  transform: ${menuState ? 'translateY(0)' : 'translateY(100%)'};
+`;
+
+const cssShowPositionLeft = (menuState: boolean) => css`
+  transform: ${menuState ? 'translateY(0)' : 'translateY(-100%)'};
+`;
+
+const cssShowPositionNone = (menuState: boolean) => css`
+  opacity: ${menuState ? '1' : '0'};
+  visibility: ${menuState ? 'visible' : 'hidden'};
+`;
+
+const cssShowPositionRight = (menuState: boolean) => css`
+  transform: ${menuState ? 'translateX(0)' : 'translateX(100%)'};
+`;
+
+const cssShowPositionTop = (menuState: boolean) => css`
+  transform: ${menuState ? 'translateY(0)' : 'translateY(-100%)'};
+`;
+
+const cssBackdrop = css`
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+`;
+
+const cssScrollButton = css`
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 2;
+`;
