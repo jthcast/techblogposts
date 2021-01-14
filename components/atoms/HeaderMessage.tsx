@@ -47,7 +47,7 @@ const cssHeaderMessage = css`
   width: 100%;
   background-color: ${globalCss.color.primaryBrandColor};
   padding: 0.5rem 0;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
   color: ${globalCss.color.black};
