@@ -1,12 +1,13 @@
 import { AppProps } from 'next/app'
-import { RecoilRoot } from 'recoil'
 import '../styles/normalize.css'
+import '../styles/index.css'
+import { ThemeProvider } from '../context/ThemeContext'
 
 function App({ Component, pageProps }: AppProps) {
   return (
-    <RecoilRoot>
+    <ThemeProvider>
       <Component {...pageProps} />
-    </RecoilRoot>
+    </ThemeProvider>
   )
 }
 
