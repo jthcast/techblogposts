@@ -24,9 +24,25 @@ const Footer = (): React.ReactElement => {
     >
       <nav className={cssFooterContainer}>
         <ul className={cssItemsLeft}>
-          <li>© {new Date().getFullYear()} {config.copyright}.</li>
           <li>
-            <IconLogoColored className={cssLogo} />
+            <a
+              href={config.copyrightHomepage}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cssExternalLink}
+            >
+              © {new Date().getFullYear()} {config.copyright}.
+            </a>
+          </li>
+          <li>
+            <a
+              href={config.copyrightHomepage}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cssExternalLink}
+            >
+              <IconLogoColored className={cssLogo} />
+            </a>
           </li>
           {/* <li> */}
           {/* <Link aria-label={`Terms of use`} to="/"> */}
@@ -185,7 +201,7 @@ const cssItemsRight = css`
 
   @media ${globalCss.breakpoint.mobileQuery} {
     align-items: flex-start;
-    justify-content: flex-start;
+    justify-content: space-between;
 
     li {
       margin: 0.5rem;
@@ -223,4 +239,8 @@ const cssScrollTopButton = css`
   left: 1.5rem;
   bottom: 1.5rem;
   z-index: 1;
+`;
+
+const cssExternalLink = css`
+  text-decoration: none;
 `;
