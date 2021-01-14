@@ -1,3 +1,6 @@
+import { injectGlobal } from '@emotion/css';
+
+injectGlobal`
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=block');
 
 * {
@@ -66,3 +69,18 @@ body {
   background-color: var(--background-base);
   color: var(--color-base);
 }
+
+@media (hover: hover) and (pointer: fine) { /*notTouchDevice*/
+  body{
+    &::-webkit-scrollbar {
+      width: 0.5rem;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--scrollbar-base-opacity);
+    }
+    &::-webkit-scrollbar-track {
+      background-color: rgba(0, 0, 0, 0);
+    }
+  }
+}
+`;

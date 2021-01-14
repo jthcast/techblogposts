@@ -1,6 +1,6 @@
 import { AppProps } from 'next/app'
 import '../styles/normalize.css'
-import '../styles/index.css'
+import '../styles'
 import { ThemeProvider } from '../context/ThemeContext'
 
 function App({ Component, pageProps }: AppProps) {
