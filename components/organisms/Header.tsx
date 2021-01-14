@@ -52,7 +52,7 @@ const Header = ({
     <>
       <HeaderMessage allowClose>
         <a href={`mailto:${config.author.email}`} aria-label="mail">
-          연락 하기 📧
+          건의 하기 📧
         </a>
       </HeaderMessage>
       <header
