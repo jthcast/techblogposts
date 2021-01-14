@@ -5,6 +5,7 @@ import HeaderMessage from '../atoms/HeaderMessage';
 import { IconLogoColored } from '../atoms/Icons';
 import DarkModeSwitch from '../molecules/DarkModeSwitch';
 import InfiniteScrollSwitch from '../molecules/InfiniteScrollSwitch';
+import config from '../../config';
 
 interface HeaderProps {
   ghost?: boolean;
@@ -50,7 +51,7 @@ const Header = ({
   return (
     <>
       <HeaderMessage allowClose>
-        <a href="mailto:jthcast@gmail.com" aria-label="mail">
+        <a href={`mailto:${config.author.email}`} aria-label="mail">
           연락 하기 📧
         </a>
       </HeaderMessage>

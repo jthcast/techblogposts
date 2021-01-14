@@ -6,25 +6,26 @@ import {
   IconGithub,
   IconLogoColored,
 } from './../atoms/Icons';
+import config from '../../config';
+import { css, cx } from '@emotion/css';
 
-interface FooterProps {
-  className?: string;
-}
-
-const Footer = ({ className }: FooterProps): React.ReactElement => {
+const Footer = (): React.ReactElement => {
   const scrollToTop = () => {
     window.scrollTo(0, 0);
   };
 
   return (
     <footer
-      className={`jth-footer jth-container${className ? ` ${className}` : ``}`}
+      className={cx(
+        { [cssFooter]: true },
+        // { [cssFooter]: true },//container
+      )}
     >
-      <nav className="jth-footer-container">
-        <ul className="jth-footer-items-left">
-          <li>© {new Date().getFullYear()} JthCast</li>
+      <nav className={cssFooterContainer}>
+        <ul className={cssItemsLeft}>
+          <li>© {new Date().getFullYear()} {config.copyright}.</li>
           <li>
-            <IconLogoColored className="jth-footer-logo" />
+            <IconLogoColored className={cssLogo} />
           </li>
           {/* <li> */}
           {/* <Link aria-label={`Terms of use`} to="/"> */}
@@ -42,15 +43,15 @@ const Footer = ({ className }: FooterProps): React.ReactElement => {
             <span>Center</span>
           </li>
         </ul> */}
-        <ul className="jth-footer-items-right">
-          <li className="jth-footer-items-icon">
-            <a href="mailto:jthcast@gmail.com" aria-label="mail">
+        <ul className={cssItemsRight}>
+          <li className={cssIcon}>
+            <a href={`mailto:${config.author.email}`} aria-label="mail">
               <IconEnvelope />
             </a>
           </li>
-          <li className="jth-footer-items-icon">
+          <li className={cssIcon}>
             <a
-              href="https://github.com/jthcast"
+              href={`${config.githubUrl}`}
               target="_blank"
               rel="noreferrer"
               aria-label="github"
@@ -65,7 +66,7 @@ const Footer = ({ className }: FooterProps): React.ReactElement => {
         tabIndex={-1}
         onClick={scrollToTop}
         showType="notTopAndUp"
-        className="jth-footer-scrollButton-top"
+        className={cssScrollTopButton}
       >
         <IconArrowToTop />
       </ScrollButton>
@@ -74,3 +75,88 @@ const Footer = ({ className }: FooterProps): React.ReactElement => {
 };
 
 export default Footer;
+
+const cssFooter = css`
+  margin: auto auto 0 auto;
+  width: 100%;
+  z-index: 1;
+`;
+
+const cssFooterContainer = css`
+  max-width: $maxWidth;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10%, auto));
+  align-items: center;
+  margin: auto;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  width: 100%;
+  padding: 1.5rem 0;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 33.3%;
+
+    li {
+      &:before {
+        content: none;
+      }
+    }
+  }
+
+  a {
+    color: $color;
+    border-bottom: none;
+
+    &:hover {
+      color: $color;
+    }
+
+    &:focus {
+      color: $color;
+    }
+
+    &:active {
+      color: $color;
+    }
+  }
+`;
+
+const cssItemsLeft = css`
+  height: 100%;
+  align-items: center;
+  justify-content: flex-start;
+
+  li {
+    margin: 0 1.5rem 0 0;
+  }
+`;
+
+const cssItemsRight = css`
+  height: 100%;
+  align-items: flex-end;
+  justify-content: flex-end;
+
+  li {
+    margin: 0 0 0 1.5rem;
+  }
+`;
+
+const cssLogo = css`
+  display: none;
+`;
+
+const cssIcon = css`
+  font-size: 1.5rem;
+`;
+
+const cssScrollTopButton = css`
+  position: fixed;
+  left: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 1;
+`;
