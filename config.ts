@@ -10,4 +10,6 @@ export default {
   social: {
     twitter: ``,
   },
+  copyright: `JthCast`,
+  copyrightHomepage: `https://jthcast.dev`,
 };
