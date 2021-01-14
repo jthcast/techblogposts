@@ -100,6 +100,7 @@ const cssScrollButton = css`
   // transform: translateY(100%); //TODO causing bug
   visibility: hidden;
   border: none;
+  cursor: pointer;
 
   svg {
     color: ${globalCss.color.white};
