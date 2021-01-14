@@ -1,3 +1,4 @@
+import { css, cx, keyframes } from '@emotion/css';
 import React, { CSSProperties, SVGAttributes } from 'react';
 
 export interface IconProps extends SVGAttributes<SVGElement> {
@@ -187,8 +188,11 @@ const IconTemplate = ({
     <svg
       viewBox={icons[iconName].viewBox}
       focusable="false"
-      className={`jth-icon${className ? ` ${className}` : ``}${spin ? ' spin' : ``
-        }`}
+      className={cx(
+        { [cssIcon]: true },
+        { [cssSpin]: spin },
+        { [className]: className !== '' },
+      )}
       style={style}
       width="1em"
       height="1em"
@@ -818,3 +822,17 @@ export {
   IconLogo,
   IconLogoColored,
 };
+
+const keyFrameSpin = keyframes`
+  100% {
+    transform: rotate(360deg);
+  }
+`;
+
+const cssSpin = css`
+  animation: ${keyFrameSpin} 1s infinite linear;
+`;
+
+const cssIcon = css`
+  color: inherit; 
+`;
