@@ -7,6 +7,10 @@ function getFontPercent() {
   return (parseInt(fontSize) / 16) * 100 + '%';
 }
 
+export function rem(size: number) {
+  return size / parseInt(fontSize) + 'rem';
+}
+
 const globalCss = {
   breakpoint: {
     mobile: breakPointMobile,
