@@ -1,8 +1,6 @@
 import { css } from '@emotion/css';
 import globalCss from '../../styles/global-css';
-import React from 'react';
-import { useRecoilState } from 'recoil';
-import { headerMessageState } from '../../recoilStates';
+import React, { useState } from 'react';
 import { IconTimes } from './Icons';
 
 interface HeaderMessageProps {
@@ -14,9 +12,8 @@ const HeaderMessage = ({
   allowClose = true,
   children,
 }: HeaderMessageProps): React.ReactElement => {
-  const [headerMessage, setHeaderMessageState] = useRecoilState(
-    headerMessageState
-  );
+  const [headerMessage, setHeaderMessageState] = useState(true);
+
   const closeHandling = () => {
     setHeaderMessageState(false);
   };

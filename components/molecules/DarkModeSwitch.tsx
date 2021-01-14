@@ -1,18 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Switch from './../atoms/Switch';
-import { useRecoilState } from 'recoil';
-import { initialColorMode } from './../../recoilStates';
+import { ThemeContext } from '../../context/ThemeContext';
+import { css } from '@emotion/css';
+import globalCss from '../../styles/global-css';
 
 const DarkModeSwitch = (): React.ReactElement => {
-  const [colorMode, setColorMode] = useRecoilState(initialColorMode);
+  const { colorMode, setColorMode } = useContext(ThemeContext);
 
-  const darkModeHandling = () => {
+  const darkModeHandling = (event: React.FormEvent<HTMLButtonElement>) => {
     setColorMode(colorMode === 'dark' ? 'light' : 'dark');
+    const innerItem = event.currentTarget.firstElementChild;
+    innerItem.animate([
+      { transform: 'rotate(0)' },
+      { transform: 'rotate(-60deg)' },
+      { transform: 'rotate(-15deg)' },
+      { transform: 'rotate(0deg)' }
+    ], 500);
   };
 
   useEffect(() => {
-    document.body.setAttribute('data-theme', colorMode);
-    window.localStorage.setItem('color-mode', colorMode);
+    if (colorMode) {
+      document.documentElement.setAttribute('data-theme', colorMode);
+    }
   }, [colorMode]);
 
   // useEffect(() => {
@@ -26,7 +35,7 @@ const DarkModeSwitch = (): React.ReactElement => {
 
   return (
     <Switch
-      className="switch-darkMode"
+      className={cssDarkModeSwitch}
       checked={colorMode === 'dark'}
       unCheckedChildren="🌞"
       checkedChildren="🌜"
@@ -36,3 +45,8 @@ const DarkModeSwitch = (): React.ReactElement => {
 };
 
 export default DarkModeSwitch;
+
+const cssDarkModeSwitch = css`
+  background-color: ${globalCss.color.borderColor};
+`;
+

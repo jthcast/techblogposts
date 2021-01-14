@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import Switch from '../atoms/Switch';
-import { useRecoilState } from 'recoil';
-import { initialColorMode } from '../../recoilStates';
 
 const InfiniteScrollSwitch = (): React.ReactElement => {
   // const [colorMode, setColorMode] = useRecoilState(initialColorMode);
@@ -26,7 +24,6 @@ const InfiniteScrollSwitch = (): React.ReactElement => {
 
   return (
     <Switch
-      className="switch-darkMode"
       // checked={colorMode === 'dark'}
       unCheckedChildren="🎇"
       checkedChildren="🧲"
