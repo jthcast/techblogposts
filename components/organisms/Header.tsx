@@ -117,6 +117,7 @@ const cssHeader = css`
   // font-size: 0.7rem;
   font-weight: ${globalCss.common.fontBold};
   text-transform: uppercase;
+  max-width: ${globalCss.common.maxWidthHeader};
 
   a {
     color: ${globalCss.color.color};

@@ -8,6 +8,7 @@ import {
 } from './../atoms/Icons';
 import config from '../../config';
 import { css, cx } from '@emotion/css';
+import globalCss from '../../styles/global-css';
 
 const Footer = (): React.ReactElement => {
   const scrollToTop = () => {
@@ -83,7 +84,7 @@ const cssFooter = css`
 `;
 
 const cssFooterContainer = css`
-  max-width: $maxWidth;
+  max-width: ${globalCss.common.maxWidth};
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(10%, auto));
   align-items: center;
@@ -109,19 +110,19 @@ const cssFooterContainer = css`
   }
 
   a {
-    color: $color;
+    color: ${globalCss.color.color};
     border-bottom: none;
 
     &:hover {
-      color: $color;
+      color: ${globalCss.color.color};
     }
 
     &:focus {
-      color: $color;
+      color: ${globalCss.color.color};
     }
 
     &:active {
-      color: $color;
+      color: ${globalCss.color.color};
     }
   }
 `;
