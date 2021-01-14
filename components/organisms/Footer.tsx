@@ -81,6 +81,20 @@ const cssFooter = css`
   margin: auto auto 0 auto;
   width: 100%;
   z-index: 1;
+  max-width: ${globalCss.common.maxWidth};
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 5rem;
+  margin: auto;
+
+  @media ${globalCss.breakpoint.mobileQuery} {
+    padding: 0 1.25rem;
+  }
+
+  @media ${globalCss.breakpoint.tabletQuery} {
+    padding: 0 3rem;
+  }
 `;
 
 const cssFooterContainer = css`
@@ -125,6 +139,14 @@ const cssFooterContainer = css`
       color: ${globalCss.color.color};
     }
   }
+
+  @media ${globalCss.breakpoint.mobileQuery} {
+    ul {
+      flex-direction: column;
+      line-height: 160%;
+      letter-spacing: 0.1rem;
+    }
+  }
 `;
 
 const cssItemsLeft = css`
@@ -134,6 +156,21 @@ const cssItemsLeft = css`
 
   li {
     margin: 0 1.5rem 0 0;
+  }
+
+  @media ${globalCss.breakpoint.mobileQuery} {
+    align-items: flex-end;
+    justify-content: flex-start;
+
+    li {
+      margin: 0.5rem;
+    }
+  }
+
+  @media ${globalCss.breakpoint.tabletQuery} {
+    li {
+      margin: 0 1.5rem 0 0;
+    }
   }
 `;
 
@@ -145,14 +182,40 @@ const cssItemsRight = css`
   li {
     margin: 0 0 0 1.5rem;
   }
+
+  @media ${globalCss.breakpoint.mobileQuery} {
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    li {
+      margin: 0.5rem;
+    }
+  }
+
+  @media ${globalCss.breakpoint.tabletQuery} {
+    li {
+      margin: 0 0 0 1.5rem;
+    }
+  }
 `;
 
 const cssLogo = css`
   display: none;
+
+  @media ${globalCss.breakpoint.mobileQuery} {
+    display: block;
+    font-size: 3rem;
+    margin-right: 2rem;
+    margin-top: 0.5rem;
+  }
 `;
 
 const cssIcon = css`
   font-size: 1.5rem;
+
+  @media ${globalCss.breakpoint.mobileQuery} {
+    font-size: 2rem;
+  }
 `;
 
 const cssScrollTopButton = css`

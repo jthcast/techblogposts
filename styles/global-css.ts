@@ -1,8 +1,19 @@
+const breakPointMobile = `17.5rem`;
+const breakPointTablet = `40.875rem`;
+const breakPointDesktop = `64rem`;
+const fontSize = `18px`;
+
+function getFontPercent() {
+  return (parseInt(fontSize) / 16) * 100 + '%';
+}
+
 const globalCss = {
   breakpoint: {
-    mobile: `17.5rem`,
-    tablet: `40.875rem`,
-    desktop: `64rem`,
+    mobile: breakPointMobile,
+    mobileQuery: `(max-width: ${breakPointTablet})`,
+    tablet: breakPointTablet,
+    tabletQuery: `(min-width: ${breakPointTablet}) and (max-width: ${breakPointDesktop})`,
+    desktop: breakPointDesktop,
   },
   common: {
     maxWidth: `66.667rem`,
@@ -10,7 +21,8 @@ const globalCss = {
     fontBold: `600`,
     fontNormal: `400`,
     borderRadius: `0.5rem`,
-    fontSize: `18px`,
+    fontSize,
+    fontPercent: getFontPercent(),
   },
   color: {
     backgroundColor: `var(--background-base)`,

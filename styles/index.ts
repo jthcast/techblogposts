@@ -1,7 +1,12 @@
 import { injectGlobal } from '@emotion/css';
+import globalCss from './global-css';
 
 injectGlobal`
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=block');
+
+html {
+  font-size: ${globalCss.common.fontPercent};
+}
 
 * {
   box-sizing: border-box;

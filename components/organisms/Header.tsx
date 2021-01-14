@@ -144,6 +144,22 @@ const cssHeader = css`
       }
     }
   }
+
+  @media ${globalCss.breakpoint.mobileQuery} {
+    width: auto;
+    position: fixed;
+    top: 0;
+    transform: translate(30%, -100%);
+    padding: 0;
+    opacity: 0;
+    background-color: transparent;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    z-index: 3;
+  }
+
+  @media ${globalCss.breakpoint.tabletQuery} {
+    padding: 1.5rem 2rem;
+  }
 `;
 
 const cssSticky = css`
@@ -173,6 +189,11 @@ const cssHeaderShow = css`
   visibility: visible;
   transform: translateY(0%);
   background-color: ${globalCss.color.backgroundColorOpacity};
+
+  @media ${globalCss.breakpoint.mobileQuery} {
+    opacity: 1;
+    transform: translate(30%, 30%);
+  }
 `;
 
 const cssGhost = css`
@@ -185,6 +206,10 @@ const cssHeaderItems = css`
   align-items: center;
   margin: auto;
   max-width: ${globalCss.common.maxWidthHeader};
+
+  @media ${globalCss.breakpoint.mobileQuery} {
+    display: none;
+  }
 `;
 
 const cssHeaderItemsLeft = css`

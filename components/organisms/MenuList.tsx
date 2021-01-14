@@ -87,7 +87,7 @@ const MenuList = ({
         role="dialog"
         aria-modal="true"
       >
-        <div className={cssMenuListItems}>
+        <div className={cssMenuListItems(menuState)}>
           <ul id="menulist-items">
             <li>
               <InfiniteScrollSwitch />
@@ -138,12 +138,12 @@ const cssMenuList = css`
   overflow-y: auto;
 
   a {
-    color: $color;
+    color: ${globalCss.color.color};
     border-bottom: none;
   }
 `;
 
-const cssMenuListItems = css`
+const cssMenuListItems = (menuState: boolean) => css`
   margin: auto;
 
   ul {
@@ -156,7 +156,12 @@ const cssMenuListItems = css`
     li {
       transition: transform 830ms cubic-bezier(0.19, 1, 0.22, 1);
       transform: translateY(-30%);
+      ${menuState && 'transform: translateY(0)'};
     }
+  }
+
+  @media ${globalCss.breakpoint.mobileQuery} {
+    line-height: 160%;
   }
 `;
 
