@@ -26,10 +26,17 @@ const MenuList = ({
   }
   const [menuState, setMenuState] = useState(false);
 
-
   const menuListHandling = () => {
     setMenuState(!menuState);
   };
+
+  useEffect(() => {
+    if (menuState) {
+      document.body.style.setProperty('overflow-y', 'hidden');
+    } else {
+      document.body.style.removeProperty('overflow-y');
+    }
+  }, [menuState])
 
   const keyDownHandling = useCallback(
     (event: KeyboardEvent) => {
