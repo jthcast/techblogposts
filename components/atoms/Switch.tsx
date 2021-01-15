@@ -83,7 +83,7 @@ const cssSwitch = css`
   border: 0;
   border-radius: 50%;
   cursor: pointer;
-  transition: all .2s;
+  transition: all 0.3s;
   user-select: none;
 `;
 

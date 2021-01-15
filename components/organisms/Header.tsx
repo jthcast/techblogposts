@@ -138,10 +138,6 @@ const cssHeader = css`
           transition: none;
         }
       }
-
-      button {
-        transition: none;
-      }
     }
   }
 
