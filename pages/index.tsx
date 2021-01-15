@@ -1,8 +1,10 @@
 import Layout from '../components/atoms/Layout';
-import { useCallback, useEffect, useState } from 'react';
-import { css } from '@emotion/css';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { css, keyframes } from '@emotion/css';
 import globalCss, { rem } from '../styles/global-css';
 import { IconSpinner } from '../components/atoms/Icons';
+import { InfiniteScrollContext } from '../context/InfiniteScrollContext';
+import useObserver from '../customHooks/useObserver';
 
 interface PostItems {
   Items?: {
@@ -38,10 +40,15 @@ interface PostItem {
 export default function Home() {
   const [posts, setPosts] = useState<PostItem[]>([]);
   const [isLoading, setLoading] = useState(false);
+  const [isInit, setInit] = useState(true);
+  const [isMorePostLoading, setMorePostLoading] = useState(false);
+  const [isInfiniteLoad, setInfiniteLoad] = useContext(InfiniteScrollContext);
   const [lastEvaluatedKey, setLastEvaluatedKey] = useState(undefined);
 
-  const getPosts = () => {
-    setLoading(true);
+  const fakeFetch = (delay = 1000) => new Promise(res => setTimeout(res, delay));//TODO to real
+  const getPosts = async () => {//TODO to real
+    isInit ? setLoading(true) : setMorePostLoading(true);
+    await fakeFetch();
     const result: PostItems = {
       Items: [
         {
@@ -78,70 +85,56 @@ export default function Home() {
           company: { S: `jthcast` },
           viewCount: { N: `0` },
           publishDate: { N: `1608595200000` }
-        },
-        {
-          link: { S: `https://jthcast.dev/posts/why-react-still-needs-class-type-(feat.errorboundary)/2` },
-          title: { S: `React에 아직은 Class 형식이 필요한 이유(feat. Errorboundary)` },
-          company: { S: `jthcast` },
-          viewCount: { N: `0` },
-          publishDate: { N: `1608595200000` }
-        },
-        {
-          link: { S: `https://jthcast.dev/posts/why-react-still-needs-class-type-(feat.errorboundary)/3` },
-          title: { S: `React에 아직은 Class 형식이 필요한 이유(feat. Errorboundary)` },
-          company: { S: `jthcast` },
-          viewCount: { N: `0` },
-          publishDate: { N: `1608595200000` }
-        },
-        {
-          link: { S: `https://jthcast.dev/posts/why-react-still-needs-class-type-(feat.errorboundary)/4` },
-          title: { S: `React에 아직은 Class 형식이 필요한 이유(feat. Errorboundary)` },
-          company: { S: `jthcast` },
-          viewCount: { N: `0` },
-          publishDate: { N: `1608595200000` }
-        },
-        {
-          link: { S: `https://jthcast.dev/posts/why-react-still-needs-class-type-(feat.errorboundary)/5` },
-          title: { S: `React에 아직은 Class 형식이 필요한 이유(feat. Errorboundary)` },
-          company: { S: `jthcast` },
-          viewCount: { N: `0` },
-          publishDate: { N: `1608595200000` }
-        },
-        {
-          link: { S: `https://jthcast.dev/posts/why-react-still-needs-class-type-(feat.errorboundary)/6` },
-          title: { S: `React에 아직은 Class 형식이 필요한 이유(feat. Errorboundary)` },
-          company: { S: `jthcast` },
-          viewCount: { N: `0` },
-          publishDate: { N: `1608595200000` }
-        },
+        }
       ],
       LastEvaluatedKey: { test: 'a' }
     }
     setPosts([...posts, ...result.Items]);
     setLastEvaluatedKey(result.LastEvaluatedKey);
-    setLoading(false);
-    console.log('done')
+    isInit ? setLoading(false) : setMorePostLoading(false);
   };
+
   // const getPosts = useCallback(async () => {
-  //   setLoading(true);
+  //   isInit ? setLoading(true) : setMorePostLoading(true);
   //   const fetchData = await fetch(`/api/get-posts${lastEvaluatedKey ? `?lastEvaluatedKey=${JSON.stringify(lastEvaluatedKey)}` : ''}`, {
   //     method: 'GET',
   //   });
   //   const result = await fetchData.json();
   //   setPosts([...posts, ...result.Items]);
   //   setLastEvaluatedKey(result.LastEvaluatedKey);
-  //   setLoading(false);
+  //   isInit ? setLoading(false) : setMorePostLoading(false);
   // }, [lastEvaluatedKey]);
-
-  const rssUpdate = async () => {
-    const fetchData = await fetch(`/api/parse-rss`);
-    const result = await fetchData.json();
-    console.log(result);
-  };
 
   useEffect(() => {
     getPosts();
+    setInit(false);
   }, []);
+
+  // const rssUpdate = async () => {//TODO Schedule
+  //   const fetchData = await fetch(`/api/parse-rss`);
+  //   const result = await fetchData.json();
+  //   console.log(result);
+  // };
+
+  const infiniteScrollHandling = () => {
+    setInfiniteLoad(isInfiniteLoad === 'on' ? 'off' : 'on');
+  }
+
+  const morePostsButtonRef = useRef();
+
+  const observer = useObserver({
+    callback: (entry) => {
+      if (!isMorePostLoading && isInfiniteLoad === 'on' && entry.isIntersecting) {
+        getPosts();
+      }
+    }, root: null, rootMargin: '50%', threshold: 0
+  });
+
+  useEffect(() => {
+    if (morePostsButtonRef.current) {
+      observer([morePostsButtonRef.current]);
+    }
+  }, [morePostsButtonRef.current])
 
   return (
     <Layout>
@@ -153,7 +146,7 @@ export default function Home() {
         }
         {!isLoading && posts && posts.length > 0 && (
           <ul className={cssList}>
-            {posts.map((post) => {
+            {posts.map((post, index) => {
               const nowDate = new Date();
               const postDate = new Date(parseInt(post.publishDate.N));
               const dateDiffer = Math.floor((nowDate.getTime() - postDate.getTime()) / 60 / 1000 / 60 / 24);
@@ -161,7 +154,7 @@ export default function Home() {
               const postDateString = `${postDate.getUTCFullYear()}-${postDate.getMonth() + 1}-${postDate.getDate()}`;
 
               return (
-                <li key={post.link.S} className={cssListItem}>
+                <li key={`${post.link.S}${index}`} className={cssListItem}>
                   <a
                     href={post.link.S}
                     target="_blank"
@@ -191,11 +184,11 @@ export default function Home() {
           </ul>
         )}
         {lastEvaluatedKey &&
-          <button className={cssMorePostsButton} onClick={getPosts}>
-            {isLoading ?
+          <button className={cssMorePostsButton} onClick={infiniteScrollHandling} ref={morePostsButtonRef}>
+            {isMorePostLoading ?
               <IconSpinner spin /> :
               <p>More Posts{' '}
-                <span role="img" aria-label="More posts">👇</span>
+                <span role="img" aria-label="More posts" className={cssBounce}>👇</span>
               </p>
             }
           </button>
@@ -213,7 +206,7 @@ const cssPosts = css`
   width: 100%;
   padding: 0 5rem;
   margin: auto;
-  margin-top: 5rem;
+  margin-top: 1rem;
 
   @media ${globalCss.breakpoint.mobileQuery} {
     padding: 0 1.25rem;
@@ -240,6 +233,10 @@ const cssList = css`
 const cssListItem = css`
   padding: 1rem 0;
   border-bottom: ${rem(2)} solid ${globalCss.color.groupColor};
+
+  &:nth-last-child(1) {
+    border-bottom: none;
+  }
   
   a{
     display: grid;
@@ -307,4 +304,27 @@ const cssMorePostsButton = css`
   color: ${globalCss.color.white};
   background-color: ${globalCss.color.secondaryBrandColor};
   cursor: pointer;
+`;
+
+const keyFramesBounce = keyframes`
+  from, 20%, 53%, 80%, to {
+    transform: translate3d(0,0,0);
+  }
+
+  40%, 43% {
+    transform: translate3d(0, ${rem(-7)}, 0);
+  }
+
+  70% {
+    transform: translate3d(0, ${rem(-3)}, 0);
+  }
+
+  90% {
+    transform: translate3d(0,-${rem(-1)},0);
+  }
+`;
+
+const cssBounce = css`
+  display: inline-block;
+  animation: ${keyFramesBounce} 1s ease infinite;
 `;
