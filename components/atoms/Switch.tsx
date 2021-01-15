@@ -1,12 +1,13 @@
 import { css, cx } from '@emotion/css';
 import globalCss from '../../styles/global-css';
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { IconSpinner } from './Icons';
 
 interface SwitchProps {
   ariaLabel?: string;
   checked?: boolean;
   checkedChildren?: string;
+  children?: ReactElement;
   className?: string;
   disabled?: boolean;
   loading?: boolean;
@@ -20,6 +21,7 @@ const Switch = ({
   ariaLabel,
   checked = false,
   checkedChildren,
+  children,
   disabled = false,
   className,
   loading = false,
@@ -60,6 +62,7 @@ const Switch = ({
         {loading && <IconSpinner spin />}
         {!loading && unCheckedChildren && !checked && unCheckedChildren}
         {!loading && checkedChildren && checked && checkedChildren}
+        {children}
       </span>
     </button>
   );
