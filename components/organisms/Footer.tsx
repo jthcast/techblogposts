@@ -94,7 +94,7 @@ const Footer = (): React.ReactElement => {
 export default Footer;
 
 const cssFooter = css`
-  margin: auto auto 0 auto;
+  margin: auto auto 0;
   width: 100%;
   z-index: 1;
   max-width: ${globalCss.common.maxWidth};
@@ -102,7 +102,6 @@ const cssFooter = css`
   flex-direction: column;
   width: 100%;
   padding: 0 5rem;
-  margin: auto;
 
   @media ${globalCss.breakpoint.mobileQuery} {
     padding: 0 1.25rem;
