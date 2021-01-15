@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import DarkModeSwitch from '../molecules/DarkModeSwitch';
-import { IconBars, IconTimes } from '../atoms/Icons';
+import { IconBars, IconLogoColored, IconTimes } from '../atoms/Icons';
 import ScrollButton from '../molecules/ScrollButton';
 import InfiniteScrollSwitch from '../molecules/InfiniteScrollSwitch';
 import { css, cx } from '@emotion/css';
 import globalCss from '../../styles/global-css';
+import config from '../../config';
 
 interface MenuListProps {
   showStartPosition?: 'bottom' | 'left' | 'none' | 'right' | 'top';
@@ -94,6 +95,15 @@ const MenuList = ({
             </li>
             <li>
               <DarkModeSwitch />
+            </li>
+            <li>
+              <a
+                href={config.copyrightHomepage}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <IconLogoColored />
+              </a>
             </li>
           </ul>
         </div>
