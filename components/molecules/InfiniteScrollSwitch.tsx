@@ -1,33 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
+import { InfiniteScrollContext } from '../../context/InfiniteScrollContext';
 import Switch from '../atoms/Switch';
 
 const InfiniteScrollSwitch = (): React.ReactElement => {
-  // const [colorMode, setColorMode] = useRecoilState(initialColorMode);
+  const { isInfiniteLoad, setInfiniteLoad } = useContext(InfiniteScrollContext);
 
-  // const darkModeHandling = () => {
-  //   setColorMode(colorMode === 'dark' ? 'light' : 'dark');
-  // };
-
-  // useEffect(() => {
-  //   document.body.setAttribute('data-theme', colorMode);
-  //   window.localStorage.setItem('color-mode', colorMode);
-  // }, [colorMode]);
-
-  // useEffect(() => {
-  //   checkSystemPreference();
-  //   systemPreference.addEventListener('change', checkSystemPreference);
-
-  //   return () => {
-  //     systemPreference.removeEventListener('change', checkSystemPreference);
-  //   };
-  // }, [checkSystemPreference, systemPreference]);
+  const infiniteScrollHandling = (event: React.FormEvent<HTMLButtonElement>) => {
+    setInfiniteLoad(isInfiniteLoad === 'on' ? 'off' : 'on');
+  };
 
   return (
     <Switch
-      // checked={colorMode === 'dark'}
+      checked={isInfiniteLoad === 'on'}
       unCheckedChildren="🎇"
       checkedChildren="🧲"
-    // onClick={darkModeHandling}
+      onClick={infiniteScrollHandling}
     />
   );
 };

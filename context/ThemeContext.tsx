@@ -15,7 +15,7 @@ export const ThemeProvider = ({ children }) => {
     localStorage.setItem('color-mode', newValue);
   };
   return (
-    <ThemeContext.Provider value={{ colorMode, setColorMode }}>
+    <ThemeContext.Provider value={[colorMode, setColorMode]}>
       {children}
     </ThemeContext.Provider>
   );

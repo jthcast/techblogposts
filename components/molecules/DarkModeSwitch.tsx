@@ -5,7 +5,7 @@ import { css } from '@emotion/css';
 import globalCss from '../../styles/global-css';
 
 const DarkModeSwitch = (): React.ReactElement => {
-  const { colorMode, setColorMode } = useContext(ThemeContext);
+  const [colorMode, setColorMode] = useContext(ThemeContext);
 
   const darkModeHandling = (event: React.FormEvent<HTMLButtonElement>) => {
     setColorMode(colorMode === 'dark' ? 'light' : 'dark');
