@@ -78,7 +78,7 @@ const Header = ({
                   <IconLogoColored />
                   {title}
                 </span>
-                <span className={cssHeaderSubTitle}>{subTitle}</span>
+                {subTitle && <span className={cssHeaderSubTitle}>{subTitle}</span>}
               </li>
             </ul>
           ) : null}
@@ -114,9 +114,8 @@ const cssHeader = css`
   z-index: 2;
   width: 100%;
   background-color: ${globalCss.color.backgroundColorOpacity};
-  // font-size: 0.7rem;
   font-weight: ${globalCss.common.fontBold};
-  text-transform: uppercase;
+  // text-transform: uppercase;
   max-width: ${globalCss.common.maxWidthHeader};
 
   a {
@@ -124,33 +123,8 @@ const cssHeader = css`
     border-bottom: none;
   }
 
-  ul {
-    list-style: none;
-    display: flex;
-
-    li {
-      &:before {
-        content: none;
-      }
-
-      a {
-        &:before {
-          transition: none;
-        }
-      }
-    }
-  }
-
   @media ${globalCss.breakpoint.mobileQuery} {
-    width: auto;
-    position: fixed;
-    top: 0;
-    transform: translate(30%, -100%);
-    padding: 0;
-    opacity: 0;
-    background-color: transparent;
-    transition: transform 0.2s ease, opacity 0.2s ease;
-    z-index: 3;
+    padding: 1rem 1.25rem;
   }
 
   @media ${globalCss.breakpoint.tabletQuery} {
@@ -185,11 +159,6 @@ const cssHeaderShow = css`
   visibility: visible;
   transform: translateY(0%);
   background-color: ${globalCss.color.backgroundColorOpacity};
-
-  @media ${globalCss.breakpoint.mobileQuery} {
-    opacity: 1;
-    transform: translate(30%, 30%);
-  }
 `;
 
 const cssGhost = css`
@@ -202,27 +171,38 @@ const cssHeaderItems = css`
   align-items: center;
   margin: auto;
   max-width: ${globalCss.common.maxWidthHeader};
-
-  @media ${globalCss.breakpoint.mobileQuery} {
-    display: none;
-  }
 `;
 
 const cssHeaderItemsLeft = css`
+  list-style: none;
+  display: flex;
   justify-content: flex-start;
   align-items: center;
 
   li {
     margin-right: 1.5rem;
   }
+
+  @media ${globalCss.breakpoint.mobileQuery} {
+    li {
+      width: 100%;
+      margin-right: 0;
+    }
+  }
 `;
 
 const cssHeaderItemsRight = css`
+  list-style: none;
+  display: flex;
   justify-content: flex-end;
   align-items: center;
 
   li {
     margin-left: 1.5rem;
+  }
+
+  @media ${globalCss.breakpoint.mobileQuery} {
+    display: none;
   }
 `;
 
@@ -234,6 +214,14 @@ const cssHeaderTitle = css`
 
   svg {
     margin-right: 0.25rem;
+    margin-top: 0.2rem;
+  }
+
+  @media ${globalCss.breakpoint.mobileQuery} {
+    width: 100%;
+    justify-content: center;
+    font-size: 1rem;
+    margin: 0;
   }
 `;
 
