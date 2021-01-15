@@ -154,9 +154,14 @@ const cssMenuListItems = (menuState: boolean) => css`
     flex-direction: column;
 
     li {
+      margin-bottom: 1rem;
       transition: transform 830ms cubic-bezier(0.19, 1, 0.22, 1);
       transform: translateY(-30%);
       ${menuState && 'transform: translateY(0)'};
+
+      &:nth-last-child(1) {
+        margin-bottom: 0;
+      }
     }
   }
 
