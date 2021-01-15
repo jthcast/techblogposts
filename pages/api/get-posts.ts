@@ -14,7 +14,7 @@ const getPosts = async (req: NowRequest, res: NowResponse) => {
     if (req.method === 'GET') {
       const params: QueryCommandInput = {
         TableName: process.env.DB_TABLE_NAME,
-        Limit: 2,
+        Limit: 10,
         KeyConditionExpression: 'dataType = :post',
         IndexName: 'publishDate-index',
         ExpressionAttributeValues: {
