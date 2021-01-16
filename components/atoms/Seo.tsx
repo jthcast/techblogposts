@@ -31,17 +31,19 @@ const SEO = ({ description = '', lang = 'ko', title, image, author, publishDate 
     <Head>
       <title>{defaultTitle && title ? defaultTitle !== title ? `${defaultTitle} - ${title}` : null : defaultTitle}</title>
       <meta httpEquiv="x-ua-compatible" content="ie=edge"></meta>
-      {/* <link rel="manifest" href="/manifest.json"></link> */}
-      {/* <link href='/favicon-16x16.png' rel='icon' type='image/png' sizes='16x16' /> */}
-      {/* <link href='/favicon-32x32.png' rel='icon' type='image/png' sizes='32x32' /> */}
-      {/* <link rel="apple-touch-icon" sizes='48x48' href="/apple-icon.png"></link> */}
-      {/* <link rel="apple-touch-icon" sizes='72x72' href="/apple-icon.png"></link> */}
-      {/* <link rel="apple-touch-icon" sizes='96x96' href="/apple-icon.png"></link> */}
-      {/* <link rel="apple-touch-icon" sizes='144x144' href="/apple-icon.png"></link> */}
-      {/* <link rel="apple-touch-icon" sizes='192x192' href="/apple-icon.png"></link> */}
-      {/* <link rel="apple-touch-icon" sizes='256x256' href="/apple-icon.png"></link> */}
-      {/* <link rel="apple-touch-icon" sizes='384x384' href="/apple-icon.png"></link> */}
-      {/* <link rel="apple-touch-icon" sizes='512x512' href="/apple-icon.png"></link> */}
+      <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'></meta>
+      <link rel="manifest" href="/manifest.json"></link>
+      <link href='/favicon.svg' rel='icon' type='image/svg+xml' sizes='16x16'></link>
+      <link href='/favicon-32x32.png' rel='icon' type='image/png' sizes='32x32'></link>
+      <meta name="theme-color" content="#f6a54c"></meta>
+      <link rel="apple-touch-icon" sizes='48x48' href="/apple-icon.png"></link>
+      <link rel="apple-touch-icon" sizes='72x72' href="/apple-icon.png"></link>
+      <link rel="apple-touch-icon" sizes='96x96' href="/apple-icon.png"></link>
+      <link rel="apple-touch-icon" sizes='144x144' href="/apple-icon.png"></link>
+      <link rel="apple-touch-icon" sizes='192x192' href="/apple-icon.png"></link>
+      <link rel="apple-touch-icon" sizes='256x256' href="/apple-icon.png"></link>
+      <link rel="apple-touch-icon" sizes='384x384' href="/apple-icon.png"></link>
+      <link rel="apple-touch-icon" sizes='512x512' href="/apple-icon.png"></link>
       <meta name='description' content={metaDescription} />
       <meta name='author' content={metaAuthor} />
       <meta itemProp='datePublished' content={metaPublishDate} />
