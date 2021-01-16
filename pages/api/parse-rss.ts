@@ -53,6 +53,9 @@ export default async function checkItems(req: NowRequest, res: NowResponse) {
       res.status(200).json({
         newItemAdded,
       });
+    } else {
+      res.status(200).json('unauthorized');
+      return;
     }
   } catch (err) {
     console.error(err);
