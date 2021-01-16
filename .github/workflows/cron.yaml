@@ -1,7 +1,7 @@
 name: Latest Techblogposts post workflow
 on:
   schedule:
-    - cron: '*/3 * * * *'
+    - cron: '*/15 * * * *'
   workflow_dispatch:
 
 jobs:
