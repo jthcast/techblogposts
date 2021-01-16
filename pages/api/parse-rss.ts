@@ -136,9 +136,9 @@ async function writeItems(items: Record<string, string | number>[]) {
           },
           TableName: process.env.DB_TABLE_NAME,
           UpdateExpression: `
-            SET title = if_not_exists(title, :title),
-            company = if_not_exists(company, :company),
-            publishDate = if_not_exists(publishDate, :publishDate),
+            SET title = :title,
+            company = :company,
+            publishDate = :publishDate,
             viewCount = if_not_exists(viewCount, :viewCount)
           `,
           ExpressionAttributeValues: {
@@ -174,8 +174,8 @@ async function writeParsingDuration(duration: number) {
     const params: UpdateItemInput = {
       TableName: process.env.DB_TABLE_NAME,
       UpdateExpression: `
-        SET timeDuration = if_not_exists(timeDuration, :timeDuration),
-        parsedDate = if_not_exists(parsedDate, :parsedDate)
+        SET timeDuration = :timeDuration,
+        parsedDate = :parsedDate
       `,
       ExpressionAttributeValues: {
         ':timeDuration': { S: dateString },
