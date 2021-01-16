@@ -137,7 +137,16 @@ export default function Home() {
     }
   }, [morePostsButtonRef.current])
 
-  const gtagOutboundEvent = (title: string) => {
+  const gtagOutboundEvent = async (link: string, title: string) => {
+    await fetch('/api/view-count', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        link,
+      })
+    });
     gtag('event', 'click', {
       'event_category': 'outbound',
       'event_label': title,
@@ -169,7 +178,7 @@ export default function Home() {
                     target="_blank"
                     rel="noreferrer"
                     aria-label={post.title.S}
-                    onClick={() => gtagOutboundEvent(post.title.S)}
+                    onClick={() => gtagOutboundEvent(post.link.S, post.title.S)}
                   >
                     <p className={cssPostTitle}>{post.title.S}</p>
                     <ul className={cssItemDetailLeft}>
