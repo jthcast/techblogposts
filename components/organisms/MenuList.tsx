@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import DarkModeSwitch from '../molecules/DarkModeSwitch';
-import { IconBars, IconLogoColored, IconTimes } from '../atoms/Icons';
+import { IconBars, IconJthLogoColored, IconTimes } from '../atoms/Icons';
 import ScrollButton from '../molecules/ScrollButton';
 import InfiniteScrollSwitch from '../molecules/InfiniteScrollSwitch';
 import { css, cx } from '@emotion/css';
@@ -101,8 +101,9 @@ const MenuList = ({
                 href={config.copyrightHomepage}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="JthCast"
               >
-                <IconLogoColored />
+                <IconJthLogoColored />
               </a>
             </li>
           </ul>
