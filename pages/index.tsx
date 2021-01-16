@@ -137,6 +137,14 @@ export default function Home() {
     }
   }, [morePostsButtonRef.current])
 
+  const gtagOutboundEvent = (title: string) => {
+    gtag('event', 'click', {
+      'event_category': 'outbound',
+      'event_label': title,
+      'transport_type': 'beacon',
+    });
+  }
+
   return (
     <Layout>
       <section className={cssPosts}>
@@ -161,6 +169,7 @@ export default function Home() {
                     target="_blank"
                     rel="noreferrer"
                     aria-label={post.title.S}
+                    onClick={() => gtagOutboundEvent(post.title.S)}
                   >
                     <p className={cssPostTitle}>{post.title.S}</p>
                     <ul className={cssItemDetailLeft}>
