@@ -5,6 +5,8 @@ import {
   QueryCommandInput,
   TransactWriteItemsCommand,
   TransactWriteItemsInput,
+  UpdateItemCommand,
+  UpdateItemInput,
 } from '@aws-sdk/client-dynamodb';
 import { NowRequest, NowResponse } from '@vercel/node';
 
@@ -21,6 +23,7 @@ const parser = new Parser({
 
 export default async function checkItems(req: NowRequest, res: NowResponse) {
   try {
+    const startTime = new Date().getTime();
     const blogs = await getBlogs();
     let newItemAdded = 0;
     for (const blog of blogs.Items) {
@@ -39,6 +42,8 @@ export default async function checkItems(req: NowRequest, res: NowResponse) {
         newItemAdded += await writeItems(newRssItems.splice(0, 25));
       }
     }
+    const endTime = new Date().getTime();
+    await writeParsingDuration(endTime - startTime);
     res.status(200).json({
       newItemAdded,
     });
@@ -142,6 +147,27 @@ async function writeItems(items: Record<string, string | number>[]) {
     await dbclient.send(new TransactWriteItemsCommand(params));
 
     return items.length;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+async function writeParsingDuration(duration: number) {
+  try {
+    const date = new Date(duration);
+    const dateString = `${date.getUTCHours()} : ${date.getMinutes()} : ${date.getSeconds()}`;
+    const params: UpdateItemInput = {
+      TableName: process.env.DB_TABLE_NAME,
+      UpdateExpression: 'SET value = if_not_exists(value, :value)',
+      ExpressionAttributeValues: {
+        ':value': { S: dateString },
+      },
+      Key: {
+        dataType: { S: 'config' },
+        link: { S: 'parsingDuration' },
+      },
+    };
+    await dbclient.send(new UpdateItemCommand(params));
   } catch (err) {
     console.error(err);
   }
