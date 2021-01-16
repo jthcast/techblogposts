@@ -5,7 +5,6 @@ import globalCss, { rem } from '../styles/global-css';
 import { IconSpinner } from '../components/atoms/Icons';
 import { InfiniteScrollContext } from '../context/InfiniteScrollContext';
 import useObserver from '../customHooks/useObserver';
-import ReactGA from "react-ga";
 
 interface PostItems {
   Items?: {
@@ -137,6 +136,14 @@ export default function Home() {
     }
   }, [morePostsButtonRef.current])
 
+  const gtagOutboundEvent = (title: string) => {
+    gtag('event', 'click', {
+      'event_category': 'outbound',
+      'event_label': title,
+      'transport_type': 'beacon',
+    });
+  }
+
   return (
     <Layout>
       <section className={cssPosts}>
@@ -156,12 +163,12 @@ export default function Home() {
 
               return (
                 <li key={`${post.link.S}${index}`} className={cssListItem}>
-                  <ReactGA.OutboundLink
-                    eventLabel={post.title.S}
-                    to={post.link.S}
+                  <a
+                    href={post.link.S}
                     target="_blank"
                     rel="noreferrer"
                     aria-label={post.title.S}
+                    onClick={gtagOutboundEvent(post.link.S, post.title.S)}
                   >
                     <p className={cssPostTitle}>{post.title.S}</p>
                     <ul className={cssItemDetailLeft}>
@@ -179,7 +186,7 @@ export default function Home() {
                         <time dateTime={postDate.toISOString()}>{dateDiffer < 8 ? dateDifferString : postDateString}</time>
                       </li>
                     </ul>
-                  </ReactGA.OutboundLink>
+                  </a>
                 </li>
               )
             })}

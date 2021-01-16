@@ -14,10 +14,10 @@
     "next-pwa": "^5.0.3",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "react-ga": "^3.3.0",
     "rss-parser": "^3.10.0"
   },
   "devDependencies": {
+    "@types/gtag.js": "^0.0.4",
     "@types/node": "^14.14.20",
     "@types/react": "^17.0.0",
     "@vercel/node": "^1.8.5",
