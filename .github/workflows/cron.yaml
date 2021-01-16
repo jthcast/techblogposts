@@ -12,4 +12,3 @@ jobs:
         run: |
           curl --request POST \
           --url '/api/parse-rss' \
-          --header 'Authorization: Bearer ${{ process.env.API_KEY }}'
