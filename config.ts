@@ -8,7 +8,7 @@ export default {
   description: `IT 기술 블로그들의 최신 포스트를 한곳에서 보세요.`,
   siteUrl: `https://techblogposts.com`,
   githubUrl: `https://github.com/jthcast/techblogposts`,
-  image: `/public/logo-seo.png`,
+  image: `/logo-seo.png`,
   social: {
     twitter: ``,
   },
