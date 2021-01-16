@@ -25,9 +25,6 @@ export default async function checkItems(req: NowRequest, res: NowResponse) {
   try {
     if (req.method === 'POST') {
       const clientKey = req.headers.authorization.split('Bearer ')[1];
-      console.log('clientKey', clientKey);
-      console.log('env', process.env.API_KEY);
-      console.log('?', clientKey !== process.env.API_KEY);
       if (clientKey !== process.env.API_KEY) {
         res.status(200).json('unauthorized');
         return;
