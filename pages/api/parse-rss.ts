@@ -24,7 +24,11 @@ const parser = new Parser({
 export default async function checkItems(req: NowRequest, res: NowResponse) {
   try {
     if (req.method === 'POST') {
-      console.log('auth', req.headers.authorization);
+      const clientKey = req.headers.authorization;
+      if (clientKey !== process.env.API_KEY) {
+        res.status(200).json('unauthorized');
+        return;
+      }
       const startTime = new Date().getTime();
       const blogs = await getBlogs();
       let newItemAdded = 0;
@@ -159,6 +163,11 @@ async function writeParsingDuration(duration: number) {
   try {
     const date = new Date(duration);
     const dateString = `${date.getUTCHours()} : ${date.getMinutes()} : ${date.getSeconds()}`;
+    const currentDate = new Date();
+    const currentUTCDate = currentDate.getTime() + currentDate.getTimezoneOffset() * 60 * 1000;
+    const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
+    const kr_curr = new Date(currentUTCDate + KR_TIME_DIFF);
+
     const params: UpdateItemInput = {
       TableName: process.env.DB_TABLE_NAME,
       UpdateExpression: `
@@ -167,7 +176,7 @@ async function writeParsingDuration(duration: number) {
       `,
       ExpressionAttributeValues: {
         ':timeDuration': { S: dateString },
-        ':parsedDate': { S: new Date().toString() },
+        ':parsedDate': { S: kr_curr.toString() },
       },
       Key: {
         dataType: { S: 'config' },
