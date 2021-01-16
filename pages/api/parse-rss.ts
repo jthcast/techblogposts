@@ -158,9 +158,13 @@ async function writeParsingDuration(duration: number) {
     const dateString = `${date.getUTCHours()} : ${date.getMinutes()} : ${date.getSeconds()}`;
     const params: UpdateItemInput = {
       TableName: process.env.DB_TABLE_NAME,
-      UpdateExpression: 'SET timeDuration = if_not_exists(timeDuration, :timeDuration)',
+      UpdateExpression: `
+        SET timeDuration = if_not_exists(timeDuration, :timeDuration),
+        parsedDate = if_not_exists(parsedDate, :parsedDate),
+      `,
       ExpressionAttributeValues: {
         ':timeDuration': { S: dateString },
+        ':parsedDate': { S: new Date().toString() },
       },
       Key: {
         dataType: { S: 'config' },
