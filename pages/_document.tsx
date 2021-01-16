@@ -64,25 +64,11 @@ class MyDocument extends Document {
   document.documentElement.setAttribute('data-theme', colorMode);
 })()`;
 
-  gaTrackingId = process.env.GA_TRACKING_ID;
-
-  gaTrackingScript = `
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', '${this.gaTrackingId}');
-  `
-
   render() {
     return (
       <Html>
         <script dangerouslySetInnerHTML={{ __html: this.checkLegacyIE }} />
         <script dangerouslySetInnerHTML={{ __html: this.getInitialColorMode }} />
-        <script
-          async
-          src={`https://www.googletagmanager.com/gtag/js?id=${this.gaTrackingId}`}
-        />
-        <script dangerouslySetInnerHTML={{ __html: this.gaTrackingScript }} />
         <Head />
         <body>
           <Main />

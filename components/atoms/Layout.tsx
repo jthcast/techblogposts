@@ -5,6 +5,7 @@ import Header from "../organisms/Header";
 import SEO from "./Seo";
 import config from '../../config'
 import MenuList from "../organisms/MenuList";
+import ReactGA from "react-ga";
 
 interface layoutProps {
   title?: string;
@@ -18,6 +19,8 @@ interface layoutProps {
 export default function Layout({ title, description = '', children, image, author, publishDate }: layoutProps) {
   useEffect(() => {
     document.documentElement.removeAttribute('style');
+    ReactGA.initialize(process.env.GA_TRACKING_ID);
+    ReactGA.pageview(window.location.pathname + window.location.search);
     unFocus();
   }, []);
 

@@ -5,6 +5,7 @@ import globalCss, { rem } from '../styles/global-css';
 import { IconSpinner } from '../components/atoms/Icons';
 import { InfiniteScrollContext } from '../context/InfiniteScrollContext';
 import useObserver from '../customHooks/useObserver';
+import ReactGA from "react-ga";
 
 interface PostItems {
   Items?: {
@@ -155,8 +156,9 @@ export default function Home() {
 
               return (
                 <li key={`${post.link.S}${index}`} className={cssListItem}>
-                  <a
-                    href={post.link.S}
+                  <ReactGA.OutboundLink
+                    eventLabel={post.title.S}
+                    to={post.link.S}
                     target="_blank"
                     rel="noreferrer"
                     aria-label={post.title.S}
@@ -177,7 +179,7 @@ export default function Home() {
                         <time dateTime={postDate.toISOString()}>{dateDiffer < 8 ? dateDifferString : postDateString}</time>
                       </li>
                     </ul>
-                  </a>
+                  </ReactGA.OutboundLink>
                 </li>
               )
             })}
