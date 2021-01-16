@@ -4,7 +4,7 @@ import {
   IconArrowToTop,
   IconEnvelope,
   IconGithub,
-  IconLogoColored,
+  IconJthLogoColored,
 } from './../atoms/Icons';
 import config from '../../config';
 import { css, cx } from '@emotion/css';
@@ -41,7 +41,7 @@ const Footer = (): React.ReactElement => {
               rel="noopener noreferrer"
               className={cssExternalLink}
             >
-              <IconLogoColored className={cssLogo} />
+              <IconJthLogoColored className={cssLogo} />
             </a>
           </li>
           {/* <li> */}
