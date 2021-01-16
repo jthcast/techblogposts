@@ -167,7 +167,7 @@ async function writeParsingDuration(duration: number) {
       `,
       ExpressionAttributeValues: {
         ':timeDuration': { S: dateString },
-        ':parsedDate': { S: new Date().toString() },
+        ':parsedDate': { S: '??' },
       },
       Key: {
         dataType: { S: 'config' },
