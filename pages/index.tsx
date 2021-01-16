@@ -5,6 +5,7 @@ import globalCss, { rem } from '../styles/global-css';
 import { IconSpinner } from '../components/atoms/Icons';
 import { InfiniteScrollContext } from '../context/InfiniteScrollContext';
 import useObserver from '../customHooks/useObserver';
+import { emit } from 'cluster';
 
 interface PostItems {
   Items?: {
@@ -136,16 +137,6 @@ export default function Home() {
     }
   }, [morePostsButtonRef.current])
 
-  const gtagOutboundEvent = (title: string) => {
-    gtag('event', 'click', {
-      'event_category': 'outbound',
-      'event_label': title,
-      'transport_type': 'beacon',
-    });
-
-    return null;
-  }
-
   return (
     <Layout>
       <section className={cssPosts}>
@@ -170,7 +161,6 @@ export default function Home() {
                     target="_blank"
                     rel="noreferrer"
                     aria-label={post.title.S}
-                    onClick={gtagOutboundEvent(post.title.S)}
                   >
                     <p className={cssPostTitle}>{post.title.S}</p>
                     <ul className={cssItemDetailLeft}>
