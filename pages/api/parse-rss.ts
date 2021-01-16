@@ -23,30 +23,33 @@ const parser = new Parser({
 
 export default async function checkItems(req: NowRequest, res: NowResponse) {
   try {
-    const startTime = new Date().getTime();
-    const blogs = await getBlogs();
-    let newItemAdded = 0;
-    for (const blog of blogs.Items) {
-      const url = blog.link.S;
-      const company = blog.company.S;
-      const rssItems = await getRSS(url, company);
-      const companyPostLinks = await getCompanyPostLinks(company);
-      const newRssItems = rssItems.reduce((acc, item) => {
-        const rssItemLink = item.link;
-        if (!companyPostLinks.includes(rssItemLink)) {
-          acc.push(item);
+    if (req.method === 'POST') {
+      console.log('auth', req.headers.authorization);
+      const startTime = new Date().getTime();
+      const blogs = await getBlogs();
+      let newItemAdded = 0;
+      for (const blog of blogs.Items) {
+        const url = blog.link.S;
+        const company = blog.company.S;
+        const rssItems = await getRSS(url, company);
+        const companyPostLinks = await getCompanyPostLinks(company);
+        const newRssItems = rssItems.reduce((acc, item) => {
+          const rssItemLink = item.link;
+          if (!companyPostLinks.includes(rssItemLink)) {
+            acc.push(item);
+          }
+          return acc;
+        }, []);
+        while (newRssItems.length > 0) {
+          newItemAdded += await writeItems(newRssItems.splice(0, 25));
         }
-        return acc;
-      }, []);
-      while (newRssItems.length > 0) {
-        newItemAdded += await writeItems(newRssItems.splice(0, 25));
       }
+      const endTime = new Date().getTime();
+      await writeParsingDuration(endTime - startTime);
+      res.status(200).json({
+        newItemAdded,
+      });
     }
-    const endTime = new Date().getTime();
-    await writeParsingDuration(endTime - startTime);
-    res.status(200).json({
-      newItemAdded,
-    });
   } catch (err) {
     console.error(err);
   }

@@ -13,3 +13,4 @@ jobs:
         run: |
           curl --request POST \
           --url 'https://techblogposts.com/api/parse-rss' \
+          --header 'Authorization: Bearer ${{ secrets.API_KEY }}'
