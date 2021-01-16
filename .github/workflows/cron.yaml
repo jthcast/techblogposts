@@ -1,7 +1,7 @@
 name: Latest Techblogposts post workflow
 on:
   schedule:
-    - cron: '*/1 * * * *'
+    - cron: '*/15 * * * *'
   workflow_dispatch:
 
 jobs:
@@ -11,4 +11,4 @@ jobs:
       - name: Call our API route
         run: |
           curl --request POST \
-          --url '/api/parse-rss' \
+          --url 'https://techblogposts.com/api/parse-rss' \
