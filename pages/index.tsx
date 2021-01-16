@@ -187,7 +187,7 @@ export default function Home() {
           <button className={cssMorePostsButton} onClick={infiniteScrollHandling} ref={morePostsButtonRef}>
             {isMorePostLoading ?
               <IconSpinner spin /> :
-              <p>More Posts{' '}
+              <p>More{' '}
                 <span role="img" aria-label="More posts" className={cssBounce}>👇</span>
               </p>
             }
@@ -209,6 +209,7 @@ const cssPosts = css`
   margin-top: 1rem;
 
   @media ${globalCss.breakpoint.mobileQuery} {
+    margin-top: 0;
     padding: 0 1.25rem;
   }
 
