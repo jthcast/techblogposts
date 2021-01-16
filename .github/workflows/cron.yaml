@@ -8,6 +8,7 @@ jobs:
   cron:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Call our API route
         run: |
           curl --request POST \
