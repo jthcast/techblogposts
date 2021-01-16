@@ -6,6 +6,7 @@ import { IconLogoColored } from '../atoms/Icons';
 import DarkModeSwitch from '../molecules/DarkModeSwitch';
 import InfiniteScrollSwitch from '../molecules/InfiniteScrollSwitch';
 import config from '../../config';
+import Link from 'next/link';
 
 interface HeaderProps {
   ghost?: boolean;
@@ -74,11 +75,13 @@ const Header = ({
           {title || subTitle ? (
             <ul className={cssHeaderItemsLeft}>
               <li>
-                <span className={cssHeaderTitle}>
-                  <IconLogoColored />
-                  {title}
-                </span>
-                {subTitle && <span className={cssHeaderSubTitle}>{subTitle}</span>}
+                <Link href="/">
+                  <a className={cssHeaderTitle}>
+                    <IconLogoColored />
+                    {title}
+                    {subTitle && <span>{subTitle}</span>}
+                  </a>
+                </Link>
               </li>
             </ul>
           ) : null}
@@ -211,6 +214,7 @@ const cssHeaderTitle = css`
   align-items: center;
   margin: 0 0.25rem;
   font-size: 1.25rem;
+  text-decoration: none;
 
   svg {
     margin-right: 0.25rem;
