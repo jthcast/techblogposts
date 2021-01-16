@@ -5,30 +5,6 @@ import globalCss, { rem } from '../styles/global-css';
 import { IconSpinner } from '../components/atoms/Icons';
 import { InfiniteScrollContext } from '../context/InfiniteScrollContext';
 import useObserver from '../customHooks/useObserver';
-import { emit } from 'cluster';
-
-interface PostItems {
-  Items?: {
-    link?: {
-      S: string;
-    };
-    title?: {
-      S: string;
-    };
-    company?: {
-      S: string;
-    };
-    viewCount?: {
-      N: string;
-    };
-    publishDate?: {
-      N: string;
-    };
-  }[];
-  LastEvaluatedKey?: {
-    test: string;
-  };
-}
 
 interface PostItem {
   link?: { S: string },
@@ -46,76 +22,21 @@ export default function Home() {
   const [isInfiniteLoad, setInfiniteLoad] = useContext(InfiniteScrollContext);
   const [lastEvaluatedKey, setLastEvaluatedKey] = useState(undefined);
 
-  const fakeFetch = (delay = 1000) => new Promise(res => setTimeout(res, delay));//TODO to real
-  const getPosts = async () => {//TODO to real
+  const getPosts = useCallback(async () => {
     isInit ? setLoading(true) : setMorePostLoading(true);
-    await fakeFetch();
-    const result: PostItems = {
-      Items: [
-        {
-          link: { S: `https://jthcast.dev/posts/how-to-make-dark-mode-with-css-variables/` },
-          title: { S: `CSS변수를 활용하여 다크 모드 구현하기` },
-          company: { S: `jthcast` },
-          viewCount: { N: `123` },
-          publishDate: { N: `1610647831303` }
-        },
-        {
-          link: { S: `https://jthcast.dev/posts/start-blog-development-with-atomic-design/` },
-          title: { S: `Atomic Design으로 블로그 개발 시작하기` },
-          company: { S: `jthcast` },
-          viewCount: { N: `12` },
-          publishDate: { N: `1610447831303` }
-        },
-        {
-          link: { S: `https://jthcast.dev/posts/why-efforts-to-preserve-web-standards-and-web-accessibility-are-required/` },
-          title: { S: `웹 표준과 웹 접근성을 지키기 위한 노력이 필요한 이유` },
-          company: { S: `jthcast` },
-          viewCount: { N: `1` },
-          publishDate: { N: `1608336000000` }
-        },
-        {
-          link: { S: `https://jthcast.dev/posts/why-react-still-needs-class-type-(feat.errorboundary)/` },
-          title: { S: `React에 아직은 Class 형식이 필요한 이유(feat. Errorboundary)` },
-          company: { S: `jthcast` },
-          viewCount: { N: `0` },
-          publishDate: { N: `1608595200000` }
-        },
-        {
-          link: { S: `https://jthcast.dev/posts/why-react-still-needs-class-type-(feat.errorboundary)/1` },
-          title: { S: `React에 아직은 Class 형식이 필요한 이유(feat. Errorboundary)` },
-          company: { S: `jthcast` },
-          viewCount: { N: `0` },
-          publishDate: { N: `1608595200000` }
-        }
-      ],
-      LastEvaluatedKey: { test: 'a' }
-    }
+    const fetchData = await fetch(`/api/posts${lastEvaluatedKey ? `?lastEvaluatedKey=${JSON.stringify(lastEvaluatedKey)}` : ''}`, {
+      method: 'GET',
+    });
+    const result = await fetchData.json();
     setPosts([...posts, ...result.Items]);
     setLastEvaluatedKey(result.LastEvaluatedKey);
     isInit ? setLoading(false) : setMorePostLoading(false);
-  };
-
-  // const getPosts = useCallback(async () => {
-  //   isInit ? setLoading(true) : setMorePostLoading(true);
-  //   const fetchData = await fetch(`/api/posts${lastEvaluatedKey ? `?lastEvaluatedKey=${JSON.stringify(lastEvaluatedKey)}` : ''}`, {
-  //     method: 'GET',
-  //   });
-  //   const result = await fetchData.json();
-  //   setPosts([...posts, ...result.Items]);
-  //   setLastEvaluatedKey(result.LastEvaluatedKey);
-  //   isInit ? setLoading(false) : setMorePostLoading(false);
-  // }, [lastEvaluatedKey]);
+  }, [lastEvaluatedKey]);
 
   useEffect(() => {
     getPosts();
     setInit(false);
   }, []);
-
-  // const rssUpdate = async () => {//TODO Schedule
-  //   const fetchData = await fetch(`/api/parse-rss`);
-  //   const result = await fetchData.json();
-  //   console.log(result);
-  // };
 
   const infiniteScrollHandling = () => {
     setInfiniteLoad(isInfiniteLoad === 'on' ? 'off' : 'on');
@@ -212,7 +133,6 @@ export default function Home() {
             }
           </button>
         }
-        {/* <button onClick={rssUpdate}>RSS UPDATE</button> */}
       </section>
     </Layout>
   );
