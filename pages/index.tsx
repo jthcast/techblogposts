@@ -142,6 +142,8 @@ export default function Home() {
       'event_label': title,
       'transport_type': 'beacon',
     });
+
+    return null;
   }
 
   return (
@@ -168,7 +170,7 @@ export default function Home() {
                     target="_blank"
                     rel="noreferrer"
                     aria-label={post.title.S}
-                    onClick={gtagOutboundEvent(post.link.S, post.title.S)}
+                    onClick={gtagOutboundEvent(post.title.S)}
                   >
                     <p className={cssPostTitle}>{post.title.S}</p>
                     <ul className={cssItemDetailLeft}>
