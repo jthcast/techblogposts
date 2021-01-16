@@ -40,6 +40,7 @@ const Footer = (): React.ReactElement => {
               target="_blank"
               rel="noopener noreferrer"
               className={cssExternalLink}
+              aria-label="JthCast"
             >
               <IconJthLogoColored className={cssLogo} />
             </a>
