@@ -1,5 +1,5 @@
 export default {
-  title: `기술 블로그 포스트 모음`,
+  title: `TechBlogPosts`,
   author: {
     name: `TaeHoon Jeong`,
     summary: `Front-end developer work with design and technology, so trying to look problems from various perspective to solve them.`,
