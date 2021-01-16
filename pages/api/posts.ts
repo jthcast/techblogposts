@@ -9,7 +9,7 @@ const dbclient = new DynamoDBClient({
   },
 });
 
-const getPosts = async (req: NowRequest, res: NowResponse) => {
+const posts = async (req: NowRequest, res: NowResponse) => {
   try {
     if (req.method === 'GET') {
       const params: QueryCommandInput = {
@@ -33,4 +33,4 @@ const getPosts = async (req: NowRequest, res: NowResponse) => {
   }
 };
 
-export default getPosts;
+export default posts;

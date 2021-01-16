@@ -97,7 +97,7 @@ export default function Home() {
 
   // const getPosts = useCallback(async () => {
   //   isInit ? setLoading(true) : setMorePostLoading(true);
-  //   const fetchData = await fetch(`/api/get-posts${lastEvaluatedKey ? `?lastEvaluatedKey=${JSON.stringify(lastEvaluatedKey)}` : ''}`, {
+  //   const fetchData = await fetch(`/api/posts${lastEvaluatedKey ? `?lastEvaluatedKey=${JSON.stringify(lastEvaluatedKey)}` : ''}`, {
   //     method: 'GET',
   //   });
   //   const result = await fetchData.json();
