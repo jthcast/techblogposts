@@ -52,7 +52,7 @@ const SEO = ({ description = '', lang = 'ko', title, image, author, publishDate 
       <meta property='og:title' content={metaTitle} />
       <meta property='og:description' content={metaDescription} />
       <meta property='og:type' content='website' />
-      <meta property='og:image' content={`${siteUrl}${image || defaultImage}`} />
+      <meta name='image' property='og:image' content={`${siteUrl}${image || defaultImage}`} />
       <meta property='twitter:card' content='summary' />
       <meta property='twitter:creator' content={siteMetadata?.social?.twitter || ``} />
       <meta property='twitter:title' content={metaTitle} />
