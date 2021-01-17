@@ -99,8 +99,8 @@ async function getRSS(url: string, company: string) {
     return items;
   } catch (err) {
     console.log(`${url} is maybe broken.(getRSS)`);
+    console.log(err);
     return [];
-    // console.log(err);
   }
 }
 
