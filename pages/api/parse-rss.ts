@@ -94,6 +94,7 @@ async function getRSS(url: string, company: string) {
     return items;
   } catch (err) {
     console.log(`${url} is maybe broken.(getRSS)`);
+    return [];
     // console.log(err);
   }
 }
