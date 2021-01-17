@@ -9,6 +9,7 @@ import {
   UpdateItemInput,
 } from '@aws-sdk/client-dynamodb';
 import { NowRequest, NowResponse } from '@vercel/node';
+import { decode } from 'html-entities';
 
 const dbclient = new DynamoDBClient({
   region: process.env.DB_REGION,
@@ -78,17 +79,12 @@ async function getBlogs() {
   }
 }
 
-function htmlDecode(input: string) {
-  var doc = new DOMParser().parseFromString(input, 'text/html');
-  return doc.documentElement.textContent;
-}
-
 async function getRSS(url: string, company: string) {
   try {
     const feed = await parser.parseURL(url);
     const items = feed.items.reduce<Array<Record<string, string>>>((acc, item) => {
       acc.push({
-        title: htmlDecode(item.title),
+        title: decode(item.title),
         link: item.link,
         company,
         publishDate: new Date(item.pubDate).getTime().toString(),

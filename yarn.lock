@@ -3598,6 +3598,11 @@ hmac-drbg@^1.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
 
+html-entities@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/html-entities/-/html-entities-2.0.2.tgz#3e0cda2387515b2dc6a947163fd51f6b48d80186"
+  integrity sha512-4IHIARvqG6F1gACykQUXc24KuAM8vbmKHq738CIVsPNBIp/xqmYFbIEEeA51SdjF+mxk/I52reZMNVK8Kzq9Ig==
+
 htmlparser2@5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/htmlparser2/-/htmlparser2-5.0.1.tgz#7daa6fc3e35d6107ac95a4fc08781f091664f6e7"

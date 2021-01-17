@@ -4,6 +4,7 @@ import { css, keyframes } from '@emotion/css';
 import globalCss, { rem } from '../styles/global-css';
 import { IconSpinner } from '../components/atoms/Icons';
 import Parser from 'rss-parser';
+import { decode } from 'html-entities';
 
 export default function RssTest() {
   const [posts, setPosts] = useState([]);
@@ -16,11 +17,6 @@ export default function RssTest() {
     timeout: 3000,
   });
 
-  function htmlDecode(input: string) {
-    var doc = new DOMParser().parseFromString(input, "text/html");
-    return doc.documentElement.textContent;
-  }
-
   async function getRSS(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
@@ -32,7 +28,7 @@ export default function RssTest() {
       const feed = await parser.parseURL(`${corsProxy}${url}`);
       const items = feed.items.reduce<Array<Record<string, string>>>((acc, item) => {
         acc.push({
-          title: htmlDecode(item.title),
+          title: decode(item.title),
           link: item.link,
           company,
           publishDate: new Date(item.pubDate).getTime().toString(),
