@@ -93,7 +93,7 @@ async function getRSS(url: string, company: string) {
 
     return items;
   } catch (err) {
-    // console.log(`${url} is maybe broken.`);
+    console.log(`${url} is maybe broken.(getRSS)`);
     // console.log(err);
   }
 }
@@ -117,6 +117,7 @@ async function getCompanyPostLinks(company: string) {
 
     return linkArray;
   } catch (err) {
+    console.log(`(getCompanyPostLinks)`);
     console.error(err);
   }
 }
@@ -158,6 +159,7 @@ async function writeItems(items: Record<string, string | number>[]) {
 
     return items.length;
   } catch (err) {
+    console.log(`(writeItems)`);
     console.error(err);
   }
 }
@@ -188,6 +190,7 @@ async function writeParsingDuration(duration: number) {
     };
     await dbclient.send(new UpdateItemCommand(params));
   } catch (err) {
+    console.log(`(writeParsingDuration)`);
     console.error(err);
   }
 }
