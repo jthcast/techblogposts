@@ -44,6 +44,7 @@ const SEO = ({ description = '', lang = 'ko', title, image, author, publishDate 
       <link rel="apple-touch-icon" sizes='256x256' href="/icons/icon-256x256.png"></link>
       <link rel="apple-touch-icon" sizes='384x384' href="/icons/icon-384x384.png"></link>
       <link rel="apple-touch-icon" sizes='512x512' href="/icons/icon-512x512.png"></link>
+      <meta name="keywords" content="기술 블로그, 기술 블로그 모음, IT기술 블로그, IT기술 블로그 모음, 스타트업 기술 블로그"></meta>
       <meta name='description' content={metaDescription} />
       <meta name='author' content={metaAuthor} />
       <meta itemProp='datePublished' content={metaPublishDate} />
