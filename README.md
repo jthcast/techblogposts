@@ -16,8 +16,8 @@
 - Javascript ES6+
 - Typescript
 - React
+- Next.js
 - Emotion
-- Next
 - AWS
 
 ## 📝 License
