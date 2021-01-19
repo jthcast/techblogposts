@@ -24,15 +24,6 @@ const DarkModeSwitch = (): React.ReactElement => {
     }
   }, [colorMode]);
 
-  // useEffect(() => {
-  //   checkSystemPreference();
-  //   systemPreference.addEventListener('change', checkSystemPreference);
-
-  //   return () => {
-  //     systemPreference.removeEventListener('change', checkSystemPreference);
-  //   };
-  // }, [checkSystemPreference, systemPreference]);
-
   return (
     <Switch
       className={cssDarkModeSwitch}
