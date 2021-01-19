@@ -31,17 +31,13 @@ export default async function checkItems(req: NowRequest, res: NowResponse) {
         return;
       }
       const startTime = new Date().getTime();
-      console.log('startTime', startTime); //T
       const blogs = await getBlogs();
-      console.log('getBlogs', new Date().getTime()); //T
       let newItemAdded = 0;
       for (const blog of blogs.Items) {
         const url = blog.link.S;
         const company = blog.company.S;
         const rssItems = await getRSS(url, company);
-        console.log('getRSS', new Date().getTime()); //T
         const companyPostLinks = await getCompanyPostLinks(company);
-        console.log('getCompanyPostLinks', new Date().getTime()); //T
         const newRssItems = rssItems.reduce((acc, item) => {
           const rssItemLink = item.link;
           if (!companyPostLinks.includes(rssItemLink)) {
@@ -49,11 +45,9 @@ export default async function checkItems(req: NowRequest, res: NowResponse) {
           }
           return acc;
         }, []);
-        console.log('newRssItems', new Date().getTime()); //T
         while (newRssItems.length > 0) {
           newItemAdded += await writeItems(newRssItems.splice(0, 25));
         }
-        console.log('writeItems', new Date().getTime()); //T
       }
       const endTime = new Date().getTime();
       await writeParsingDuration(endTime - startTime);
