@@ -1,16 +1,16 @@
-name: Latest Techblogposts post workflow
-on:
-  schedule:
-    - cron: '*/15 * * * *'
-  workflow_dispatch:
+# name: Latest Techblogposts post workflow
+# on:
+#   schedule:
+#     - cron: '*/15 * * * *'
+#   workflow_dispatch:
 
-jobs:
-  cron:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Call our API route
-        run: |
-          curl --request POST \
-          --url 'https://techblogposts.com/api/parse-rss' \
-          --header 'Authorization: Bearer ${{ secrets.API_KEY }}'
+# jobs:
+#   cron:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Call our API route
+#         run: |
+#           curl --request POST \
+#           --url 'https://techblogposts.com/api/parse-rss' \
+#           --header 'Authorization: Bearer ${{ secrets.API_KEY }}'
