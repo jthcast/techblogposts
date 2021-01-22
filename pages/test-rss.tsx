@@ -3,8 +3,6 @@ import { FormEvent, useRef, useState } from 'react';
 import { css, keyframes } from '@emotion/css';
 import globalCss, { rem } from '../styles/global-css';
 import { IconSpinner } from '../components/atoms/Icons';
-import Parser from 'rss-parser';
-import { decode } from 'html-entities';
 
 export default function RssTest() {
   const [posts, setPosts] = useState([]);
@@ -13,28 +11,15 @@ export default function RssTest() {
   const inputURLRef = useRef<HTMLInputElement>();
   const inputCompanyRef = useRef<HTMLInputElement>();
 
-  const parser = new Parser({
-    timeout: 3000,
-  });
-
   async function getRSS(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
       setLoading(true);
-      // const corsProxy = 'https://cors-anywhere.herokuapp.com/';
-      const corsProxy = '';
       const url = inputURLRef.current.value;
       const company = inputCompanyRef.current.value;
-      const feed = await parser.parseURL(`${corsProxy}${url}`);
-      const items = feed.items.reduce<Array<Record<string, string>>>((acc, item) => {
-        acc.push({
-          title: decode(item.title),
-          link: item.link,
-          company,
-          publishDate: new Date(item.pubDate).getTime().toString(),
-        });
-        return acc;
-      }, []);
+      const feedResponse = await fetch(`/api/test-rss?url=${url}&company=${company}`);
+      const feed = await feedResponse.json();
+      const items = feed.rssItems;
       setPosts(items);
       setError(undefined);
       setLoading(false);
@@ -128,15 +113,6 @@ const cssPosts = css`
   @media ${globalCss.breakpoint.tabletQuery} {
     padding: 0 3rem;
   }
-`;
-
-const cssLoading = css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 5rem;
-  color: ${globalCss.color.secondaryBrandColor};
-  margin: 5rem 0;
 `;
 
 const cssList = css`
