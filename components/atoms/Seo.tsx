@@ -35,6 +35,7 @@ const SEO = ({ description = '', lang = 'ko', title, image, author, publishDate 
       <link rel="manifest" href="/manifest.json"></link>
       <link href='/favicon.svg' rel='icon' type='image/svg+xml' sizes='16x16'></link>
       <link href='/favicon-32x32.png' rel='icon' type='image/png' sizes='32x32'></link>
+      <meta name="theme-color" content="#ffffff"></meta>
       <link rel="apple-touch-icon" sizes='48x48' href="/icons/icon-48x48.png"></link>
       <link rel="apple-touch-icon" sizes='72x72' href="/icons/icon-72x72.png"></link>
       <link rel="apple-touch-icon" sizes='96x96' href="/icons/icon-96x96.png"></link>
