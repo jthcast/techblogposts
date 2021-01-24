@@ -95,7 +95,7 @@ const Footer = (): React.ReactElement => {
 export default Footer;
 
 const cssFooter = css`
-  margin: auto auto 0;
+  margin: auto auto 0 auto;
   width: 100%;
   z-index: 1;
   max-width: ${globalCss.common.maxWidth};
@@ -166,7 +166,6 @@ const cssFooterContainer = css`
 `;
 
 const cssItemsLeft = css`
-  height: 100%;
   align-items: center;
   justify-content: flex-start;
 
@@ -191,7 +190,6 @@ const cssItemsLeft = css`
 `;
 
 const cssItemsRight = css`
-  height: 100%;
   align-items: flex-end;
   justify-content: flex-end;
 
