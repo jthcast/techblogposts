@@ -12,7 +12,8 @@ import globalCss from '../../styles/global-css';
 
 const Footer = (): React.ReactElement => {
   const scrollToTop = () => {
-    window.scrollTo(0, 0);
+    const root = document.querySelector('#__next');
+    root.scrollTo(0, 0);
   };
 
   return (
