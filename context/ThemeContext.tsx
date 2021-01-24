@@ -1,11 +1,11 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useEffect, useState } from 'react';
 
 export const ThemeContext = createContext(undefined);
 
 export const ThemeProvider = ({ children }) => {
   const [colorMode, rawSetColorMode] = useState(undefined);
 
-  const checkSystemPreference = () => {
+  const checkSystemPreference = useCallback(() => {
     const isClient = typeof window !== 'undefined';
     if (isClient) {
       const systemPreference = window.matchMedia('(prefers-color-scheme: dark)');
@@ -17,7 +17,7 @@ export const ThemeProvider = ({ children }) => {
       rawSetColorMode('light');
       localStorage.setItem('color-mode', 'light');
     }
-  }
+  }, [rawSetColorMode]);
 
   useEffect(() => {
     const systemPreference = window.matchMedia('(prefers-color-scheme: dark)');
