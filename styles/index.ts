@@ -22,7 +22,6 @@ html {
 
 body {
   height: 100%;
-  overflow-y: overlay;
   line-height: 1.8;
 }
 
@@ -31,6 +30,7 @@ body {
   flex-direction: column;
   flex: 1 auto;
   overflow-x: hidden;
+  overflow-y: overlay;
   height: 100%;
   width: 100%;
 }
