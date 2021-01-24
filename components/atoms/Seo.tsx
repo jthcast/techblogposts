@@ -32,6 +32,7 @@ const SEO = ({ description = '', lang = 'ko', title, image, author, publishDate 
       <title>{defaultTitle && title ? defaultTitle !== title ? `${defaultTitle} - ${title}` : null : defaultTitle}</title>
       <meta httpEquiv="x-ua-compatible" content="ie=edge"></meta>
       <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'></meta>
+      <link rel="canonical" href="https://techblogposts.com"></link>
       <link rel="manifest" href="/manifest.json"></link>
       <link href='/favicon.svg' rel='icon' type='image/svg+xml' sizes='16x16'></link>
       <link href='/favicon-32x32.png' rel='icon' type='image/png' sizes='32x32'></link>
