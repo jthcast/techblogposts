@@ -87,8 +87,11 @@ export default function Home() {
           <ul className={cssList}>
             {posts.map((post, index) => {
               const nowDate = new Date();
+              const today = new Date(`${nowDate.getFullYear()}-${nowDate.getMonth() + 1}-${nowDate.getDate()}`);
               const postDate = new Date(parseInt(post.publishDate.N));
-              const dateDiffer = Math.floor((nowDate.getTime() - postDate.getTime()) / 60 / 1000 / 60 / 24);
+              const postDay = new Date(`${postDate.getFullYear()}-${postDate.getMonth() + 1}-${postDate.getDate()}`);
+              const dateDiffer = Math.floor((today.getTime() - postDay.getTime()) / 60 / 1000 / 60 / 24);
+              // const dateDiffer = Math.floor((nowDate.getTime() - postDate.getTime()) / 60 / 1000 / 60 / 24);
               const dateDifferString = dateDiffer === 0 ? `오늘` : `${dateDiffer}일 전`;
               const postDateString = `${postDate.getUTCFullYear()}-${postDate.getMonth() + 1}-${postDate.getDate()}`;
 
