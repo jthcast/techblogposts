@@ -6,6 +6,7 @@ injectGlobal`
 
 html {
   font-size: ${globalCss.common.fontPercent};
+  height: 100%;
 }
 
 * {
@@ -20,8 +21,7 @@ html {
 }
 
 body {
-  min-height: 100vh;
-  /* display: flex; */
+  height: 100%;
   overflow-y: overlay;
   line-height: 1.8;
 }
@@ -30,9 +30,8 @@ body {
   display: flex;
   flex-direction: column;
   flex: 1 auto;
-  /* white-space: pre-line; */
   overflow-x: hidden;
-  min-height: 100vh;
+  height: 100%;
   width: 100%;
 }
 
@@ -76,7 +75,7 @@ body {
 }
 
 @media (hover: hover) and (pointer: fine) { /*notTouchDevice*/
-  body{
+  #__next {
     &::-webkit-scrollbar {
       width: 0.5rem;
     }

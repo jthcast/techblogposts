@@ -29,7 +29,7 @@ const ScrollButton = ({
   const showTypeRef = useRef(showType);
 
   const scrollHandling = useCallback(() => {
-    const scrollValue = window.scrollY;
+    const scrollValue = document.querySelector('#__next').scrollTop;
 
     if (scrollValue === 0) {
       setIsTopState(true);
@@ -60,10 +60,11 @@ const ScrollButton = ({
 
   useEffect(() => {
     scrollHandling();
-    window.addEventListener('scroll', scrollHandling);
+    const root = document.querySelector('#__next');
+    root.addEventListener('scroll', scrollHandling);
 
     return () => {
-      window.removeEventListener('scroll', scrollHandling);
+      root.removeEventListener('scroll', scrollHandling);
     };
   }, [scrollHandling]);
 
@@ -97,7 +98,7 @@ const cssScrollButton = css`
   align-items: center;
   opacity: 0;
   transition: 0.2s ease;
-  // transform: translateY(100%); //TODO causing bug
+  transform: translateY(100%);
   visibility: hidden;
   border: none;
   cursor: pointer;
