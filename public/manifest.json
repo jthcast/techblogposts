@@ -1,7 +1,7 @@
 {
   "name": "TechBlogPosts",
   "short_name": "TechBlogPosts",
-  "theme_color": "#f6a54c",
+  "theme_color": "#ffffff",
   "background_color": "#614cf6",
   "display": "minimal-ui",
   "scope": "/",
