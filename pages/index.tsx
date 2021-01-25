@@ -23,6 +23,7 @@ export default function Home() {
   const [isMorePostLoading, setMorePostLoading] = useState(false);
   const [isInfiniteLoad, setInfiniteLoad] = useContext(InfiniteScrollContext);
   const [lastEvaluatedKey, setLastEvaluatedKey] = useState(undefined);
+  const iconCtx = '/companyIcons/';
 
   const getPosts = useCallback(async () => {
     isInit ? setLoading(true) : setMorePostLoading(true);
@@ -113,7 +114,7 @@ export default function Home() {
                         {icons[post.company.S] &&
                           <div className={cssCompanyIcon}>
                             <Image
-                              src={icons[post.company.S]}
+                              src={`${iconCtx}${icons[post.company.S]}`}
                               alt={post.company.S}
                               width='fill'
                               height='fill'
