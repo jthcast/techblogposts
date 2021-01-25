@@ -26,6 +26,7 @@ const icons = {
   NTS: `naver.ico`,
   리디: `ridi.png`,
   네이버플레이스: `naver-place.png`,
+  플라네타리움: `planetarium.png`,
 };
 
 export default icons;
