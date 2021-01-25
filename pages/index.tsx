@@ -5,6 +5,8 @@ import globalCss, { rem } from '../styles/global-css';
 import { IconSpinner } from '../components/atoms/Icons';
 import { InfiniteScrollContext } from '../context/InfiniteScrollContext';
 import useObserver from '../customHooks/useObserver';
+import icons from '../lib/utils/icons';
+import Image from 'next/image'
 
 interface PostItem {
   link?: { S: string },
@@ -91,9 +93,10 @@ export default function Home() {
               const postDate = new Date(parseInt(post.publishDate.N));
               const postDay = new Date(`${postDate.getFullYear()}-${postDate.getMonth() + 1}-${postDate.getDate()}`);
               const dateDiffer = Math.floor((today.getTime() - postDay.getTime()) / 60 / 1000 / 60 / 24);
-              // const dateDiffer = Math.floor((nowDate.getTime() - postDate.getTime()) / 60 / 1000 / 60 / 24);
               const dateDifferString = dateDiffer === 0 ? `오늘` : `${dateDiffer}일 전`;
-              const postDateString = `${postDate.getUTCFullYear()}-${postDate.getMonth() + 1}-${postDate.getDate()}`;
+              const postDateMonth = (postDate.getMonth() + 1).toString().length === 1 ? `0${postDate.getMonth() + 1}` : postDate.getMonth() + 1;
+              const postDateDate = postDate.getDate().toString().length === 1 ? `0${postDate.getDate()}` : postDate.getDate();
+              const postDateString = `${postDate.getFullYear()}-${postDateMonth}-${postDateDate}`;
 
               return (
                 <li key={`${post.link.S}${index}`} className={cssListItem}>
@@ -105,18 +108,26 @@ export default function Home() {
                     onClick={() => gtagOutboundEvent(post.link.S, post.title.S)}
                   >
                     <p className={cssPostTitle}>{post.title.S}</p>
-                    <ul className={cssItemDetailLeft}>
-                      <li>
+                    <ul className={cssItemDetail}>
+                      <li className={cssItemDetailLeft}>
+                        {icons[post.company.S] &&
+                          <div className={cssCompanyIcon}>
+                            <Image
+                              src={icons[post.company.S]}
+                              alt={post.company.S}
+                              width='fill'
+                              height='fill'
+                              layout='responsive'
+                            />
+                          </div>
+                        }
                         {post.company.S}
                       </li>
                       {/* <li>
                         <span role="img" aria-label="viewCount">👀</span>{' '}
                         {post.viewCount.N}
                       </li> */}
-                    </ul>
-                    <ul className={cssItemDetailRight}>
                       <li>
-                        <span role="img" aria-label="date">📅</span>{' '}
                         <time dateTime={postDate.toISOString()}>{dateDiffer < 8 ? dateDifferString : postDateString}</time>
                       </li>
                     </ul>
@@ -182,14 +193,13 @@ const cssListItem = css`
   }
   
   a{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.25rem;
+    display: flex;
+    flex-direction: column;
     text-decoration: none;
     color: ${globalCss.color.color};
 
     p:first-child {
-      grid-area: 1/1/2/3;
+      margin-bottom: 0.25rem;
     }
 
     &:visited {
@@ -207,36 +217,30 @@ const cssPostTitle = css`
   font-weight: bold;
 `;
 
-const cssItemDetailLeft = css`
+const cssItemDetail = css`
   font-size: 0.9rem;
   display: flex;
+  flex-wrap: wrap;
   list-style: none;
   justify-content: flex-start;
   color: ${globalCss.color.colorDown};
 
-  li{
-    margin-right: 1rem;
+  li {
+    margin-right: 0.5rem;
 
+    &:nth-child(1) {
+      margin-right: auto;
+    }
+  
     &:nth-last-child(1) {
       margin-right: 0;
     }
   }
 `;
 
-const cssItemDetailRight = css`
-  font-size: 0.9rem;
+const cssItemDetailLeft = css`
   display: flex;
-  list-style: none;
-  justify-content: flex-end;
-  color: ${globalCss.color.colorDown};
-
-  li{
-    margin-left: 1rem;
-
-    &:nth-child(1) {
-      margin-left: 0;
-    }
-  }
+  align-items: center;
 `;
 
 const cssMorePostsButton = css`
@@ -270,4 +274,12 @@ const keyFramesBounce = keyframes`
 const cssBounce = css`
   display: inline-block;
   animation: ${keyFramesBounce} 1s ease infinite;
+`;
+
+const cssCompanyIcon = css`
+  width: 1rem;
+  height: 1rem;
+  display: inline-block;
+  margin-right: 0.25rem;
+  margin-top: 0.15rem;
 `;
