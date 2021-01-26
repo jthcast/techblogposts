@@ -24,6 +24,7 @@ export default function Home() {
   const [isInfiniteLoad, setInfiniteLoad] = useContext(InfiniteScrollContext);
   const [lastEvaluatedKey, setLastEvaluatedKey] = useState(undefined);
   const iconCtx = '/companyIcons/';
+  const root = typeof window !== 'undefined' ? document.querySelector('#__next') : null;
 
   const getPosts = useCallback(async () => {
     isInit ? setLoading(true) : setMorePostLoading(true);
@@ -52,7 +53,7 @@ export default function Home() {
       if (!isMorePostLoading && isInfiniteLoad === 'on' && entry.isIntersecting) {
         getPosts();
       }
-    }, root: null, rootMargin: '50%', threshold: 0
+    }, root: root, rootMargin: '50%', threshold: 0
   });
 
   useEffect(() => {
