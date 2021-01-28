@@ -597,6 +597,34 @@ const IconPlay = ({
   );
 };
 
+const IconPaperWithSignalColored = ({
+  className,
+  style,
+  spin,
+  rotate,
+  onClick,
+}: IconProps): React.ReactElement => {
+  const viewBox = '0 0 512 512';
+  return (
+    <svg
+      viewBox={viewBox}
+      focusable="false"
+      className={`jth-icon${className ? ` ${className}` : ``}${spin ? ' spin' : ``
+        }`}
+      style={style}
+      width="1em"
+      height="1em"
+      fill="currentColor"
+      aria-hidden="true"
+      onClick={onClick}
+    >
+      <path fill="#614CF6" d="M67 57c0-13.807 11.193-25 25-25h329c13.807 0 25 11.193 25 25v398c0 13.807-11.193 25-25 25H92c-13.807 0-25-11.193-25-25V57zm341.315 44.154c0-13.807-11.193-25-25-25h-253.63c-13.807 0-25 11.193-25 25v308.909c0 13.807 11.193 25 25 25h253.63c13.807 0 25-11.193 25-25V101.154z" />
+      <path fill="#F6A54C" d="M470 272c5.523 0 10.021-4.491 9.795-10.009-5.111-124.587-105.199-224.675-229.786-229.786C244.491 31.979 240 36.477 240 42v40c0 5.523 4.485 9.971 10 10.273C341.449 97.28 414.72 170.551 419.727 262c.302 5.515 4.75 10 10.273 10h40z" />
+      <path fill="#F6A54C" d="M370 272c5.523 0 10.037-4.492 9.648-10.001-4.895-69.349-60.298-124.752-129.647-129.647C244.492 131.963 240 136.477 240 142v15c0 5.523 4.491 9.95 9.99 10.469 50.016 4.72 89.821 44.525 94.541 94.541.519 5.499 4.946 9.99 10.469 9.99h15z" />
+      <path fill="#F6A54C" d="M310 272c5.523 0 10.066-4.5 9.384-9.98-4.506-36.203-33.201-64.898-69.404-69.404-5.48-.682-9.98 3.861-9.98 9.384s4.511 9.913 9.958 10.823c25.159 4.202 45.017 24.06 49.219 49.219.91 5.447 5.3 9.958 10.823 9.958z" /></svg>
+  );
+};
+
 const IconSearch = ({
   className,
   style,
@@ -895,6 +923,7 @@ export {
   IconPermutation,
   IconPlay,
   IconSearch,
+  IconPaperWithSignalColored,
   IconSearchPlus,
   IconSieve,
   IconSpinner,
