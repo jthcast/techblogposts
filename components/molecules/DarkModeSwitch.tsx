@@ -26,6 +26,8 @@ const DarkModeSwitch = (): React.ReactElement => {
 
   return (
     <Switch
+      ariaLabel="테마"
+      // title="테마"
       className={cssDarkModeSwitch}
       checked={colorMode === 'dark'}
       unCheckedChildren="🌞"

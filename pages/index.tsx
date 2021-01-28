@@ -2,7 +2,7 @@ import Layout from '../components/atoms/Layout';
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { css, keyframes } from '@emotion/css';
 import globalCss, { rem } from '../styles/global-css';
-import { IconSpinner } from '../components/atoms/Icons';
+import { IconMagnetColored, IconSpinner } from '../components/atoms/Icons';
 import { InfiniteScrollContext } from '../context/InfiniteScrollContext';
 import useObserver from '../customHooks/useObserver';
 import icons from '../lib/utils/icons';
@@ -143,9 +143,10 @@ export default function Home() {
           <button className={cssMorePostsButton} onClick={infiniteScrollHandling} ref={morePostsButtonRef}>
             {isMorePostLoading ?
               <IconSpinner spin /> :
-              <p>More{' '}
-                <span role="img" aria-label="More posts" className={cssBounce}>👇</span>
-              </p>
+              <>
+                <span>More</span>
+                <div role="img" aria-label="More posts" className={cssBounce}><IconMagnetColored /></div>
+              </>
             }
           </button>
         }
@@ -246,6 +247,7 @@ const cssItemDetailLeft = css`
 `;
 
 const cssMorePostsButton = css`
+  display: flex;
   margin: 1rem auto;
   padding: 0.5rem 2rem;
   border: none;
@@ -274,7 +276,8 @@ const keyFramesBounce = keyframes`
 `;
 
 const cssBounce = css`
-  display: inline-block;
+  margin-left: 0.25rem;
+  margin-top: 0.1rem;
   animation: ${keyFramesBounce} 1s ease infinite;
 `;
 

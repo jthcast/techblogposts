@@ -15,6 +15,7 @@ interface SwitchProps {
   onClick?: (event: React.FormEvent<HTMLButtonElement>) => void;
   tabIndex?: number;
   unCheckedChildren?: string;
+  title?: string;
 }
 
 const Switch = ({
@@ -29,6 +30,7 @@ const Switch = ({
   onClick,
   tabIndex,
   unCheckedChildren,
+  title,
 }: SwitchProps): React.ReactElement => {
   const onClickHandling = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -57,6 +59,7 @@ const Switch = ({
       role="switch"
       tabIndex={tabIndex}
       type="button"
+      title={title}
     >
       <span className={cssSwitchInner}>
         {loading && <IconSpinner spin />}

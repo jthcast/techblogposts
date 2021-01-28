@@ -835,6 +835,45 @@ const IconLogoColored = ({
   );
 };
 
+const IconMagnetColored = ({
+  className,
+  style,
+  spin,
+  rotate,
+  onClick,
+}: IconProps): React.ReactElement => {
+  const viewBox = '0 0 512 512';
+  return (
+    <svg
+      viewBox={viewBox}
+      focusable="false"
+      className={`jth-icon${className ? ` ${className}` : ``}${spin ? ' spin' : ``
+        }`}
+      style={style}
+      width="1em"
+      height="1em"
+      fill="currentColor"
+      aria-hidden="true"
+      onClick={onClick}
+    >
+      <path
+        transform={
+          rotate ? `rotate(${rotate} ${getRotateDegree(viewBox)})` : undefined
+        }
+        fill="#FFFFFF"
+        d="M32 96V32h96v64H32zM384 96V32h96v64h-96z"
+      />
+      <path
+        transform={
+          rotate ? `rotate(${rotate} ${getRotateDegree(viewBox)})` : undefined
+        }
+        fill="#E81224"
+        d="M32 279V130h95.893v154c0 55.228 44.772 100 100 100h56.713c55.229 0 100-44.772 100-100V130H480v149c0 110.457-89.543 200-200 200h-48c-110.457 0-200-89.543-200-200z"
+      />
+    </svg>
+  );
+};
+
 export {
   IconTemplate,
   IconAngleDown,
@@ -866,6 +905,7 @@ export {
   IconLogo,
   IconJthLogoColored,
   IconLogoColored,
+  IconMagnetColored,
 };
 
 const keyFrameSpin = keyframes`
