@@ -90,13 +90,15 @@ const MenuList = ({
       >
         <div className={cssMenuListItems(menuState)}>
           <ul id="menulist-items">
-            <li>
+            <li className={cssButtonGrid}>
               <InfiniteScrollSwitch />
+              <span>자동 글 불러오기</span>
             </li>
-            <li>
+            <li className={cssButtonGrid}>
               <DarkModeSwitch />
+              <span>테마</span>
             </li>
-            <li>
+            <li className={cssButtonGrid}>
               <a
                 href={config.copyrightHomepage}
                 target="_blank"
@@ -105,6 +107,7 @@ const MenuList = ({
               >
                 <IconJthLogoColored />
               </a>
+              <span>제작자 블로그</span>
             </li>
           </ul>
         </div>
@@ -214,4 +217,23 @@ const cssScrollButton = css`
   right: 1.5rem;
   bottom: 1.5rem;
   z-index: 2;
+`;
+
+const cssButtonGrid = css`
+  display: grid;
+  font-size: 0.8rem;
+  line-height: 2.5;
+  align-items: center;
+  justify-items: center;
+  user-select: none;
+
+  button {
+    margin: auto;
+  }
+
+  a {
+    svg {
+      font-size: 2rem;
+    }
+  }
 `;
