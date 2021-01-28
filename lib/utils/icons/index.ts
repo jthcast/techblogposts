@@ -1,3 +1,5 @@
+const iconsCtx = '/companyIcons/';
+
 const icons = {
   네이버: `naver.ico`,
   글루시스: `gluesys.png`,
@@ -29,4 +31,4 @@ const icons = {
   플라네타리움: `planetarium.png`,
 };
 
-export default icons;
+export { icons, iconsCtx };

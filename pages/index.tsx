@@ -5,8 +5,8 @@ import globalCss, { rem } from '../styles/global-css';
 import { IconMagnetColored, IconSpinner } from '../components/atoms/Icons';
 import { InfiniteScrollContext } from '../context/InfiniteScrollContext';
 import useObserver from '../customHooks/useObserver';
-import icons from '../lib/utils/icons';
-import Image from 'next/image'
+import { icons, iconsCtx } from '../lib/utils/icons';
+import Image from 'next/image';
 
 interface PostItem {
   link?: { S: string },
@@ -23,7 +23,6 @@ export default function Home() {
   const [isMorePostLoading, setMorePostLoading] = useState(false);
   const [isInfiniteLoad, setInfiniteLoad] = useContext(InfiniteScrollContext);
   const [lastEvaluatedKey, setLastEvaluatedKey] = useState(undefined);
-  const iconCtx = '/companyIcons/';
   const root = typeof window !== 'undefined' ? document.querySelector('#__next') : null;
 
   const getPosts = useCallback(async () => {
@@ -115,7 +114,7 @@ export default function Home() {
                         {icons[post.company.S] &&
                           <div className={cssCompanyIcon}>
                             <Image
-                              src={`${iconCtx}${icons[post.company.S]}`}
+                              src={`${iconsCtx}${icons[post.company.S]}`}
                               alt={post.company.S}
                               width='fill'
                               height='fill'
