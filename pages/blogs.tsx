@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { IconSpinner } from '../components/atoms/Icons';
 import { icons, iconsCtx } from '../lib/utils/icons';
 import Image from 'next/image';
+import config from '../config';
 
 interface BlogItem {
   company?: { S: string },
@@ -68,6 +69,17 @@ export default function Blogs() {
             })}
           </ul>
         )}
+        {!isLoading &&
+          <div className={cssReport}>
+            <h3>원하시는 기업의 기술 블로그가 목록에 없나요?</h3>
+            <p>저에게 알려주세요 🙌 검토 후 추가하겠습니다.</p>
+            <a
+              href={`mailto:${config.author.email}`} aria-label="mail"
+            >
+              제보 하기 📧
+            </a>
+          </div>
+        }
       </section>
     </Layout>
   );
@@ -149,4 +161,30 @@ const cssCompanyIcon = css`
   height: 1rem;
   margin-right: 0.25rem;
   margin-top: 0.15rem;
+`;
+
+const cssReport = css`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: center;
+  justify-items: center;
+  text-align: center;
+  margin: 5rem 0;
+
+  a {
+    background-color: ${globalCss.color.color};
+    color: ${globalCss.color.backgroundCode};
+    text-decoration: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.2rem;
+  }
+
+  @media ${globalCss.breakpoint.mobileQuery} {
+    margin: 3rem 0;
+  }
+
+  @media ${globalCss.breakpoint.tabletQuery} {
+    margin: 4rem 0;
+  }
 `;
