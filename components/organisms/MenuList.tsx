@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import DarkModeSwitch from '../molecules/DarkModeSwitch';
-import { IconBars, IconJthLogoColored, IconTimes } from '../atoms/Icons';
+import { IconBars, IconJthLogoColored, IconPaperWithSignalColored, IconTimes } from '../atoms/Icons';
 import ScrollButton from '../molecules/ScrollButton';
 import InfiniteScrollSwitch from '../molecules/InfiniteScrollSwitch';
 import { css, cx } from '@emotion/css';
 import globalCss from '../../styles/global-css';
 import config from '../../config';
+import Link from 'next/link';
 
 interface MenuListProps {
   showStartPosition?: 'bottom' | 'left' | 'none' | 'right' | 'top';
@@ -99,6 +100,19 @@ const MenuList = ({
               <span>테마</span>
             </li>
             <li className={cssButtonGrid}>
+              <Link
+                href="/blogs"
+              >
+                <a
+                  aria-label="blog list"
+                  onClick={menuListHandling}
+                >
+                  <IconPaperWithSignalColored />
+                </a>
+              </Link>
+              <span>블로그 목록</span>
+            </li>
+            <li className={cssButtonGrid}>
               <a
                 href={config.copyrightHomepage}
                 target="_blank"
@@ -107,7 +121,7 @@ const MenuList = ({
               >
                 <IconJthLogoColored />
               </a>
-              <span>제작자 블로그</span>
+              <span>© {new Date().getFullYear()} {config.copyright}.</span>
             </li>
           </ul>
         </div>
@@ -232,6 +246,8 @@ const cssButtonGrid = css`
   }
 
   a {
+    line-height: 0;
+    
     svg {
       font-size: 2rem;
     }
