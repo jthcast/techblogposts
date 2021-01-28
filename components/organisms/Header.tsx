@@ -201,7 +201,11 @@ const cssHeaderItemsRight = css`
   align-items: center;
 
   li {
-    margin-left: 1.5rem;
+    margin-left: 1rem;
+
+    &:nth-child(1) {
+      margin-left: 0;
+    }
   }
 
   @media ${globalCss.breakpoint.mobileQuery} {
