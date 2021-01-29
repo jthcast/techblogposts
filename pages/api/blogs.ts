@@ -19,6 +19,7 @@ const blogs = async (req: NowRequest, res: NowResponse) => {
           ':blog': { S: 'blog' },
         },
         ProjectionExpression: 'company, blogURL',
+        ScanIndexForward: false,
       };
       const results = await dbclient.send(new QueryCommand(params));
       res.status(200).json(results);
