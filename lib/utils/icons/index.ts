@@ -29,6 +29,8 @@ const icons = {
   리디: `ridi.png`,
   네이버플레이스: `naver-place.png`,
   플라네타리움: `planetarium.png`,
+  라인웍스: `linewalks.png`,
+  그린랩스: `greenlabs.png`,
 };
 
 export { icons, iconsCtx };
