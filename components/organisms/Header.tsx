@@ -98,10 +98,10 @@ const Header = ({
             ))} */}
           <ul className={cssHeaderItemsRight}>
             <li>
-              <InfiniteScrollSwitch />
+              <InfiniteScrollSwitch ariaLabel="자동 글 불러오기" title="자동 글 불러오기" />
             </li>
             <li>
-              <DarkModeSwitch />
+              <DarkModeSwitch ariaLabel="테마" title="테마" />
             </li>
           </ul>
         </nav>

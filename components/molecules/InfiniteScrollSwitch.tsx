@@ -1,11 +1,15 @@
-import { css, cx } from '@emotion/css';
+import { css } from '@emotion/css';
 import React, { useContext } from 'react';
 import { InfiniteScrollContext } from '../../context/InfiniteScrollContext';
-import globalCss from '../../styles/global-css';
-import { IconMagnetColored, IconTemplate } from '../atoms/Icons';
+import { IconMagnetColored } from '../atoms/Icons';
 import Switch from '../atoms/Switch';
 
-const InfiniteScrollSwitch = (): React.ReactElement => {
+interface InfiniteScrollSwitchProps {
+  title?: string;
+  ariaLabel?: string;
+}
+
+const InfiniteScrollSwitch = ({ title, ariaLabel }: InfiniteScrollSwitchProps): React.ReactElement => {
   const [isInfiniteLoad, setInfiniteLoad] = useContext(InfiniteScrollContext);
 
   const infiniteScrollHandling = (event: React.FormEvent<HTMLButtonElement>) => {
@@ -14,7 +18,8 @@ const InfiniteScrollSwitch = (): React.ReactElement => {
 
   return (
     <Switch
-      ariaLabel="자동 글 불러오기"
+      ariaLabel={ariaLabel}
+      title={title}
       className={cssInfiniteScrollSwitch}
       checked={isInfiniteLoad === 'on'}
       onClick={infiniteScrollHandling}

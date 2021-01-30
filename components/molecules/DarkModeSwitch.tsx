@@ -4,7 +4,12 @@ import { ThemeContext } from '../../context/ThemeContext';
 import { css } from '@emotion/css';
 import globalCss from '../../styles/global-css';
 
-const DarkModeSwitch = (): React.ReactElement => {
+interface DarkmodeSwitchProps {
+  title?: string;
+  ariaLabel?: string;
+}
+
+const DarkModeSwitch = ({ title, ariaLabel }: DarkmodeSwitchProps): React.ReactElement => {
   const [colorMode, setColorMode] = useContext(ThemeContext);
 
   const darkModeHandling = (event: React.FormEvent<HTMLButtonElement>) => {
@@ -26,8 +31,8 @@ const DarkModeSwitch = (): React.ReactElement => {
 
   return (
     <Switch
-      ariaLabel="테마"
-      // title="테마"
+      ariaLabel={ariaLabel}
+      title={title}
       className={cssDarkModeSwitch}
       checked={colorMode === 'dark'}
       unCheckedChildren="🌞"
