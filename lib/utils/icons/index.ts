@@ -13,7 +13,7 @@ const icons = {
   브랜디: `brandi.png`,
   스타일쉐어: `styleshare.ico`,
   쏘카: `socar.png`,
-  씨앤텍시스템즈: '',
+  씨앤텍시스템즈: 'cntechsystems.ico',
   왓챠: `watcha.ico`,
   우아한형제들: `woowahan.ico`,
   이스트소프트: `estsoft.ico`,
