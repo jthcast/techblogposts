@@ -1,7 +1,8 @@
 import { css } from '@emotion/css';
 import globalCss from '../../styles/global-css';
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { IconTimes } from './Icons';
+import { HeaderMessageContext } from '../../context/HeaderMessageContext';
 
 interface HeaderMessageProps {
   allowClose?: boolean;
@@ -12,15 +13,15 @@ const HeaderMessage = ({
   allowClose = true,
   children,
 }: HeaderMessageProps): React.ReactElement => {
-  const [headerMessage, setHeaderMessageState] = useState(true);
+  const [isMessageShow, setMessageShow] = useContext(HeaderMessageContext);
 
   const closeHandling = () => {
-    setHeaderMessageState(false);
+    setMessageShow(false);
   };
 
   return (
     <>
-      {children && headerMessage && (
+      {children && isMessageShow && (
         <div className={cssHeaderMessage}>
           <div className={cssContainer}>
             <span className={cssContent}>{children}</span>
