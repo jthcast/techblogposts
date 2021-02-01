@@ -36,7 +36,7 @@ export const ThemeProvider = ({ children }) => {
       return;
     }
     checkSystemPreference();
-  }, []);
+  }, [checkSystemPreference]);
 
   const setColorMode = (newValue: string) => {
     rawSetColorMode(newValue);
