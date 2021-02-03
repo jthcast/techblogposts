@@ -33,7 +33,7 @@ export default function RssTest() {
   }
 
   return (
-    <Layout>
+    <Layout title={`RSS 테스트`}>
       <section className={cssPosts}>
         <form onSubmit={getRSS} className={cssForm}>
           <input placeholder='URL' ref={inputURLRef} className={cssInput} />
