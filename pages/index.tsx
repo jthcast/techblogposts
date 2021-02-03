@@ -79,7 +79,7 @@ export default function Home() {
   }
 
   return (
-    <Layout>
+    <Layout title={'기술 블로그 모음'}>
       <section className={cssPosts}>
         {isLoading &&
           <div className={cssLoading}>

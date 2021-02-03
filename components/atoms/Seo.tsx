@@ -29,7 +29,7 @@ const SEO = ({ description = '', lang = 'ko', title, image, author, publishDate 
 
   return (
     <Head>
-      <title>{defaultTitle && title ? defaultTitle !== title ? `${defaultTitle} - ${title}` : null : defaultTitle}</title>
+      <title>{defaultTitle && title ? defaultTitle !== title ? `${title} - ${defaultTitle}` : null : defaultTitle}</title>
       <meta httpEquiv="x-ua-compatible" content="ie=edge"></meta>
       <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'></meta>
       <link rel="canonical" href="https://techblogposts.com"></link>

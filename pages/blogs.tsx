@@ -31,7 +31,7 @@ export default function Blogs() {
   }, []);
 
   return (
-    <Layout>
+    <Layout title={'기술 블로그 목록'}>
       <section className={cssBlogs}>
         {isLoading &&
           <div className={cssLoading}>
