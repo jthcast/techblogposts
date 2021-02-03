@@ -2,7 +2,8 @@
   <a rel="noreferrer" target="_blank" alt="logo" href="https://techblogposts.com">
     <img width="150" src="./public/favicon.svg">
   </a>
-  <h3 align="center">TechBlogPosts</h3>
+  <h2 align="center">TechBlogPosts</h2>
+  <h3 align="center">기술 블로그 모음</h3>
   <p align="center">
     <a rel="noreferrer" target="_blank" alt="logo" href="https://techblogposts.com">
       TechBlogPosts
