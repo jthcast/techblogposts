@@ -31,6 +31,13 @@ const icons = {
   플라네타리움: `planetarium.png`,
   라인웍스: `linewalks.png`,
   그린랩스: `greenlabs.png`,
+  ZUM: `zum.ico`,
+  네이버클라우드플랫폼: `naver-cloud-platform.ico`,
+  크몽: `kmong.png`,
+  품고: `poomgo.png`,
+  꿈많은청년들: `dreamyoungs.png`,
+  SKCNC: `skcnc.ico`,
+  엘리시아: `elysia.ico`,
 };
 
 export { icons, iconsCtx };
