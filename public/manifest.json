@@ -2,7 +2,7 @@
   "name": "TechBlogPosts",
   "short_name": "TechBlogPosts",
   "background_color": "#000000",
-  "display": "standalone",
+  "display": "minimal-ui",
   "scope": "/",
   "start_url": "/",
   "icons": [
