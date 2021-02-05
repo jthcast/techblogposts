@@ -38,6 +38,12 @@ const icons = {
   꿈많은청년들: `dreamyoungs.png`,
   SKCNC: `skcnc.ico`,
   엘리시아: `elysia.ico`,
+  센드버드: `sendbird.png`,
+  지그재그: `zigzag.ico`,
+  엔라이즈: `nrise.ico`,
+  데이블: `dable.png`,
+  뤼이드: `riiid.png`,
+  마이리얼트립: `myrealtrip.ico`,
 };
 
 export { icons, iconsCtx };
