@@ -44,6 +44,8 @@ const icons = {
   데이블: `dable.png`,
   뤼이드: `riiid.png`,
   마이리얼트립: `myrealtrip.ico`,
+  VCNC: `vcnc.ico`,
+  코인원: `coinone.png`,
 };
 
 export { icons, iconsCtx };
