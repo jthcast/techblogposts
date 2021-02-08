@@ -8,6 +8,9 @@
     "postbuild": "next-sitemap --config next-sitemap.config.js",
     "start": "next start"
   },
+  "resolutions": {
+    "minipass": "2.7.0"
+  },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.2.0",
     "@emotion/css": "^11.1.3",
