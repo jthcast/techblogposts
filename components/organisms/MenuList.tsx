@@ -155,7 +155,7 @@ const cssMenuList = css`
   background-color: ${globalCss.color.backgroundColorDownOpacity};
   backdrop-filter: blur(16px);
   font-size: 2rem;
-  font-weight: 600;
+  font-weight: ${globalCss.common.fontNormal};
   line-height: 200%;
   text-transform: uppercase;
   display: flex;

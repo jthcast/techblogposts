@@ -216,7 +216,7 @@ const cssListItem = css`
 
 const cssPostTitle = css`
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: ${globalCss.common.fontNormal};
 `;
 
 const cssItemDetail = css`

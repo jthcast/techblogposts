@@ -49,7 +49,7 @@ const cssHeaderMessage = css`
   background-color: ${globalCss.color.primaryBrandColor};
   padding: 0.5rem 0;
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: ${globalCss.common.fontNormal};
   text-transform: uppercase;
   color: ${globalCss.color.black};
   z-index: 2;
@@ -74,7 +74,7 @@ const cssContent = css`
     color: ${globalCss.color.black};
     border-bottom: none;
     text-decoration: none;
-    font-weight: ${globalCss.common.fontBold};
+    font-weight: ${globalCss.common.fontNormal};
   }
 `;
 

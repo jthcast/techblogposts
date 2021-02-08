@@ -2,7 +2,7 @@ import { injectGlobal } from '@emotion/css';
 import globalCss from './global-css';
 
 injectGlobal`
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=block');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=block');
 
 html {
   font-size: ${globalCss.common.fontPercent};
@@ -15,6 +15,7 @@ html {
   padding: 0;
   /* font-family: 'IBMPlexSansKR-Light', 'Courier New', monospace; */
   font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
