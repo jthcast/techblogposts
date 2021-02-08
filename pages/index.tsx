@@ -90,14 +90,17 @@ export default function Home() {
           <ul className={cssList}>
             {posts.map((post, index) => {
               const nowDate = new Date();
-              const today = new Date(`${nowDate.getFullYear()}-${nowDate.getMonth() + 1}-${nowDate.getDate()}`);
               const postDate = new Date(parseInt(post.publishDate.N));
-              const postDay = new Date(`${postDate.getFullYear()}-${postDate.getMonth() + 1}-${postDate.getDate()}`);
-              const dateDiffer = Math.floor((today.getTime() - postDay.getTime()) / 60 / 1000 / 60 / 24);
-              const dateDifferString = dateDiffer === 0 ? `오늘` : `${dateDiffer}일 전`;
+              const todayMonth = (nowDate.getMonth() + 1).toString().length === 1 ? `0${nowDate.getMonth() + 1}` : nowDate.getMonth() + 1;
+              const todayDate = nowDate.getDate().toString().length === 1 ? `0${nowDate.getDate()}` : nowDate.getDate();
+              const todayString = `${nowDate.getFullYear()}-${todayMonth}-${todayDate}`;
+              const today = new Date(todayString);
               const postDateMonth = (postDate.getMonth() + 1).toString().length === 1 ? `0${postDate.getMonth() + 1}` : postDate.getMonth() + 1;
               const postDateDate = postDate.getDate().toString().length === 1 ? `0${postDate.getDate()}` : postDate.getDate();
               const postDateString = `${postDate.getFullYear()}-${postDateMonth}-${postDateDate}`;
+              const postDay = new Date(postDateString);
+              const dateDiffer = Math.floor((today.getTime() - postDay.getTime()) / 60 / 1000 / 60 / 24);
+              const dateDifferString = dateDiffer === 0 ? `오늘` : `${dateDiffer}일 전`;
 
               return (
                 <li key={`${post.link.S}${index}`} className={cssListItem}>
