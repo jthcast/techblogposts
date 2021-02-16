@@ -13,7 +13,6 @@ html {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  /* font-family: 'IBMPlexSansKR-Light', 'Courier New', monospace; */
   font-family: 'Noto Sans KR', sans-serif;
   font-weight: 
   -webkit-font-smoothing: antialiased;

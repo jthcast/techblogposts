@@ -46,6 +46,8 @@ const icons = {
   마이리얼트립: `myrealtrip.ico`,
   VCNC: `vcnc.ico`,
   코인원: `coinone.png`,
+  쿠팡: `coupang.ico`,
+  매스프레소: `mathpresso.png`,
 };
 
 export { icons, iconsCtx };
