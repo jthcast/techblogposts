@@ -48,6 +48,7 @@ const icons = {
   코인원: `coinone.png`,
   쿠팡: `coupang.ico`,
   매스프레소: `mathpresso.png`,
+  루닛: `lunit.ico`,
 };
 
 export { icons, iconsCtx };
