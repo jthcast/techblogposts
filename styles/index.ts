@@ -52,6 +52,7 @@ body {
   --danger: #e03434;
   --black: #000000;
   --white: #ffffff;
+  color-scheme: light dark;
 
   background-color: var(--background-base);
   color: var(--color-base);
