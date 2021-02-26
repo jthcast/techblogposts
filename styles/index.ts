@@ -14,7 +14,6 @@ html {
   margin: 0;
   padding: 0;
   font-family: 'Noto Sans KR', sans-serif;
-  font-weight: 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
