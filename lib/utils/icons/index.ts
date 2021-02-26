@@ -49,6 +49,7 @@ const icons = {
   쿠팡: `coupang.ico`,
   매스프레소: `mathpresso.png`,
   루닛: `lunit.ico`,
+  모두싸인: `modusign.png`,
 };
 
 export { icons, iconsCtx };
