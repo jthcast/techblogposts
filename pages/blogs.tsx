@@ -72,7 +72,7 @@ export default function Blogs() {
         {!isLoading &&
           <div className={cssReport}>
             <h3>원하시는 기업의 기술 블로그가 목록에 없나요?</h3>
-            <p>저에게 알려주세요. 검토 후 추가하겠습니다. 🙌</p>
+            <p>저에게 알려주세요. 추가하겠습니다. 🙌</p>
             <a
               href={`mailto:${config.author.email}`} aria-label="mail"
             >
