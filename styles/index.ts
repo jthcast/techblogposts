@@ -37,7 +37,7 @@ body {
 :root {
   --background-base: #ffffff;
   --background-base-opacity: rgba(255, 255, 255, 0.85);
-  --background-down-opacity: rgba(255, 255, 255, 0.3);
+  --background-down-opacity: rgba(255, 255, 255, 0.2);
   --scrollbar-base-opacity: rgba(0, 0, 0, 0.5);
   --background-code-base: #f9f2f4;
   --color-base: #000000;
@@ -60,7 +60,7 @@ body {
 [data-theme='dark'] {
   --background-base: #000000;
   --background-base-opacity: rgba(0, 0, 0, 0.85);
-  --background-down-opacity: rgba(0, 0, 0, 0.3);
+  --background-down-opacity: rgba(0, 0, 0, 0.2);
   --scrollbar-base-opacity: rgba(255, 255, 255, 0.5);
   --background-code-base: #3c3636;
   --color-base: #ffffff;
