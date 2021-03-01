@@ -18,7 +18,7 @@ interface PostItem {
 
 export default function Home() {
   const [posts, setPosts] = useState<PostItem[]>([]);
-  const [postTitles, setpostTitles] = useState([]);
+  const [postLinks, setPostLinks] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [isInit, setInit] = useState(true);
   const [isMorePostLoading, setMorePostLoading] = useState(false);
@@ -35,9 +35,9 @@ export default function Home() {
     // setPosts([...posts, ...result.Items]);
     const postsArray = [...posts];
     result.Items.forEach((post: PostItem) => {
-      const title = post.title.S;
-      if (!postTitles.includes(title)) {
-        postTitles.push(title);
+      const link = post.link.S;
+      if (!postLinks.includes(link)) {
+        postLinks.push(link);
         postsArray.push(post);
       }
     });
