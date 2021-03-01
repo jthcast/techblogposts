@@ -51,6 +51,7 @@ const icons = {
   루닛: `lunit.ico`,
   모두싸인: `modusign.png`,
   TOAST_UI: `toast_ui.png`,
+  구글디벨로퍼스: `googleDevelopersico.ico`,
 };
 
 export { icons, iconsCtx };
