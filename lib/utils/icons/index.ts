@@ -50,6 +50,7 @@ const icons = {
   매스프레소: `mathpresso.png`,
   루닛: `lunit.ico`,
   모두싸인: `modusign.png`,
+  TOAST_UI: `toast_ui.png`,
 };
 
 export { icons, iconsCtx };
