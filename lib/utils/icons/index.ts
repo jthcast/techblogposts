@@ -52,6 +52,7 @@ const icons = {
   모두싸인: `modusign.png`,
   TOAST_UI: `toast_ui.png`,
   구글디벨로퍼스: `googleDevelopersico.ico`,
+  스포카: `spoqa.ico`,
 };
 
 export { icons, iconsCtx };
