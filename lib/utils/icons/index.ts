@@ -53,6 +53,14 @@ const icons = {
   TOAST_UI: `toast_ui.png`,
   구글디벨로퍼스: `googleDevelopersico.ico`,
   스포카: `spoqa.ico`,
+  사람인: `saramin.ico`,
+  휴몬랩: `huemonelabpng.png`,
+  스퀘어랩: `squarelab.png`,
+  프로메디우스: `promedius.png`,
+  블로코: `blocko.png`,
+  무스마: `musma.ico`,
+  원티드: `wanted.png`,
+  숨고: `soomgo.ico`,
 };
 
 export { icons, iconsCtx };
