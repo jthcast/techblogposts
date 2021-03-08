@@ -1,5 +1,5 @@
 import Layout from '../components/atoms/Layout';
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { css, keyframes } from '@emotion/css';
 import globalCss, { rem } from '../styles/global-css';
 import { IconMagnetColored, IconSpinner } from '../components/atoms/Icons';
@@ -7,6 +7,8 @@ import { InfiniteScrollContext } from '../context/InfiniteScrollContext';
 import useObserver from '../customHooks/useObserver';
 import { icons, iconsCtx } from '../lib/utils/icons';
 import Image from 'next/image';
+import { InferGetServerSidePropsType } from 'next';
+import config from '../config';
 
 interface PostItem {
   link?: { S: string };
@@ -17,18 +19,23 @@ interface PostItem {
   isShow?: { BOOL: boolean };
 }
 
-export default function Home() {
-  const [posts, setPosts] = useState<PostItem[]>([]);
-  const [postLinks, setPostLinks] = useState([]);
+export async function getServerSideProps() {
+  const res = await fetch(`${config.siteUrl}/api/posts`);
+  const data = await res.json();
+
+  return { props: { data } }
+}
+
+export default function Home({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const [posts, setPosts] = useState<PostItem[]>([...data.Items]);
+  const [postLinks] = useState(data.Items.map((post: PostItem) => post.link.S));
   const [isLoading, setLoading] = useState(false);
-  const [isInit, setInit] = useState(true);
-  const [isMorePostLoading, setMorePostLoading] = useState(false);
   const [isInfiniteLoad, setInfiniteLoad] = useContext(InfiniteScrollContext);
-  const [lastEvaluatedKey, setLastEvaluatedKey] = useState(undefined);
+  const [lastEvaluatedKey, setLastEvaluatedKey] = useState(data.LastEvaluatedKey);
   const root = typeof window !== 'undefined' ? document.querySelector('#__next') : null;
 
-  const getPosts = useCallback(async () => {
-    isInit ? setLoading(true) : setMorePostLoading(true);
+  async function getPosts() {
+    setLoading(true);
     const fetchData = await fetch(`/api/posts${lastEvaluatedKey ? `?lastEvaluatedKey=${JSON.stringify(lastEvaluatedKey)}` : ''}`, {
       method: 'GET',
     });
@@ -44,15 +51,10 @@ export default function Home() {
     });
     setPosts(postsArray);
     setLastEvaluatedKey(result.LastEvaluatedKey);
-    isInit ? setLoading(false) : setMorePostLoading(false);
-  }, [lastEvaluatedKey]);
+    setLoading(false);
+  };
 
-  useEffect(() => {
-    getPosts();
-    setInit(false);
-  }, []);
-
-  const infiniteScrollHandling = () => {
+  function infiniteScrollHandling() {
     setInfiniteLoad(isInfiniteLoad === 'on' ? 'off' : 'on');
   }
 
@@ -60,7 +62,7 @@ export default function Home() {
 
   const observer = useObserver({
     callback: (entry) => {
-      if (!isMorePostLoading && isInfiniteLoad === 'on' && entry.isIntersecting) {
+      if (!isLoading && isInfiniteLoad === 'on' && entry.isIntersecting) {
         getPosts();
       }
     }, root: root, rootMargin: '50%', threshold: 0
@@ -72,7 +74,7 @@ export default function Home() {
     }
   }, [morePostsButtonRef.current])
 
-  const gtagOutboundEvent = async (link: string, title: string) => {
+  async function gtagOutboundEvent(link: string, title: string) {
     await fetch('/api/view-count', {
       method: 'POST',
       headers: {
@@ -92,12 +94,7 @@ export default function Home() {
   return (
     <Layout title={'기술 블로그 모음'}>
       <section className={cssPosts}>
-        {isLoading &&
-          <div className={cssLoading}>
-            <IconSpinner spin />
-          </div>
-        }
-        {!isLoading && posts && posts.length > 0 && (
+        {posts && posts.length > 0 && (
           <ul className={cssList}>
             {posts.map((post, index) => {
               if (post.isShow?.BOOL === false) {
@@ -157,7 +154,7 @@ export default function Home() {
         )}
         {lastEvaluatedKey &&
           <button className={cssMorePostsButton} onClick={infiniteScrollHandling} ref={morePostsButtonRef}>
-            {isMorePostLoading ?
+            {isLoading ?
               <IconSpinner spin /> :
               <>
                 <span>More</span>
