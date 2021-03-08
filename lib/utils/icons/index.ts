@@ -61,6 +61,9 @@ const icons = {
   무스마: `musma.ico`,
   원티드: `wanted.png`,
   숨고: `soomgo.ico`,
+  게임빌컴투스플랫폼: `gamevilcom2us.png`,
+  포스타입: `postype.png`,
+  오일나우: `oilnow.ico`,
 };
 
 export { icons, iconsCtx };
