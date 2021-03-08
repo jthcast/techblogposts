@@ -9,11 +9,12 @@ import { icons, iconsCtx } from '../lib/utils/icons';
 import Image from 'next/image';
 
 interface PostItem {
-  link?: { S: string },
-  title?: { S: string },
-  company?: { S: string },
-  viewCount?: { N: string },
-  publishDate?: { N: string }
+  link?: { S: string };
+  title?: { S: string };
+  company?: { S: string };
+  viewCount?: { N: string };
+  publishDate?: { N: string };
+  isShow?: { BOOL: boolean };
 }
 
 export default function Home() {
@@ -99,6 +100,9 @@ export default function Home() {
         {!isLoading && posts && posts.length > 0 && (
           <ul className={cssList}>
             {posts.map((post, index) => {
+              if (post.isShow?.BOOL === false) {
+                return null;
+              }
               const nowDate = new Date();
               const postDate = new Date(parseInt(post.publishDate.N));
               const todayMonth = (nowDate.getMonth() + 1).toString().length === 1 ? `0${nowDate.getMonth() + 1}` : nowDate.getMonth() + 1;
