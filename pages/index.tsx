@@ -1,5 +1,5 @@
 import Layout from '../components/atoms/Layout';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { css, keyframes } from '@emotion/css';
 import globalCss, { rem } from '../styles/global-css';
 import { IconMagnetColored, IconSpinner } from '../components/atoms/Icons';
@@ -7,8 +7,6 @@ import { InfiniteScrollContext } from '../context/InfiniteScrollContext';
 import useObserver from '../customHooks/useObserver';
 import { icons, iconsCtx } from '../lib/utils/icons';
 import Image from 'next/image';
-import { InferGetServerSidePropsType } from 'next';
-import config from '../config';
 
 interface PostItem {
   link?: { S: string };
@@ -19,23 +17,18 @@ interface PostItem {
   isShow?: { BOOL: boolean };
 }
 
-export async function getServerSideProps() {
-  const res = await fetch(`${config.siteUrl}/api/posts`);
-  const data = await res.json();
-
-  return { props: { data } }
-}
-
-export default function Home({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const [posts, setPosts] = useState<PostItem[]>([...data.Items]);
-  const [postLinks] = useState(data.Items.map((post: PostItem) => post.link.S));
+export default function Home() {
+  const [posts, setPosts] = useState<PostItem[]>([]);
+  const [postLinks] = useState([]);
   const [isLoading, setLoading] = useState(false);
+  const [isInit, setInit] = useState(true);
+  const [isMorePostLoading, setMorePostLoading] = useState(false);
   const [isInfiniteLoad, setInfiniteLoad] = useContext(InfiniteScrollContext);
-  const [lastEvaluatedKey, setLastEvaluatedKey] = useState(data.LastEvaluatedKey);
+  const [lastEvaluatedKey, setLastEvaluatedKey] = useState(undefined);
   const root = typeof window !== 'undefined' ? document.querySelector('#__next') : null;
 
-  async function getPosts() {
-    setLoading(true);
+  const getPosts = useCallback(async () => {
+    isInit ? setLoading(true) : setMorePostLoading(true);
     const fetchData = await fetch(`/api/posts${lastEvaluatedKey ? `?lastEvaluatedKey=${JSON.stringify(lastEvaluatedKey)}` : ''}`, {
       method: 'GET',
     });
@@ -51,8 +44,13 @@ export default function Home({ data }: InferGetServerSidePropsType<typeof getSer
     });
     setPosts(postsArray);
     setLastEvaluatedKey(result.LastEvaluatedKey);
-    setLoading(false);
-  };
+    isInit ? setLoading(false) : setMorePostLoading(false);
+  }, [lastEvaluatedKey]);
+
+  useEffect(() => {
+    getPosts();
+    setInit(false);
+  }, []);
 
   function infiniteScrollHandling() {
     setInfiniteLoad(isInfiniteLoad === 'on' ? 'off' : 'on');
@@ -62,7 +60,7 @@ export default function Home({ data }: InferGetServerSidePropsType<typeof getSer
 
   const observer = useObserver({
     callback: (entry) => {
-      if (!isLoading && isInfiniteLoad === 'on' && entry.isIntersecting) {
+      if (!isMorePostLoading && isInfiniteLoad === 'on' && entry.isIntersecting) {
         getPosts();
       }
     }, root: root, rootMargin: '50%', threshold: 0
@@ -94,7 +92,12 @@ export default function Home({ data }: InferGetServerSidePropsType<typeof getSer
   return (
     <Layout title={'기술 블로그 모음'}>
       <section className={cssPosts}>
-        {posts && posts.length > 0 && (
+        {isLoading &&
+          <div className={cssLoading}>
+            <IconSpinner spin />
+          </div>
+        }
+        {!isLoading && posts && posts.length > 0 && (
           <ul className={cssList}>
             {posts.map((post, index) => {
               if (post.isShow?.BOOL === false) {
@@ -154,7 +157,7 @@ export default function Home({ data }: InferGetServerSidePropsType<typeof getSer
         )}
         {lastEvaluatedKey &&
           <button className={cssMorePostsButton} onClick={infiniteScrollHandling} ref={morePostsButtonRef}>
-            {isLoading ?
+            {isMorePostLoading ?
               <IconSpinner spin /> :
               <>
                 <span>More</span>

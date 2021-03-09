@@ -1,10 +1,10 @@
 import Layout from '../components/atoms/Layout';
 import { css } from '@emotion/css';
 import globalCss from '../styles/global-css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { IconSpinner } from '../components/atoms/Icons';
 import { icons, iconsCtx } from '../lib/utils/icons';
 import Image from 'next/image';
-import { InferGetServerSidePropsType } from 'next';
 import config from '../config';
 
 interface BlogItem {
@@ -12,20 +12,32 @@ interface BlogItem {
   blogURL?: { S: string }
 }
 
-export async function getServerSideProps() {
-  const res = await fetch(`${config.siteUrl}/api/blogs`);
-  const data = await res.json();
+export default function Blogs() {
+  const [isLoading, setLoading] = useState(true);
+  const [blogs, setBlogs] = useState<BlogItem[]>([]);
 
-  return { props: { data } }
-}
+  async function getBlogs() {
+    const fetchData = await fetch(`/api/blogs`, {
+      method: 'GET',
+    });
+    const result = await fetchData.json();
+    setBlogs([...result.Items]);
+    setLoading(false);
+  };
 
-export default function Blogs({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const [blogs] = useState<BlogItem[]>([...data.Items]);
+  useEffect(() => {
+    getBlogs();
+  }, []);
 
   return (
     <Layout title={'기술 블로그 목록'}>
       <section className={cssBlogs}>
-        {blogs && blogs.length > 0 && (
+        {isLoading &&
+          <div className={cssLoading}>
+            <IconSpinner spin />
+          </div>
+        }
+        {!isLoading && blogs && blogs.length > 0 && (
           <ul className={cssList}>
             {blogs.map((blog) => {
               return (
@@ -56,15 +68,17 @@ export default function Blogs({ data }: InferGetServerSidePropsType<typeof getSe
             })}
           </ul>
         )}
-        <div className={cssReport}>
-          <h3>원하시는 기업의 기술 블로그가 목록에 없나요?</h3>
-          <p>저에게 알려주세요. 추가하겠습니다. 🙌</p>
-          <a
-            href={`mailto:${config.author.email}`} aria-label="mail"
-          >
-            제보 하기 📧
+        {!isLoading &&
+          <div className={cssReport}>
+            <h3>원하시는 기업의 기술 블로그가 목록에 없나요?</h3>
+            <p>저에게 알려주세요. 추가하겠습니다. 🙌</p>
+            <a
+              href={`mailto:${config.author.email}`} aria-label="mail"
+            >
+              제보 하기 📧
             </a>
-        </div>
+          </div>
+        }
       </section>
     </Layout>
   );
