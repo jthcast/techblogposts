@@ -64,6 +64,7 @@ const icons = {
   게임빌컴투스플랫폼: `gamevilcom2us.png`,
   포스타입: `postype.png`,
   오일나우: `oilnow.ico`,
+  농심데이터시스템: `nds.ico`,
 };
 
 export { icons, iconsCtx };
