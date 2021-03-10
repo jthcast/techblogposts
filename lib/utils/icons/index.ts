@@ -66,6 +66,9 @@ const icons = {
   오일나우: `oilnow.ico`,
   농심데이터시스템: `nds.ico`,
   푸시뉴스: `pushnews.png`,
+  어반베이스: `urbanbase.png`,
+  마키나락스: `makinarocks.png`,
+  뷰저블: `beusable.ico`,
 };
 
 export { icons, iconsCtx };
