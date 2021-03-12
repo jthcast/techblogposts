@@ -69,6 +69,7 @@ const icons = {
   어반베이스: `urbanbase.png`,
   마키나락스: `makinarocks.png`,
   뷰저블: `beusable.ico`,
+  다나와: `danawa.ico`,
 };
 
 export { icons, iconsCtx };
