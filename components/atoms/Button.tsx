@@ -57,7 +57,6 @@ const Button = ({
 export default Button;
 
 const cssButton = css`
-padding: 0.5rem;
 margin: 0;
 background-color: transparent;
 color: ${globalCss.color.color};
@@ -66,6 +65,10 @@ border-radius: 0.125rem;
 cursor: pointer;
 transition: all 0.2s;
 font-weight: normal;
+
+svg {
+  margin: 0.5rem;
+}
 
 &:hover {
   opacity: 0.8;
