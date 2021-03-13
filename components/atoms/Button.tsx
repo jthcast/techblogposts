@@ -11,7 +11,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLElement> {
   disabled?: boolean;
   loading?: boolean;
   formAction?: string;
-  target?: '_blank' | '_self' | '_parent' | '_top';
+  formTarget?: string;
   onClick?: (
     event: React.MouseEvent<HTMLElement, MouseEvent>
   ) => void | undefined;
@@ -30,7 +30,6 @@ const Button = ({
   tabIndex,
   title,
   formTarget,
-  target = '_blank',
 }: ButtonProps): React.ReactElement => {
   return (
     <button
