@@ -28,6 +28,7 @@ const Button = ({
   loading = false,
   onClick,
   tabIndex,
+  title,
   formTarget,
   target = '_blank',
 }: ButtonProps): React.ReactElement => {
@@ -46,6 +47,7 @@ const Button = ({
       type="button"
       formTarget={formTarget}
       formAction={formAction}
+      title={title}
     >
       {loading && <IconSpinner spin className="loading" />}
       {children}
