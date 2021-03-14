@@ -56,9 +56,7 @@ const Modal = ({
         role="dialog"
         aria-modal="true"
       >
-        <div>
-          {children}
-        </div>
+        {children}
         <div
           role="presentation"
           onClick={openHandling}
