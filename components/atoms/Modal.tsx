@@ -15,7 +15,6 @@ const Modal = ({
   onClose,
   children
 }: ModalProps): React.ReactElement => {
-
   const openHandling = () => {
     if (openHandler) {
       openHandler();
@@ -43,10 +42,10 @@ const Modal = ({
   );
 
   useEffect(() => {
-    window.addEventListener('keydown', (event) => keyDownHandling(event));
+    window.addEventListener('keydown', keyDownHandling);
 
     return () => {
-      window.removeEventListener('keydown', (event) => keyDownHandling(event));
+      window.removeEventListener('keydown', keyDownHandling);
     };
   }, [keyDownHandling]);
 
