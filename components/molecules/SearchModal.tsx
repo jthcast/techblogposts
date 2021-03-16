@@ -59,6 +59,7 @@ const SearchModal = ({
   }, [debounceValue]);
 
   const keyDownHandling = (event: KeyboardEvent) => {
+    console.log(event.code)
     if (event.code === 'Space' && event.ctrlKey) {
       setTimeout(() => {
         openHandler(); //TODO bug: when input value is Korean function run twice
@@ -173,7 +174,14 @@ const SearchModal = ({
         )}
         {posts && !posts.length && inputValue &&
           <div className={cssList}>
-            <div className={cssNoResults}>검색 결과가 없습니다. 😅</div>
+            <a
+              href={`https://www.google.com/search?q=${inputValue}`}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="구글로 검색 바로가기"
+            >
+              <div className={cssNoResults}>검색 결과가 없습니다. 구글로 검색할까요? 👉</div>
+            </a>
           </div>
         }
       </div>
@@ -238,6 +246,10 @@ const cssList = css`
   border-top: none;
   border-radius: 0 0 0.7rem 0.7rem;
   background-color: ${globalCss.color.groupColorOpacity};
+
+  a {
+    text-decoration: none;
+  }
 `;
 const cssListItem = css`
   padding: 1rem 0;
