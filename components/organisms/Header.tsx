@@ -202,6 +202,8 @@ const cssHeaderItemsRight = css`
 
   li {
     margin-left: 1rem;
+    display: flex;
+    align-items: center;
 
     &:nth-child(1) {
       margin-left: 0;
@@ -236,4 +238,21 @@ const cssHeaderTitle = css`
 const cssHeaderSubTitle = css`
   margin: 0 0.25rem;
   font-size: 0.75rem;
+`;
+
+const cssIcon = css`
+  border: none;
+  font-size: 1.5rem;
+
+  &:hover {
+    border: none;
+  }
+  
+  &:focus {
+    border: none;
+  }
+  
+  &:active {
+    border: none;
+  }
 `;
