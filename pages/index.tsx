@@ -7,6 +7,7 @@ import { InfiniteScrollContext } from '../context/InfiniteScrollContext';
 import useObserver from '../customHooks/useObserver';
 import { icons, iconsCtx } from '../lib/utils/icons';
 import Image from 'next/image';
+import { gtagOutboundEvent } from '../lib/utils/googleAnalytics';
 
 interface PostItem {
   link?: { S: string };
@@ -28,6 +29,7 @@ export default function Home() {
   const root = typeof window !== 'undefined' ? document.querySelector('#__next') : null;
 
   const getPosts = useCallback(async () => {
+    //TODO ES
     isInit ? setLoading(true) : setMorePostLoading(true);
     const fetchData = await fetch(`/api/posts${lastEvaluatedKey ? `?lastEvaluatedKey=${JSON.stringify(lastEvaluatedKey)}` : ''}`, {
       method: 'GET',
@@ -71,23 +73,6 @@ export default function Home() {
       observer([morePostsButtonRef.current]);
     }
   }, [morePostsButtonRef.current])
-
-  async function gtagOutboundEvent(link: string, title: string) {
-    await fetch('/api/view-count', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        link,
-      })
-    });
-    gtag('event', 'click', {
-      'event_category': 'outbound',
-      'event_label': title,
-      'transport_type': 'beacon',
-    });
-  }
 
   return (
     <Layout title={'기술 블로그 모음'}>
