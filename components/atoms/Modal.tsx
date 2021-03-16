@@ -7,13 +7,15 @@ interface ModalProps {
   openHandler?: () => void;
   onClose?: () => void;
   children?: React.ReactElement;
+  escClose?: boolean;
 }
 
 const Modal = ({
   isOpen = false,
   openHandler,
   onClose,
-  children
+  children,
+  escClose = true
 }: ModalProps): React.ReactElement => {
   const openHandling = () => {
     if (openHandler) {
@@ -34,7 +36,7 @@ const Modal = ({
 
   const keyDownHandling = useCallback(
     (event: KeyboardEvent) => {
-      if (event.code === 'Escape' && isOpen) {
+      if (event.code === 'Escape' && escClose && isOpen) {
         openHandler();
       }
     },
@@ -79,7 +81,6 @@ const cssModal = (isOpen: boolean) => css`
   backdrop-filter: blur(16px);
   font-size: 2rem;
   font-weight: ${globalCss.common.fontNormal};
-  line-height: 200%;
   text-transform: uppercase;
   flex-direction: column;
   align-items: center;
