@@ -79,8 +79,6 @@ const cssModal = (isOpen: boolean) => css`
   top: 0;
   background-color: ${globalCss.color.backgroundColorDownOpacity};
   backdrop-filter: blur(16px);
-  font-size: 2rem;
-  font-weight: ${globalCss.common.fontNormal};
   text-transform: uppercase;
   flex-direction: column;
   align-items: center;
