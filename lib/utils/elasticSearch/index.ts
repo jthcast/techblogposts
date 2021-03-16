@@ -39,12 +39,12 @@ export interface SearchResponse<T> {
   aggregations?: any;
 }
 
-export const index = process.env.DB_TABLE_NAME;
+export const index = process.env.ES_INDEX_NAME;
 
 export const client = new Client({
   node: process.env.ES_ENDPOINT,
   auth: {
-    username: process.env.ES_USERNAME,
+    username: process.env.ES_USER_NAME,
     password: process.env.ES_PASSWORD,
   },
 });
