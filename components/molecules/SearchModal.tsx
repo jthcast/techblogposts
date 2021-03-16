@@ -90,7 +90,7 @@ const SearchModal = ({
   return (
     <Modal isOpen={isOpen} openHandler={openHandler} escClose={false}>
       <div className={cssSearchWrapper}>
-        <div className={cssInputWrapper}>
+        <div className={cssInputWrapper(posts)}>
           <IconSearch />
           <input ref={inputEl} className={cssInput} placeholder='검색' onChange={inputChangeHandling} value={inputValue} />
         </div>
@@ -164,19 +164,19 @@ export default SearchModal;
 
 const cssSearchWrapper = css`
   width: 100%;
-  height: 100%;
+  // height: 100%;
   max-width: 75%;
+  transform: translateY(15vh);
 `;
 
-const cssInputWrapper = css`
+const cssInputWrapper = (posts: SearchSource[]) => css`
   width: 100%;
-  margin-top: 10rem;
   display: flex;
   align-items: center;
   border: ${globalCss.color.borderColor} 0.15rem solid;
-  border-radius: 0.7rem;
+  border-radius: ${posts ? '0.7rem 0.7rem 0 0' : '0.7rem'};
   padding: 0.7rem;
-  background-color: ${globalCss.color.groupColor};
+  background-color: ${globalCss.color.groupColorOpacity};
 
   svg{
     font-size: 1.5rem;
@@ -199,7 +199,11 @@ const cssInput = css`
 const cssList = css`
   list-style: none;
   overflow-y: scroll;
-  max-height: 50%;
+  max-height: 60vh;
+  border: 0.15rem solid ${globalCss.color.borderColor};
+  border-top: none;
+  border-radius: 0 0 0.7rem 0.7rem;
+  background-color: ${globalCss.color.groupColorOpacity};
 `;
 const cssListItem = css`
   padding: 1rem 0;
