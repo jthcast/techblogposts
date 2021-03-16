@@ -83,7 +83,7 @@ const SearchModal = ({
 
   useEffect(() => {
     if (isOpen) {
-      inputEl.current.focus();
+      inputEl.current.select();
     }
   }, [isOpen]);
 
