@@ -1,7 +1,7 @@
 import { css } from '@emotion/css';
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import globalCss, { rem } from '../../styles/global-css';
-import { IconSearch } from '../atoms/Icons';
+import { IconSearch, IconSpinner } from '../atoms/Icons';
 import Modal from '../atoms/Modal';
 import { icons, iconsCtx } from '../../lib/utils/icons';
 import Image from 'next/image';
@@ -30,12 +30,15 @@ const SearchModal = ({
   const inputEl = useRef<HTMLInputElement>();
   const [posts, setPosts] = useState<SearchSource[]>(undefined);
   const [inputValue, setInputValue] = useState<string>('');
+  const [isLoading, setLoading] = useState(false);
 
   const search = async (query: string) => {
     if (query) {
+      setLoading(true);
       const fetchData = await fetch(`/api/search?query=${query}`);
       const result = await fetchData.json();
       setPosts([...result]);
+      setLoading(false);
     } else {
       setPosts(undefined);
     }
@@ -91,7 +94,7 @@ const SearchModal = ({
     <Modal isOpen={isOpen} openHandler={openHandler} escClose={false}>
       <div className={cssSearchWrapper}>
         <div className={cssInputWrapper(posts)}>
-          <IconSearch />
+          {isLoading ? <IconSpinner spin /> : <IconSearch />}
           <input ref={inputEl} className={cssInput} placeholder='검색' onChange={inputChangeHandling} value={inputValue} />
         </div>
         {posts && posts.length > 0 && (
@@ -151,8 +154,8 @@ const SearchModal = ({
           </ul>
         )}
         {posts && !posts.length && inputValue &&
-          <div className={cssNoResults}>
-            <span>검색 결과가 없습니다. 😅</span>
+          <div className={cssList}>
+            <div className={cssNoResults}>검색 결과가 없습니다. 😅</div>
           </div>
         }
       </div>
@@ -164,9 +167,17 @@ export default SearchModal;
 
 const cssSearchWrapper = css`
   width: 100%;
-  // height: 100%;
-  max-width: 75%;
+  max-width: ${globalCss.common.maxWidth};
   transform: translateY(15vh);
+  padding: 0 5rem;
+
+  @media ${globalCss.breakpoint.mobileQuery} {
+    padding: 0 1.25rem;
+  }
+
+  @media ${globalCss.breakpoint.tabletQuery} {
+    padding: 0 3rem;
+  }
 `;
 
 const cssInputWrapper = (posts: SearchSource[]) => css`
@@ -208,8 +219,7 @@ const cssList = css`
 const cssListItem = css`
   padding: 1rem 0;
   border-bottom: ${rem(2)} solid ${globalCss.color.groupColor};
-  max-width: 98%;
-  margin: auto;
+  margin: 0 0.5rem;
 
   &:nth-last-child(1) {
     border-bottom: none;
