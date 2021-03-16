@@ -192,6 +192,7 @@ const cssInputWrapper = (posts: SearchSource[]) => css`
   border-radius: ${posts ? '0.7rem 0.7rem 0 0' : '0.7rem'};
   padding: 0.7rem;
   background-color: ${globalCss.color.groupColorOpacity};
+  font-size: 1.5rem;
 
   svg{
     font-size: 1.5rem;
