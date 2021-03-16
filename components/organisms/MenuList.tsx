@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import DarkModeSwitch from '../molecules/DarkModeSwitch';
-import { IconBars, IconJthLogoColored, IconPaperWithSignalColored, IconTimes } from '../atoms/Icons';
+import { IconBars, IconJthLogoColored, IconPaperWithSignalColored, IconSearch, IconTimes } from '../atoms/Icons';
 import ScrollButton from '../molecules/ScrollButton';
 import InfiniteScrollSwitch from '../molecules/InfiniteScrollSwitch';
 import { css, cx } from '@emotion/css';
 import globalCss from '../../styles/global-css';
 import config from '../../config';
 import Link from 'next/link';
+import SearchModal from '../molecules/SearchModal';
 
 interface MenuListProps {
   showStartPosition?: 'bottom' | 'left' | 'none' | 'right' | 'top';
@@ -75,6 +76,12 @@ const MenuList = ({
     };
   }, [keyDownHandling]);
 
+  const [isSearchModalOpen, setSearchModalOpen] = useState(false);
+
+  const searchHandling = () => {
+    setSearchModalOpen(!isSearchModalOpen);
+  }
+
   return (
     <>
       <nav
@@ -131,13 +138,23 @@ const MenuList = ({
           className={cssBackdrop}
         />
       </nav>
+      <SearchModal isOpen={isSearchModalOpen} openHandler={searchHandling} />
+      <ScrollButton
+        ariaLabel="검색"
+        title="검색"
+        onClick={searchHandling}
+        showType="up"
+        className={cssSearchButton}
+      >
+        <IconSearch />
+      </ScrollButton>
       <ScrollButton
         id="scrollButton-menuList-menu"
         ariaLabel="메뉴"
         title="메뉴"
         onClick={menuListHandling}
         showType="up"
-        className={cssScrollButton}
+        className={cssMenuButton}
       >
         {menuState ? <IconTimes /> : <IconBars />}
       </ScrollButton>
@@ -227,7 +244,14 @@ const cssBackdrop = css`
   z-index: -1;
 `;
 
-const cssScrollButton = css`
+const cssSearchButton = css`
+  position: fixed;
+  right: 1.5rem;
+  bottom: 6rem;
+  z-index: 1;
+`;
+
+const cssMenuButton = css`
   position: fixed;
   right: 1.5rem;
   bottom: 1.5rem;
