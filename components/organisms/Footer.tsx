@@ -81,7 +81,8 @@ const Footer = (): React.ReactElement => {
         </ul>
       </nav>
       <ScrollButton
-        ariaLabel="ScrollTop"
+        title="위로"
+        ariaLabel="위로"
         tabIndex={-1}
         onClick={scrollToTop}
         showType="notTopAndUp"

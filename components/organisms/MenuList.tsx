@@ -133,7 +133,8 @@ const MenuList = ({
       </nav>
       <ScrollButton
         id="scrollButton-menuList-menu"
-        ariaLabel="menuButton"
+        ariaLabel="메뉴"
+        title="메뉴"
         onClick={menuListHandling}
         showType="up"
         className={cssScrollButton}
