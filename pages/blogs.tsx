@@ -8,8 +8,10 @@ import Image from 'next/image';
 import config from '../config';
 
 interface BlogItem {
-  company?: { S: string },
-  blogURL?: { S: string }
+  _source: {
+    id: string;
+    title: string;
+  }
 }
 
 export default function Blogs() {
@@ -21,7 +23,7 @@ export default function Blogs() {
       method: 'GET',
     });
     const result = await fetchData.json();
-    setBlogs([...result.Items]);
+    setBlogs([...result]);
     setLoading(false);
   };
 
@@ -40,27 +42,28 @@ export default function Blogs() {
         {!isLoading && blogs && blogs.length > 0 && (
           <ul className={cssList}>
             {blogs.map((blog) => {
+              const { id, title } = blog._source;
               return (
-                <li key={`${blog.company.S}`}>
+                <li key={`${id}`}>
                   <a
-                    href={blog.blogURL.S}
+                    href={id}
                     target="_blank"
                     rel="noreferrer"
-                    aria-label={blog.company.S}
+                    aria-label={title}
                   >
                     <div className={cssListItem}>
-                      {icons[blog.company.S] &&
+                      {icons[title] &&
                         <div className={cssCompanyIcon}>
                           <Image
-                            src={`${iconsCtx}${icons[blog.company.S]}`}
-                            alt={blog.company.S}
+                            src={`${iconsCtx}${icons[title]}`}
+                            alt={title}
                             width='fill'
                             height='fill'
                             layout='responsive'
                           />
                         </div>
                       }
-                      <span>{blog.company.S}</span>
+                      <span>{title}</span>
                     </div>
                   </a>
                 </li>
