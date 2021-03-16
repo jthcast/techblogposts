@@ -11,6 +11,7 @@ interface ScrollButtonProps {
   showType?: 'notTop' | 'notTopAndUp' | 'up';
   tabIndex?: number;
   id?: string;
+  title?: string;
 }
 
 const ScrollButton = ({
@@ -22,6 +23,7 @@ const ScrollButton = ({
   showType = 'notTop',
   tabIndex,
   id,
+  title
 }: ScrollButtonProps): React.ReactElement => {
   const [scrollState, setScrollState] = useState(false);
   const [isTopState, setIsTopState] = useState(false);
@@ -80,6 +82,7 @@ const ScrollButton = ({
         { [className]: true },
       )}
       onClick={onClick || undefined}
+      title={title}
     >
       {children || null}
     </button>
