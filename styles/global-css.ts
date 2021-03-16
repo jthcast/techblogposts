@@ -34,6 +34,7 @@ const globalCss = {
     backgroundColorDownOpacity: `var(--background-down-opacity)`,
     borderColor: `var(--border-base)`,
     groupColor: `var(--group-base)`,
+    groupColorOpacity: `var(--group-base-opacity)`,
     color: `var(--color-base)`,
     colorDown: `var(--color-down)`,
     primaryBrandColor: `var(--primary-brand-base)`,

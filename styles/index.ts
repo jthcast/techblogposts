@@ -48,6 +48,7 @@ body {
   --primary-brand-background-base: #504646;
   --border-base: #d6d6d6;
   --group-base: #f4f4f4;
+  --group-base-opacity: rgba(244, 244, 244, 0.5);
   --danger: #e03434;
   --black: #000000;
   --white: #ffffff;
@@ -69,6 +70,7 @@ body {
   --secondary-brand-base: #6e59ff;
   --border-base: #d6d6d6;
   --group-base: #242526;
+  --group-base-opacity: rgba(36, 37, 38, 0.7);
 
   background-color: var(--background-base);
   color: var(--color-base);
