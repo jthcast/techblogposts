@@ -75,7 +75,7 @@ body {
 }
 
 @media (hover: hover) and (pointer: fine) { /*notTouchDevice*/
-  #__next {
+  * {
     &::-webkit-scrollbar {
       width: 0.5rem;
     }
