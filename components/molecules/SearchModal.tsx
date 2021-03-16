@@ -94,7 +94,7 @@ const SearchModal = ({
     <Modal isOpen={isOpen} openHandler={openHandler} escClose={false}>
       <div className={cssSearchWrapper}>
         <div className={cssInputWrapper(posts)}>
-          {isLoading ? <IconSpinner spin /> : <IconSearch />}
+          {isLoading ? <IconSpinner spin className={cssLoadingIcon} /> : <IconSearch />}
           <input ref={inputEl} className={cssInput} placeholder='검색' onChange={inputChangeHandling} value={inputValue} />
         </div>
         {posts && posts.length > 0 && (
@@ -164,6 +164,10 @@ const SearchModal = ({
 };
 
 export default SearchModal;
+
+const cssLoadingIcon = css`
+  color: ${globalCss.color.secondaryBrandColor};
+`;
 
 const cssSearchWrapper = css`
   width: 100%;
