@@ -1,11 +1,12 @@
 import { css } from '@emotion/css';
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import globalCss, { rem } from '../../styles/global-css';
 import { IconSearch, IconSpinner } from '../atoms/Icons';
 import Modal from '../atoms/Modal';
 import { icons, iconsCtx } from '../../lib/utils/icons';
 import Image from 'next/image';
 import { gtagOutboundEvent } from '../../lib/utils/googleAnalytics';
+import useDebounce from '../../customHooks/useDebounce';
 
 interface SearchModalProps {
   isOpen?: boolean;
@@ -31,18 +32,31 @@ const SearchModal = ({
   const [posts, setPosts] = useState<SearchSource[]>(undefined);
   const [inputValue, setInputValue] = useState<string>('');
   const [isLoading, setLoading] = useState(false);
+  const debounceValue = useDebounce(inputValue, 500);
 
-  const search = async (query: string) => {
-    if (query) {
-      setLoading(true);
-      const fetchData = await fetch(`/api/search?query=${query}`);
-      const result = await fetchData.json();
-      setPosts([...result]);
-      setLoading(false);
-    } else {
+  // const search = async (query: string) => {
+  //   if (query) {
+  //     setLoading(true);
+  //     const fetchData = await fetch(`/api/search?query=${query}`);
+  //     const result = await fetchData.json();
+  //     setPosts([...result]);
+  //     setLoading(false);
+  //   } else {
+  //     setPosts(undefined);
+  //   }
+  // }
+
+  const searchHandling = useCallback(async () => {
+    if (!inputValue.trim()) {
       setPosts(undefined);
+      return;
     }
-  }
+    setLoading(true);
+    const fetchData = await fetch(`/api/search?query=${inputValue}`);
+    const result = await fetchData.json();
+    setPosts([...result]);
+    setLoading(false);
+  }, [debounceValue]);
 
   const keyDownHandling = (event: KeyboardEvent) => {
     if (event.code === 'Space' && event.ctrlKey) {
@@ -54,7 +68,7 @@ const SearchModal = ({
       event.preventDefault();
     }
     if (event.code === 'Enter' && isOpen) {
-      search(inputValue);
+      //TODO 이동
     }
     if (event.code === 'Escape' && isOpen) {
       if (inputValue) {
@@ -79,10 +93,14 @@ const SearchModal = ({
   }
 
   useEffect(() => {
-    if (!inputValue) {
+    if (!inputValue.trim()) {
       setPosts(undefined);
     }
   }, [inputValue]);
+
+  useEffect(() => {
+    searchHandling();
+  }, [debounceValue, searchHandling])
 
   useEffect(() => {
     if (isOpen) {
