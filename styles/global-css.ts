@@ -39,6 +39,7 @@ const globalCss = {
     colorDown: `var(--color-down)`,
     primaryBrandColor: `var(--primary-brand-base)`,
     secondaryBrandColor: `var(--secondary-brand-base)`,
+    secondaryBrandColorOpacity: `var(--secondary-brand-base-opacity)`,
     backgroundCode: `var(--background-code-base)`,
     colorCode: `var(--color-code-base)`,
     black: `var(--black)`,

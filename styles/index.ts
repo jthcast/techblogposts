@@ -45,6 +45,7 @@ body {
   --color-code-base: #9a354a;
   --primary-brand-base: #f6a54c;
   --secondary-brand-base: #614cf6;
+  --secondary-brand-base-opacity: rgba(110, 89, 255, 0.4);
   --primary-brand-background-base: #504646;
   --border-base: #d6d6d6;
   --group-base: #f4f4f4;
@@ -68,6 +69,7 @@ body {
   --color-down: #ababab;
   --color-code-base: #ffb3c2;
   --secondary-brand-base: #6e59ff;
+  --secondary-brand-base-opacity: rgba(110, 89, 255, 0.4);
   --border-base: #d6d6d6;
   --group-base: #242526;
   --group-base-opacity: rgba(36, 37, 38, 0.7);
