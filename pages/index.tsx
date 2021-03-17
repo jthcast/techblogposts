@@ -2,12 +2,14 @@ import Layout from '../components/atoms/Layout';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { css, keyframes } from '@emotion/css';
 import globalCss, { rem } from '../styles/global-css';
-import { IconMagnetColored, IconSpinner } from '../components/atoms/Icons';
+import { IconMagnetColored, IconSpinner, IconTemplate } from '../components/atoms/Icons';
 import { InfiniteScrollContext } from '../context/InfiniteScrollContext';
 import useObserver from '../customHooks/useObserver';
 import { icons, iconsCtx } from '../lib/utils/icons';
 import Image from 'next/image';
 import { gtagOutboundEvent } from '../lib/utils/googleAnalytics';
+import ErrorSection from '../components/atoms/ErrorSection';
+import Button from '../components/atoms/Button';
 
 interface PostItem {
   sort: Array<any>;
@@ -30,14 +32,22 @@ export default function Home() {
   const [isInfiniteLoad, setInfiniteLoad] = useContext(InfiniteScrollContext);
   const [sort, setSort] = useState(undefined);
   const root = typeof window !== 'undefined' ? document.querySelector('#__next') : null;
+  const [errorMessage, setErrorMessage] = useState('');
 
   const getPosts = async () => {
-    isInit ? setLoading(true) : setMorePostLoading(true);
-    const fetchData = await fetch(`/api/posts${sort ? `?sort=${JSON.stringify(sort)}` : ''}`);
-    const result = await fetchData.json();
-    setPosts([...posts, ...result]);
-    setSort(result[result.length - 1].sort);
-    isInit ? setLoading(false) : setMorePostLoading(false);
+    try {
+      isInit ? setLoading(true) : setMorePostLoading(true);
+      setErrorMessage('');
+      const fetchData = await fetch(`/api/posts${sort ? `?sort=${JSON.stringify(sort)}` : ''}`);
+      const result = await fetchData.json();
+      setPosts([...posts, ...result]);
+      setSort(result[result.length - 1].sort);
+    } catch (event) {
+      setInit(true);
+      setErrorMessage('DB로 부터 데이터를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.');
+    } finally {
+      isInit ? setLoading(false) : setMorePostLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -73,7 +83,7 @@ export default function Home() {
             <IconSpinner spin />
           </div>
         }
-        {!isLoading && posts && posts.length > 0 && (
+        {!isLoading && !errorMessage && posts && posts.length > 0 && (
           <ul className={cssList}>
             {posts.map((post) => {
               const { company, id, publishDate, title } = post._source;
@@ -129,7 +139,7 @@ export default function Home() {
             })}
           </ul>
         )}
-        {sort &&
+        {!errorMessage && sort &&
           <button className={cssMorePostsButton} onClick={infiniteScrollHandling} ref={morePostsButtonRef}>
             {isMorePostLoading ?
               <IconSpinner spin /> :
@@ -139,6 +149,11 @@ export default function Home() {
               </>
             }
           </button>
+        }
+        {errorMessage &&
+          <ErrorSection errorMessage={errorMessage}>
+            <Button ariaLabel="Retry" className={cssButton} onClick={getPosts}><IconTemplate iconName="IconReDo" /></Button>
+          </ErrorSection>
         }
       </section>
     </Layout>
@@ -277,4 +292,26 @@ const cssCompanyIcon = css`
   display: inline-block;
   margin-right: 0.25rem;
   margin-top: 0.15rem;
+`;
+
+const cssButton = css`
+  background-color: ${globalCss.color.secondaryBrandColor};
+  border: none;
+
+  &:hover {
+    opacity: 1;
+    border: none;
+    color: ${globalCss.color.color};
+  }
+  
+  &:focus {
+    opacity: 1;
+    border: none;
+    color: ${globalCss.color.color};
+  }
+  
+  &:active {
+    border: none;
+    color: ${globalCss.color.color};
+  }
 `;

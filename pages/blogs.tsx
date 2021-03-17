@@ -2,10 +2,12 @@ import Layout from '../components/atoms/Layout';
 import { css } from '@emotion/css';
 import globalCss from '../styles/global-css';
 import { useEffect, useState } from 'react';
-import { IconSpinner } from '../components/atoms/Icons';
+import { IconSpinner, IconTemplate } from '../components/atoms/Icons';
 import { icons, iconsCtx } from '../lib/utils/icons';
 import Image from 'next/image';
 import config from '../config';
+import ErrorSection from '../components/atoms/ErrorSection';
+import Button from '../components/atoms/Button';
 
 interface BlogItem {
   _source: {
@@ -17,14 +19,22 @@ interface BlogItem {
 export default function Blogs() {
   const [isLoading, setLoading] = useState(true);
   const [blogs, setBlogs] = useState<BlogItem[]>([]);
+  const [errorMessage, setErrorMessage] = useState('');
 
   async function getBlogs() {
-    const fetchData = await fetch(`/api/blogs`, {
-      method: 'GET',
-    });
-    const result = await fetchData.json();
-    setBlogs([...result]);
-    setLoading(false);
+    try {
+      setLoading(true);
+      setErrorMessage('');
+      const fetchData = await fetch(`/api/blogs`, {
+        method: 'GET',
+      });
+      const result = await fetchData.json();
+      setBlogs([...result]);
+    } catch (event) {
+      setErrorMessage('DB로 부터 데이터를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -39,7 +49,7 @@ export default function Blogs() {
             <IconSpinner spin />
           </div>
         }
-        {!isLoading && blogs && blogs.length > 0 && (
+        {!isLoading && !errorMessage && blogs && blogs.length > 0 && (
           <ul className={cssList}>
             {blogs.map((blog) => {
               const { id, title } = blog._source;
@@ -71,7 +81,7 @@ export default function Blogs() {
             })}
           </ul>
         )}
-        {!isLoading &&
+        {!isLoading && !errorMessage &&
           <div className={cssReport}>
             <h3>원하시는 기업의 기술 블로그가 목록에 없나요?</h3>
             <p>저에게 알려주세요. 추가하겠습니다. 🙌</p>
@@ -81,6 +91,11 @@ export default function Blogs() {
               제보 하기 📧
             </a>
           </div>
+        }
+        {errorMessage &&
+          <ErrorSection errorMessage={errorMessage}>
+            <Button ariaLabel="Retry" className={cssButton} onClick={getBlogs}><IconTemplate iconName="IconReDo" /></Button>
+          </ErrorSection>
         }
       </section>
     </Layout>
@@ -188,5 +203,27 @@ const cssReport = css`
 
   @media ${globalCss.breakpoint.tabletQuery} {
     margin: 4rem 0;
+  }
+`;
+
+const cssButton = css`
+  background-color: ${globalCss.color.secondaryBrandColor};
+  border: none;
+
+  &:hover {
+    opacity: 1;
+    border: none;
+    color: ${globalCss.color.color};
+  }
+  
+  &:focus {
+    opacity: 1;
+    border: none;
+    color: ${globalCss.color.color};
+  }
+  
+  &:active {
+    border: none;
+    color: ${globalCss.color.color};
   }
 `;

@@ -38,31 +38,26 @@ const SearchModal = ({
   const [movePosition, setMovePosition] = useState('');
   const [indexValue, setIndexValue] = useState<number>(0);
   const [maxIndexValue, setMaxIndexValue] = useState<number>(undefined);
-
-  // const search = async (query: string) => {
-  //   if (query) {
-  //     setLoading(true);
-  //     const fetchData = await fetch(`/api/search?query=${query}`);
-  //     const result = await fetchData.json();
-  //     setPosts([...result]);
-  //     setLoading(false);
-  //   } else {
-  //     setPosts(undefined);
-  //   }
-  // }
+  const [errorMessage, setErrorMessage] = useState('');
 
   const searchHandling = async () => {
-    if (!inputValue.trim()) {
-      setPosts(undefined);
-      return;
+    try {
+      if (!inputValue.trim()) {
+        setPosts(undefined);
+        return;
+      }
+      setLoading(true);
+      const fetchData = await fetch(`/api/search?query=${inputValue}`);
+      const result = await fetchData.json();
+      setPosts([...result]);
+      setMaxIndexValue(result.length);
+      setIndexValue(0);
+    } catch (event) {
+      setErrorMessage('DB로 부터 데이터를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.');
+    } finally {
+      setLoading(false);
     }
-    setLoading(true);
-    const fetchData = await fetch(`/api/search?query=${inputValue}`);
-    const result = await fetchData.json();
-    setPosts([...result]);
-    setMaxIndexValue(result.length);
-    setIndexValue(0);
-    setLoading(false);
+
   };
 
   const keyDownHandling = (event: KeyboardEvent) => {
@@ -166,7 +161,7 @@ const SearchModal = ({
           {isLoading ? <IconSpinner spin className={cssLoadingIcon} /> : <IconSearch />}
           <input type='text' ref={inputEl} className={cssInput} placeholder='검색' onChange={inputChangeHandling} value={inputValue} />
         </div>
-        {posts && posts.length > 0 && (
+        {!errorMessage && posts && posts.length > 0 && (
           <ul className={cssList} ref={resultsList}>
             {posts.map((post, index) => {
               const { publishDate, company, id, title } = post._source;
@@ -230,7 +225,7 @@ const SearchModal = ({
             })}
           </ul>
         )}
-        {posts && !posts.length && inputValue &&
+        {!errorMessage && posts && !posts.length && inputValue &&
           <ul className={cssList} ref={resultsList}>
             <ListItem className={cx(
               { [cssNoResults]: true },
@@ -246,6 +241,18 @@ const SearchModal = ({
               >
                 <div className={cssNoResults}>검색 결과가 없습니다. 구글로 검색할까요? 👉</div>
               </a>
+            </ListItem>
+          </ul>
+        }
+        {errorMessage &&
+          <ul className={cssList} ref={resultsList}>
+            <ListItem className={cx(
+              { [cssNoResults]: true },
+              { [cssListItemFocused]: true },
+            )}
+              onFocus={focusHandling}
+            >
+              <div className={cssNoResults}>{errorMessage} 😥</div>
             </ListItem>
           </ul>
         }
