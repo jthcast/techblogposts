@@ -97,6 +97,10 @@ const SearchModal = ({
     if (event.code === 'Enter' && isOpen) {
       event.preventDefault();
       setTimeout(() => {
+        if (!posts.length) {
+          window.open(`https://www.google.com/search?q=${inputValue}`, '_blank');
+          return;
+        }
         const { id, title } = posts[indexValue]._source;
         gtagOutboundEvent(id, title);
         window.open(id, '_blank');
