@@ -1,5 +1,5 @@
 import Layout from '../components/atoms/Layout';
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { css, keyframes } from '@emotion/css';
 import globalCss, { rem } from '../styles/global-css';
 import { IconMagnetColored, IconSpinner } from '../components/atoms/Icons';
@@ -10,12 +10,16 @@ import Image from 'next/image';
 import { gtagOutboundEvent } from '../lib/utils/googleAnalytics';
 
 interface PostItem {
-  link?: { S: string };
-  title?: { S: string };
-  company?: { S: string };
-  viewCount?: { N: string };
-  publishDate?: { N: string };
-  isShow?: { BOOL: boolean };
+  sort: Array<any>;
+  _source: {
+    company: string;
+    dataType: string;
+    id: string;
+    isShow: boolean;
+    publishDate: number;
+    title: string;
+    viewCount: number;
+  }
 }
 
 export default function Home() {
@@ -25,29 +29,17 @@ export default function Home() {
   const [isInit, setInit] = useState(true);
   const [isMorePostLoading, setMorePostLoading] = useState(false);
   const [isInfiniteLoad, setInfiniteLoad] = useContext(InfiniteScrollContext);
-  const [lastEvaluatedKey, setLastEvaluatedKey] = useState(undefined);
+  const [sort, setSort] = useState(undefined);
   const root = typeof window !== 'undefined' ? document.querySelector('#__next') : null;
 
-  const getPosts = useCallback(async () => {
-    //TODO ES
+  const getPosts = async () => {
     isInit ? setLoading(true) : setMorePostLoading(true);
-    const fetchData = await fetch(`/api/posts${lastEvaluatedKey ? `?lastEvaluatedKey=${JSON.stringify(lastEvaluatedKey)}` : ''}`, {
-      method: 'GET',
-    });
+    const fetchData = await fetch(`/api/posts${sort ? `?sort=${JSON.stringify(sort)}` : ''}`);
     const result = await fetchData.json();
-    // setPosts([...posts, ...result.Items]);
-    const postsArray = [...posts];
-    result.Items.forEach((post: PostItem) => {
-      const link = post.link.S;
-      if (!postLinks.includes(link)) {
-        postLinks.push(link);
-        postsArray.push(post);
-      }
-    });
-    setPosts(postsArray);
-    setLastEvaluatedKey(result.LastEvaluatedKey);
+    setPosts([...posts, ...result]);
+    setSort(result[result.length - 1].sort);
     isInit ? setLoading(false) : setMorePostLoading(false);
-  }, [lastEvaluatedKey]);
+  };
 
   useEffect(() => {
     getPosts();
@@ -84,12 +76,10 @@ export default function Home() {
         }
         {!isLoading && posts && posts.length > 0 && (
           <ul className={cssList}>
-            {posts.map((post, index) => {
-              if (post.isShow?.BOOL === false) {
-                return null;
-              }
+            {posts.map((post) => {
+              const { company, id, publishDate, title } = post._source;
               const nowDate = new Date();
-              const postDate = new Date(parseInt(post.publishDate.N));
+              const postDate = new Date(publishDate);
               const todayMonth = (nowDate.getMonth() + 1).toString().length === 1 ? `0${nowDate.getMonth() + 1}` : nowDate.getMonth() + 1;
               const todayDate = nowDate.getDate().toString().length === 1 ? `0${nowDate.getDate()}` : nowDate.getDate();
               const todayString = `${nowDate.getFullYear()}-${todayMonth}-${todayDate}`;
@@ -102,29 +92,29 @@ export default function Home() {
               const dateDifferString = dateDiffer === 0 ? `오늘` : `${dateDiffer}일 전`;
 
               return (
-                <li key={`${post.link.S}${index}`} className={cssListItem}>
+                <li key={id} className={cssListItem}>
                   <a
-                    href={post.link.S}
+                    href={id}
                     target="_blank"
                     rel="noreferrer"
-                    aria-label={post.title.S}
-                    onClick={() => gtagOutboundEvent(post.link.S, post.title.S)}
+                    aria-label={title}
+                    onClick={() => gtagOutboundEvent(id, title)}
                   >
-                    <p className={cssPostTitle}>{post.title.S}</p>
+                    <p className={cssPostTitle}>{title}</p>
                     <ul className={cssItemDetail}>
                       <li className={cssItemDetailLeft}>
-                        {icons[post.company.S] &&
+                        {icons[company] &&
                           <div className={cssCompanyIcon}>
                             <Image
-                              src={`${iconsCtx}${icons[post.company.S]}`}
-                              alt={post.company.S}
+                              src={`${iconsCtx}${icons[company]}`}
+                              alt={company}
                               width='fill'
                               height='fill'
                               layout='responsive'
                             />
                           </div>
                         }
-                        {post.company.S}
+                        {company}
                       </li>
                       {/* <li>
                         <span role="img" aria-label="viewCount">👀</span>{' '}
@@ -140,7 +130,7 @@ export default function Home() {
             })}
           </ul>
         )}
-        {lastEvaluatedKey &&
+        {sort &&
           <button className={cssMorePostsButton} onClick={infiniteScrollHandling} ref={morePostsButtonRef}>
             {isMorePostLoading ?
               <IconSpinner spin /> :

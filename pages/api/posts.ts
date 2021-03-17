@@ -1,33 +1,56 @@
-import { DynamoDBClient, QueryCommand, QueryCommandInput } from '@aws-sdk/client-dynamodb';
+import { client, index, SearchResponse } from '../../lib/utils/elasticSearch';
 import { NowRequest, NowResponse } from '@vercel/node';
 
-const dbclient = new DynamoDBClient({
-  region: process.env.DB_REGION,
-  credentials: {
-    accessKeyId: process.env.DB_ACCESSKEY_ID,
-    secretAccessKey: process.env.DB_SECRETACCESS_KEY,
-  },
-});
+interface Query {
+  dataType: string;
+  isShow: boolean;
+  publishDate: {
+    order: string;
+  };
+}
 
 const posts = async (req: NowRequest, res: NowResponse) => {
   try {
-    if (req.method === 'GET') {
-      const params: QueryCommandInput = {
-        TableName: process.env.DB_TABLE_NAME,
-        Limit: 10,
-        KeyConditionExpression: 'dataType = :post',
-        IndexName: 'publishDate-index',
-        ExpressionAttributeValues: {
-          ':post': { S: 'post' },
+    let query = {
+      index,
+      size: 10,
+      body: {
+        query: {
+          bool: {
+            filter: [
+              {
+                term: {
+                  dataType: 'post',
+                },
+              },
+              {
+                term: {
+                  isShow: true,
+                },
+              },
+            ],
+          },
         },
-        ScanIndexForward: false,
-      };
-      if (req.query.lastEvaluatedKey) {
-        params.ExclusiveStartKey = JSON.parse(req.query.lastEvaluatedKey + '');
-      }
-      const results = await dbclient.send(new QueryCommand(params));
-      res.status(200).json(results);
+        sort: [
+          {
+            publishDate: {
+              order: 'desc',
+            },
+          },
+          {
+            'id.keyword': {
+              order: 'asc',
+            },
+          },
+        ],
+      },
+    };
+    if (req.query.sort) {
+      query.body['search_after'] = JSON.parse(req.query.sort + '');
     }
+    const { body } = await client.search<SearchResponse<Query>>(query);
+
+    res.status(200).json(body.hits.hits);
   } catch (err) {
     console.error(err);
   }
