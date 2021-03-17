@@ -65,7 +65,6 @@ const SearchModal = ({
   };
 
   const keyDownHandling = (event: KeyboardEvent) => {
-    console.log(event.code)
     //TODO bug: when input value is Korean function run twice. setTimeout makes it okay but I donw know why 🤷‍♂️
     if (event.code === 'Space' && event.ctrlKey) {
       setTimeout(() => {
