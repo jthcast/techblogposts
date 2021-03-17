@@ -40,7 +40,7 @@ const search = async (req: NowRequest, res: NowResponse) => {
         },
         sort: [
           {
-            'publishDate.keyword': {
+            publishDate: {
               order: 'desc',
             },
           },
