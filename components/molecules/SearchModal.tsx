@@ -97,6 +97,9 @@ const SearchModal = ({
     if (event.code === 'Enter' && isOpen) {
       event.preventDefault();
       setTimeout(() => {
+        if (!posts) {
+          return;
+        }
         if (!posts.length) {
           window.open(`https://www.google.com/search?q=${inputValue}`, '_blank');
           return;
