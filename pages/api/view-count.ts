@@ -20,8 +20,7 @@ const viewCount = async (req: NowRequest, res: NowResponse) => {
           ':val': { N: '1' },
         },
         Key: {
-          dataType: { S: 'post' },
-          link: { S: req.body.link },
+          id: { S: req.body.link },
         },
       };
       const results = await dbclient.send(new UpdateItemCommand(params));
