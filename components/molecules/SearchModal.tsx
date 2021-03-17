@@ -1,5 +1,5 @@
-import { css } from '@emotion/css';
-import React, { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { css, cx } from '@emotion/css';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import globalCss, { rem } from '../../styles/global-css';
 import { IconSearch, IconSpinner } from '../atoms/Icons';
 import Modal from '../atoms/Modal';
@@ -7,6 +7,7 @@ import { icons, iconsCtx } from '../../lib/utils/icons';
 import Image from 'next/image';
 import { gtagOutboundEvent } from '../../lib/utils/googleAnalytics';
 import useDebounce from '../../customHooks/useDebounce';
+import ListItem from '../atoms/ListItem';
 
 interface SearchModalProps {
   isOpen?: boolean;
@@ -33,6 +34,9 @@ const SearchModal = ({
   const [inputValue, setInputValue] = useState<string>('');
   const [isLoading, setLoading] = useState(false);
   const debounceValue = useDebounce(inputValue, 500);
+  const resultsList = useRef<HTMLUListElement>();
+  const [indexValue, setIndexValue] = useState<number>(0);
+  const [maxIndexValue, setMaxIndexValue] = useState<number>(undefined);
 
   // const search = async (query: string) => {
   //   if (query) {
@@ -46,7 +50,7 @@ const SearchModal = ({
   //   }
   // }
 
-  const searchHandling = useCallback(async () => {
+  const searchHandling = async () => {
     if (!inputValue.trim()) {
       setPosts(undefined);
       return;
@@ -55,29 +59,59 @@ const SearchModal = ({
     const fetchData = await fetch(`/api/search?query=${inputValue}`);
     const result = await fetchData.json();
     setPosts([...result]);
+    setMaxIndexValue(result.length);
+    setIndexValue(0);
     setLoading(false);
-  }, [debounceValue]);
+  };
 
   const keyDownHandling = (event: KeyboardEvent) => {
     console.log(event.code)
+    //TODO bug: when input value is Korean function run twice. setTimeout makes it okay but I donw know why 🤷‍♂️
     if (event.code === 'Space' && event.ctrlKey) {
       setTimeout(() => {
-        openHandler(); //TODO bug: when input value is Korean function run twice
+        openHandler();
       }, 0);
     }
     if (event.code === 'Tab' && isOpen) {
       event.preventDefault();
     }
+    if (event.code === 'ArrowUp' && isOpen) {
+      event.preventDefault();
+      setTimeout(() => {
+        let nextValue = indexValue - 1;
+        if (nextValue < 0) {
+          nextValue = maxIndexValue - 1;
+        }
+        setIndexValue(nextValue);
+      }, 0);
+    }
+    if (event.code === 'ArrowDown' && isOpen) {
+      event.preventDefault();
+      setTimeout(() => {
+        let nextValue = indexValue + 1;
+        if (nextValue === maxIndexValue) {
+          nextValue = 0;
+        }
+        setIndexValue(nextValue);
+      }, 0);
+    }
     if (event.code === 'Enter' && isOpen) {
-      //TODO 이동
+      event.preventDefault();
+      setTimeout(() => {
+        const { id, title } = posts[indexValue]._source;
+        gtagOutboundEvent(id, title);
+        window.open(id, '_blank');
+      }, 0);
     }
     if (event.code === 'Escape' && isOpen) {
-      if (inputValue) {
-        setInputValue('');
-        setPosts(undefined);
-        return;
-      }
-      openHandler();
+      setTimeout(() => {
+        if (inputValue) {
+          setInputValue('');
+          setPosts(undefined);
+          return;
+        }
+        openHandler();
+      }, 0);
     }
   }
 
@@ -101,7 +135,11 @@ const SearchModal = ({
 
   useEffect(() => {
     searchHandling();
-  }, [debounceValue, searchHandling])
+  }, [debounceValue]);
+
+  const focusHandling = () => {
+    inputEl.current.focus();
+  }
 
   useEffect(() => {
     if (isOpen) {
@@ -117,8 +155,8 @@ const SearchModal = ({
           <input ref={inputEl} className={cssInput} placeholder='검색' onChange={inputChangeHandling} value={inputValue} />
         </div>
         {posts && posts.length > 0 && (
-          <ul className={cssList}>
-            {posts.map((post) => {
+          <ul className={cssList} ref={resultsList}>
+            {posts.map((post, index) => {
               const { publishDate, company, id, title } = post._source;
               const nowDate = new Date();
               const postDate = new Date(publishDate);
@@ -134,7 +172,14 @@ const SearchModal = ({
               const dateDifferString = dateDiffer === 0 ? `오늘` : `${dateDiffer}일 전`;
 
               return (
-                <li key={`${id}`} className={cssListItem}>
+                <ListItem className={cx(
+                  { [cssListItem]: true },
+                  { [cssListItemFocused]: index === indexValue },
+                )}
+                  isFocused={index === indexValue}
+                  onFocus={focusHandling}
+                  key={id}
+                >
                   <a
                     href={id}
                     target="_blank"
@@ -167,22 +212,29 @@ const SearchModal = ({
                       </li>
                     </ul>
                   </a>
-                </li>
+                </ListItem>
               )
             })}
           </ul>
         )}
         {posts && !posts.length && inputValue &&
-          <div className={cssList}>
-            <a
-              href={`https://www.google.com/search?q=${inputValue}`}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="구글로 검색 바로가기"
+          <ul className={cssList} ref={resultsList}>
+            <ListItem className={cx(
+              { [cssNoResults]: true },
+              { [cssListItemFocused]: true },
+            )}
+              onFocus={focusHandling}
             >
-              <div className={cssNoResults}>검색 결과가 없습니다. 구글로 검색할까요? 👉</div>
-            </a>
-          </div>
+              <a
+                href={`https://www.google.com/search?q=${inputValue}`}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="구글로 검색 바로가기"
+              >
+                <div className={cssNoResults}>검색 결과가 없습니다. 구글로 검색할까요? 👉</div>
+              </a>
+            </ListItem>
+          </ul>
         }
       </div>
     </Modal>
@@ -240,7 +292,7 @@ const cssInput = css`
 
 const cssList = css`
   list-style: none;
-  overflow-y: scroll;
+  overflow-y: overlay;
   max-height: 60vh;
   border: 0.15rem solid ${globalCss.color.borderColor};
   border-top: none;
@@ -252,9 +304,8 @@ const cssList = css`
   }
 `;
 const cssListItem = css`
-  padding: 1rem 0;
+  padding: 1rem 1rem 1rem 0.5rem;
   border-bottom: ${rem(2)} solid ${globalCss.color.groupColor};
-  margin: 0 0.5rem;
 
   &:nth-last-child(1) {
     border-bottom: none;
@@ -278,6 +329,9 @@ const cssListItem = css`
       color: ${globalCss.color.color};
     }
   }
+`;
+const cssListItemFocused = css`
+  background-color: ${globalCss.color.secondaryBrandColorOpacity};
 `;
 const cssPostTitle = css`
   font-size: 1rem;
@@ -318,8 +372,6 @@ const cssCompanyIcon = css`
 `;
 
 const cssNoResults = css`
-  padding: 1rem 0;
-  max-width: 98%;
-  margin: auto;
+  padding: 0.5rem 0.5rem;
   font-size: 1rem;
 `;
