@@ -35,6 +35,7 @@ const SearchModal = ({
   const [isLoading, setLoading] = useState(false);
   const debounceValue = useDebounce(inputValue, 500);
   const resultsList = useRef<HTMLUListElement>();
+  const [movePosition, setMovePosition] = useState('');
   const [indexValue, setIndexValue] = useState<number>(0);
   const [maxIndexValue, setMaxIndexValue] = useState<number>(undefined);
 
@@ -76,6 +77,7 @@ const SearchModal = ({
     }
     if (event.code === 'ArrowUp' && isOpen) {
       event.preventDefault();
+      setMovePosition(event.code);
       setTimeout(() => {
         let nextValue = indexValue - 1;
         if (nextValue < 0) {
@@ -86,6 +88,7 @@ const SearchModal = ({
     }
     if (event.code === 'ArrowDown' && isOpen) {
       event.preventDefault();
+      setMovePosition(event.code);
       setTimeout(() => {
         let nextValue = indexValue + 1;
         if (nextValue === maxIndexValue) {
@@ -144,11 +147,14 @@ const SearchModal = ({
   }, [debounceValue]);
 
   const focusHandling = () => {
-    inputEl.current.focus();
+    if (inputEl) {
+      inputEl.current.focus();
+    }
   }
 
   useEffect(() => {
     if (isOpen) {
+      inputEl.current.focus();
       inputEl.current.select();
     }
   }, [isOpen]);
@@ -185,6 +191,7 @@ const SearchModal = ({
                   isFocused={index === indexValue}
                   onFocus={focusHandling}
                   key={id}
+                  movePosition={movePosition}
                 >
                   <a
                     href={id}
