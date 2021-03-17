@@ -158,7 +158,7 @@ const SearchModal = ({
       <div className={cssSearchWrapper}>
         <div className={cssInputWrapper(posts)}>
           {isLoading ? <IconSpinner spin className={cssLoadingIcon} /> : <IconSearch />}
-          <input ref={inputEl} className={cssInput} placeholder='검색' onChange={inputChangeHandling} value={inputValue} />
+          <input type='text' ref={inputEl} className={cssInput} placeholder='검색' onChange={inputChangeHandling} value={inputValue} />
         </div>
         {posts && posts.length > 0 && (
           <ul className={cssList} ref={resultsList}>
