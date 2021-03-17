@@ -24,7 +24,6 @@ interface PostItem {
 
 export default function Home() {
   const [posts, setPosts] = useState<PostItem[]>([]);
-  const [postLinks] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [isInit, setInit] = useState(true);
   const [isMorePostLoading, setMorePostLoading] = useState(false);
