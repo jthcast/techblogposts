@@ -13,7 +13,7 @@ const search = async (req: NowRequest, res: NowResponse) => {
     const query = req.query.query;
     const { body } = await client.search<SearchResponse<Query>>({
       index,
-      size: 10000,
+      size: 100,
       body: {
         query: {
           bool: {
@@ -31,8 +31,9 @@ const search = async (req: NowRequest, res: NowResponse) => {
             ],
             must: [
               {
-                match: {
-                  title: query,
+                multi_match: {
+                  query,
+                  fields: ['title', 'company'],
                 },
               },
             ],
