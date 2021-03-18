@@ -1,5 +1,5 @@
 import { css, cx } from '@emotion/css';
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import globalCss, { rem } from '../../styles/global-css';
 import { IconSearch, IconSpinner } from '../atoms/Icons';
 import Modal from '../atoms/Modal';
@@ -12,6 +12,9 @@ import ListItem from '../atoms/ListItem';
 interface SearchModalProps {
   isOpen?: boolean;
   openHandler?: () => void;
+  children?: React.ReactElement;
+  valueState?: [string, React.Dispatch<React.SetStateAction<string>>];
+  inputEl?: React.MutableRefObject<HTMLInputElement>
 }
 
 interface SearchSource {
@@ -27,11 +30,13 @@ interface SearchSource {
 
 const SearchModal = ({
   isOpen = false,
-  openHandler
+  openHandler,
+  children,
+  valueState,
+  inputEl
 }: SearchModalProps): React.ReactElement => {
-  const inputEl = useRef<HTMLInputElement>();
   const [posts, setPosts] = useState<SearchSource[]>(undefined);
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = valueState;
   const [isLoading, setLoading] = useState(false);
   const debounceValue = useDebounce(inputValue, 500);
   const resultsList = useRef<HTMLUListElement>();
@@ -127,10 +132,6 @@ const SearchModal = ({
     };
   }, [keyDownHandling]);
 
-  const inputChangeHandling = (event: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
-  }
-
   useEffect(() => {
     if (!inputValue.trim()) {
       setPosts(undefined);
@@ -150,7 +151,9 @@ const SearchModal = ({
   useEffect(() => {
     if (isOpen) {
       inputEl.current.focus();
-      inputEl.current.select();
+      if (inputValue) {
+        inputEl.current.select();
+      }
     }
   }, [isOpen]);
 
@@ -159,7 +162,7 @@ const SearchModal = ({
       <div className={cssSearchWrapper}>
         <div className={cssInputWrapper(posts)}>
           {isLoading ? <IconSpinner spin className={cssLoadingIcon} /> : <IconSearch />}
-          <input type='text' ref={inputEl} className={cssInput} placeholder='검색' onChange={inputChangeHandling} value={inputValue} />
+          {children}
         </div>
         {!errorMessage && posts && posts.length > 0 && (
           <ul className={cssList} ref={resultsList}>
@@ -295,18 +298,6 @@ const cssInputWrapper = (posts: SearchSource[]) => css`
   svg{
     font-size: 1.5rem;
     margin-right: 0.5rem;
-  }
-`;
-
-const cssInput = css`
-  background-color: transparent;
-  color: ${globalCss.color.color};
-  border: none;
-  outline: none;
-  width: 100%;
-
-  &::placeholder{
-    color: ${globalCss.color.borderColor};
   }
 `;
 

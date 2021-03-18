@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import DarkModeSwitch from '../molecules/DarkModeSwitch';
 import { IconBars, IconJthLogoColored, IconPaperWithSignalColored, IconSearch, IconTimes } from '../atoms/Icons';
 import ScrollButton from '../molecules/ScrollButton';
@@ -82,6 +82,28 @@ const MenuList = ({
     setSearchModalOpen(!isSearchModalOpen);
   }
 
+  const inputEl = useRef<HTMLInputElement>();
+  const [inputValue, setInputValue] = useState<string>('');
+  const inputChangeHandling = (event: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+  }
+  const inputClickHandling = () => { //This function is only for mobile Safari input keyboard when focused
+    setSearchModalOpen(!isSearchModalOpen);
+    const fakeInput = document.createElement('input');
+    fakeInput.setAttribute('type', 'text');
+    fakeInput.style.position = 'absolute';
+    fakeInput.style.opacity = '0';
+    fakeInput.style.height = '0';
+    fakeInput.style.fontSize = '16px';
+    document.body.prepend(fakeInput);
+    fakeInput.focus();
+
+    setTimeout(() => {
+      inputEl.current.focus();
+      fakeInput.remove();
+    }, 0);
+  }
+
   return (
     <>
       <nav
@@ -138,11 +160,13 @@ const MenuList = ({
           className={cssBackdrop}
         />
       </nav>
-      <SearchModal isOpen={isSearchModalOpen} openHandler={searchHandling} />
+      <SearchModal isOpen={isSearchModalOpen} openHandler={searchHandling} inputEl={inputEl} valueState={[inputValue, setInputValue]}>
+        <input type='text' ref={inputEl} className={cssInput} placeholder='검색' onChange={inputChangeHandling} value={inputValue} />
+      </SearchModal>
       <ScrollButton
         ariaLabel="검색"
         title="검색"
-        onClick={searchHandling}
+        onClick={inputClickHandling}
         showType="up"
         className={cssSearchButton}
       >
@@ -276,5 +300,17 @@ const cssButtonGrid = css`
     svg {
       font-size: 2rem;
     }
+  }
+`;
+
+const cssInput = css`
+  background-color: transparent;
+  color: ${globalCss.color.color};
+  border: none;
+  outline: none;
+  width: 100%;
+
+  &::placeholder{
+    color: ${globalCss.color.borderColor};
   }
 `;
