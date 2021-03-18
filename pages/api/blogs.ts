@@ -10,7 +10,7 @@ const blogs = async (req: NowRequest, res: NowResponse) => {
   try {
     const { body } = await client.search<SearchResponse<Query>>({
       index,
-      size: 10000,
+      size: 200,
       body: {
         query: {
           bool: {
