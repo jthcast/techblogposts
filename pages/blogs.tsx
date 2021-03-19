@@ -51,36 +51,39 @@ export default function Blogs() {
           </div>
         }
         {!isLoading && !error && blogs && blogs.length > 0 && (
-          <ul className={cssList}>
-            {blogs.map((blog) => {
-              const { id, title } = blog._source;
-              return (
-                <li key={`${id}`}>
-                  <a
-                    href={id}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={title}
-                  >
-                    <div className={cssListItem}>
-                      {icons[title] &&
-                        <div className={cssCompanyIcon}>
-                          <Image
-                            src={`${iconsCtx}${icons[title]}`}
-                            alt={title}
-                            width='fill'
-                            height='fill'
-                            layout='responsive'
-                          />
-                        </div>
-                      }
-                      <span>{title}</span>
-                    </div>
-                  </a>
-                </li>
-              )
-            })}
-          </ul>
+          <>
+            <h1 className={cssTitle}>현재 <span className={cssBlogsCount}>{blogs.length}</span>개의 기술 블로그를 구독중입니다 ✨</h1>
+            <ul className={cssList}>
+              {blogs.map((blog) => {
+                const { id, title } = blog._source;
+                return (
+                  <li key={`${id}`}>
+                    <a
+                      href={id}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={title}
+                    >
+                      <div className={cssListItem}>
+                        {icons[title] &&
+                          <div className={cssCompanyIcon}>
+                            <Image
+                              src={`${iconsCtx}${icons[title]}`}
+                              alt={title}
+                              width='fill'
+                              height='fill'
+                              layout='responsive'
+                            />
+                          </div>
+                        }
+                        <span>{title}</span>
+                      </div>
+                    </a>
+                  </li>
+                )
+              })}
+            </ul>
+          </>
         )}
         {!isLoading && !error &&
           <div className={cssReport}>
@@ -228,4 +231,14 @@ const cssButton = css`
     border: none;
     color: ${globalCss.color.color};
   }
+`;
+
+const cssTitle = css`
+  font-size: 1.25rem;
+  text-align: center;
+  margin-bottom: 5rem;
+`;
+
+const cssBlogsCount = css`
+  color: ${globalCss.color.primaryBrandColor};
 `;
