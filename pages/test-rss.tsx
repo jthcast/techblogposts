@@ -15,7 +15,7 @@ export default function RssTest() {
     event.preventDefault();
     try {
       setLoading(true);
-      const url = inputURLRef.current.value;
+      const url = encodeURI(inputURLRef.current.value);
       const company = inputCompanyRef.current.value;
       const feedResponse = await fetch(`/api/test-rss?url=${url}&company=${company}`);
       const feed = await feedResponse.json();
