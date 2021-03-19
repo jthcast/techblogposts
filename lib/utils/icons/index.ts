@@ -70,6 +70,9 @@ const icons = {
   마키나락스: `makinarocks.png`,
   뷰저블: `beusable.ico`,
   다나와: `danawa.ico`,
+  핀다: `finda.png`,
+  코인플러그: `coinplug.ico`,
+  마이크로소프트: `microsoft.ico`,
 };
 
 export { icons, iconsCtx };
