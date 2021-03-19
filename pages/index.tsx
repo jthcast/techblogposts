@@ -10,6 +10,7 @@ import Image from 'next/image';
 import { gtagOutboundEvent } from '../lib/utils/googleAnalytics';
 import ErrorSection from '../components/atoms/ErrorSection';
 import Button from '../components/atoms/Button';
+import { API } from '../lib/utils/api';
 
 interface PostItem {
   sort: Array<any>;
@@ -32,22 +33,22 @@ export default function Home() {
   const [isInfiniteLoad, setInfiniteLoad] = useContext(InfiniteScrollContext);
   const [sort, setSort] = useState(undefined);
   const root = typeof window !== 'undefined' ? document.querySelector('#__next') : null;
-  const [errorMessage, setErrorMessage] = useState('');
+  const [error, setError] = useState<[number, string]>(undefined);
 
   const getPosts = async () => {
-    try {
-      isInit ? setLoading(true) : setMorePostLoading(true);
-      setErrorMessage('');
-      const fetchData = await fetch(`/api/posts${sort ? `?sort=${JSON.stringify(sort)}` : ''}`);
-      const result = await fetchData.json();
-      setPosts([...posts, ...result]);
-      setSort(result[result.length - 1].sort);
-    } catch (event) {
+    isInit ? setLoading(true) : setMorePostLoading(true);
+    setError(undefined);
+    const fetchData = await fetch(`/api/posts${sort ? `?sort=${JSON.stringify(sort)}` : ''}`);
+    const result: API = await fetchData.json();
+    const { isError, statusCode, message, data } = result;
+    if (isError) {
       setInit(true);
-      setErrorMessage('DB로 부터 데이터를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.');
-    } finally {
-      isInit ? setLoading(false) : setMorePostLoading(false);
+      setError([statusCode, message]);
+      return;
     }
+    setPosts([...posts, ...data]);
+    setSort(data[data.length - 1].sort);
+    isInit ? setLoading(false) : setMorePostLoading(false);
   };
 
   useEffect(() => {
@@ -83,7 +84,7 @@ export default function Home() {
             <IconSpinner spin />
           </div>
         }
-        {!isLoading && !errorMessage && posts && posts.length > 0 && (
+        {!isLoading && !error && posts && posts.length > 0 && (
           <ul className={cssList}>
             {posts.map((post) => {
               const { company, id, publishDate, title } = post._source;
@@ -139,7 +140,7 @@ export default function Home() {
             })}
           </ul>
         )}
-        {!errorMessage && sort &&
+        {!error && sort &&
           <button className={cssMorePostsButton} onClick={infiniteScrollHandling} ref={morePostsButtonRef}>
             {isMorePostLoading ?
               <IconSpinner spin /> :
@@ -150,8 +151,8 @@ export default function Home() {
             }
           </button>
         }
-        {errorMessage &&
-          <ErrorSection errorMessage={errorMessage}>
+        {error &&
+          <ErrorSection message={error[1]} statusCode={error[0]}>
             <Button ariaLabel="Retry" className={cssButton} onClick={getPosts}><IconTemplate iconName="IconReDo" /></Button>
           </ErrorSection>
         }
@@ -297,6 +298,7 @@ const cssCompanyIcon = css`
 const cssButton = css`
   background-color: ${globalCss.color.secondaryBrandColor};
   border: none;
+  color: ${globalCss.color.white};
 
   &:hover {
     opacity: 1;

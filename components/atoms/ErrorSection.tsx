@@ -3,28 +3,26 @@ import globalCss, { rem } from '../../styles/global-css';
 import { IconEnvelope } from './Icons';
 import config from '../../config';
 
-interface ErrorProps {
-  children?: React.ReactElement;
-  errorMessage?: string;
+interface ErrorSectionProps {
+  statusCode: number;
+  message: string;
+  children: React.ReactElement;
 }
 
-const ErrorSection = ({
-  children,
-  errorMessage
-}: ErrorProps): React.ReactElement => {
+const ErrorSection = ({ statusCode, message, children }: ErrorSectionProps): React.ReactElement => {
   return (
     <section className={cssSection}>
       <div className={cssContainer}>
         <h1 data-content='오류가 발생했습니다'>
           오류가 발생했습니다. 💥
         </h1>
-        {errorMessage ?
+        {message ?
           <>
-            <p>죄송합니다 😥</p>
-            <p>{errorMessage}</p>
+            <p>{statusCode} 😥</p>
+            <p>{message}</p>
           </> :
           <>
-            <p>죄송합니다 😥 오류를 제보 부탁드립니다.</p>
+            <p>죄송합니다 😥 오류를 제보 부탁드립니다.({statusCode})</p>
             <a className={cssIcon} href={`mailto:${config.author.email}`} aria-label="mail">
               <IconEnvelope />
             </a>

@@ -8,6 +8,7 @@ import Image from 'next/image';
 import config from '../config';
 import ErrorSection from '../components/atoms/ErrorSection';
 import Button from '../components/atoms/Button';
+import { API } from '../lib/utils/api';
 
 interface BlogItem {
   _source: {
@@ -19,22 +20,22 @@ interface BlogItem {
 export default function Blogs() {
   const [isLoading, setLoading] = useState(true);
   const [blogs, setBlogs] = useState<BlogItem[]>([]);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [error, setError] = useState<[number, string]>(undefined);
 
   async function getBlogs() {
-    try {
-      setLoading(true);
-      setErrorMessage('');
-      const fetchData = await fetch(`/api/blogs`, {
-        method: 'GET',
-      });
-      const result = await fetchData.json();
-      setBlogs([...result]);
-    } catch (event) {
-      setErrorMessage('DB로 부터 데이터를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.');
-    } finally {
-      setLoading(false);
+    setLoading(true);
+    setError(undefined);
+    const fetchData = await fetch(`/api/blogs`, {
+      method: 'GET',
+    });
+    const result: API = await fetchData.json();
+    const { isError, statusCode, message, data } = result;
+    if (isError) {
+      setError([statusCode, message]);
+      return;
     }
+    setBlogs([...data]);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -44,12 +45,12 @@ export default function Blogs() {
   return (
     <Layout title={'기술 블로그 목록'}>
       <section className={cssBlogs}>
-        {isLoading &&
+        {isLoading && !error &&
           <div className={cssLoading}>
             <IconSpinner spin />
           </div>
         }
-        {!isLoading && !errorMessage && blogs && blogs.length > 0 && (
+        {!isLoading && !error && blogs && blogs.length > 0 && (
           <ul className={cssList}>
             {blogs.map((blog) => {
               const { id, title } = blog._source;
@@ -81,7 +82,7 @@ export default function Blogs() {
             })}
           </ul>
         )}
-        {!isLoading && !errorMessage &&
+        {!isLoading && !error &&
           <div className={cssReport}>
             <h3>원하시는 기업의 기술 블로그가 목록에 없나요?</h3>
             <p>저에게 알려주세요. 추가하겠습니다. 🙌</p>
@@ -92,8 +93,8 @@ export default function Blogs() {
             </a>
           </div>
         }
-        {errorMessage &&
-          <ErrorSection errorMessage={errorMessage}>
+        {error &&
+          <ErrorSection message={error[1]} statusCode={error[0]}>
             <Button ariaLabel="Retry" className={cssButton} onClick={getBlogs}><IconTemplate iconName="IconReDo" /></Button>
           </ErrorSection>
         }
@@ -209,6 +210,7 @@ const cssReport = css`
 const cssButton = css`
   background-color: ${globalCss.color.secondaryBrandColor};
   border: none;
+  color: ${globalCss.color.white};
 
   &:hover {
     opacity: 1;

@@ -43,26 +43,25 @@ const SearchModal = ({
   const [movePosition, setMovePosition] = useState('');
   const [indexValue, setIndexValue] = useState<number>(0);
   const [maxIndexValue, setMaxIndexValue] = useState<number>(undefined);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [error, setError] = useState<[number, string]>(undefined);
 
   const searchHandling = async () => {
-    try {
-      if (!inputValue.trim()) {
-        setPosts(undefined);
-        return;
-      }
-      setLoading(true);
-      const fetchData = await fetch(`/api/search?query=${inputValue}`);
-      const result = await fetchData.json();
-      setPosts([...result]);
-      setMaxIndexValue(result.length);
-      setIndexValue(0);
-    } catch (event) {
-      setErrorMessage('DB로 부터 데이터를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.');
-    } finally {
-      setLoading(false);
+    if (!inputValue.trim()) {
+      setPosts(undefined);
+      return;
     }
-
+    setLoading(true);
+    const fetchData = await fetch(`/api/search?query=${inputValue}`);
+    const result = await fetchData.json();
+    const { isError, statusCode, message, data } = result;
+    setLoading(false);
+    if (isError) {
+      setError([statusCode, message]);
+      return;
+    }
+    setPosts([...data]);
+    setMaxIndexValue(data.length);
+    setIndexValue(0);
   };
 
   const keyDownHandling = (event: KeyboardEvent) => {
@@ -164,7 +163,7 @@ const SearchModal = ({
           {isLoading ? <IconSpinner spin className={cssLoadingIcon} /> : <IconSearch />}
           {children}
         </div>
-        {!errorMessage && posts && posts.length > 0 && (
+        {!error && posts && posts.length > 0 && (
           <ul className={cssList} ref={resultsList}>
             {posts.map((post, index) => {
               const { publishDate, company, id, title } = post._source;
@@ -228,7 +227,7 @@ const SearchModal = ({
             })}
           </ul>
         )}
-        {!errorMessage && posts && !posts.length && inputValue &&
+        {!error && posts && !posts.length && inputValue &&
           <ul className={cssList} ref={resultsList}>
             <ListItem className={cx(
               { [cssNoResults]: true },
@@ -247,7 +246,7 @@ const SearchModal = ({
             </ListItem>
           </ul>
         }
-        {errorMessage &&
+        {error &&
           <ul className={cssList} ref={resultsList}>
             <ListItem className={cx(
               { [cssNoResults]: true },
@@ -255,7 +254,7 @@ const SearchModal = ({
             )}
               onFocus={focusHandling}
             >
-              <div className={cssNoResults}>{errorMessage} 😥</div>
+              <div className={cssNoResults}>{error[1]} 😥</div>
             </ListItem>
           </ul>
         }
