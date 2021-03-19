@@ -38,7 +38,7 @@ async function getRSS(url: string, company: string) {
       return acc;
     }, []);
 
-    return items;
+    return items.sort((a, b) => parseInt(b.publishDate) - parseInt(a.publishDate));
   } catch (err) {
     console.log(`${url} is maybe broken.(getRSS)`);
     console.log(err);
