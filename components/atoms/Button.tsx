@@ -5,7 +5,7 @@ import { IconSpinner } from './Icons';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLElement> {
   ariaLabel?: string;
-  children?: React.ReactElement;
+  children?: React.ReactElement | string;
   className?: string;
   danger?: boolean;
   disabled?: boolean;
