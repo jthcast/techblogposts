@@ -57,7 +57,7 @@ export default function Blogs() {
               {blogs.map((blog) => {
                 const { id, title } = blog._source;
                 return (
-                  <li key={`${id}`}>
+                  <li key={id}>
                     <a
                       href={id}
                       target="_blank"
