@@ -5,8 +5,8 @@ import config from '../../config';
 
 interface ErrorSectionProps {
   statusCode: number;
-  message: string;
-  children: React.ReactElement;
+  message?: string;
+  children?: React.ReactElement;
 }
 
 const ErrorSection = ({ statusCode, message, children }: ErrorSectionProps): React.ReactElement => {
