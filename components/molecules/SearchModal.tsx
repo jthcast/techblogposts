@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { gtagOutboundEvent } from '../../lib/utils/googleAnalytics';
 import useDebounce from '../../customHooks/useDebounce';
 import ListItem from '../atoms/ListItem';
+import { useRouter } from 'next/router'
 
 interface SearchModalProps {
   isOpen?: boolean;
@@ -44,6 +45,7 @@ const SearchModal = ({
   const [indexValue, setIndexValue] = useState<number>(0);
   const [maxIndexValue, setMaxIndexValue] = useState<number>(undefined);
   const [error, setError] = useState<[number, string]>(undefined);
+  const router = useRouter();
 
   const searchHandling = async () => {
     if (!inputValue.trim()) {
@@ -64,11 +66,18 @@ const SearchModal = ({
     setIndexValue(0);
   };
 
+  const openHandling = () => {
+    if (openHandler) {
+      openHandler();
+    }
+    router.push('', undefined, { shallow: true });
+  }
+
   const keyDownHandling = (event: KeyboardEvent) => {
     //TODO bug: when input value is Korean function run twice. setTimeout makes it okay but I donw know why 🤷‍♂️
     if (event.code === 'Space' && event.ctrlKey) {
       setTimeout(() => {
-        openHandler();
+        openHandling();
       }, 0);
     }
     if (event.code === 'Tab' && isOpen) {
@@ -118,7 +127,7 @@ const SearchModal = ({
           setPosts(undefined);
           return;
         }
-        openHandler();
+        openHandling();
       }, 0);
     }
   }
@@ -149,15 +158,20 @@ const SearchModal = ({
 
   useEffect(() => {
     if (isOpen) {
+      router.push('?search', undefined, { shallow: true });
+      window.addEventListener('popstate', openHandling);
       inputEl.current.focus();
       if (inputValue) {
         inputEl.current.select();
       }
     }
+    return () => {
+      window.removeEventListener('popstate', openHandling);
+    }
   }, [isOpen]);
 
   return (
-    <Modal isOpen={isOpen} openHandler={openHandler} escClose={false}>
+    <Modal isOpen={isOpen} openHandler={openHandling} escClose={false}>
       <div className={cssSearchWrapper}>
         <div className={cssInputWrapper(posts)}>
           {isLoading ? <IconSpinner spin className={cssLoadingIcon} /> : <IconSearch />}
