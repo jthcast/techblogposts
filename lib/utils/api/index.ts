@@ -4,3 +4,10 @@ export interface API {
   message: string;
   data: any[];
 }
+
+export interface PostItem {
+  title: string;
+  id: string;
+  company: string;
+  publishDate: number;
+}
