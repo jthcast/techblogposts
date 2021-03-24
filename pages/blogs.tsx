@@ -237,6 +237,14 @@ const cssTitle = css`
   font-size: 1.25rem;
   text-align: center;
   margin-bottom: 5rem;
+
+  @media ${globalCss.breakpoint.mobileQuery} {
+    margin-bottom: 1rem;
+  }
+
+  @media ${globalCss.breakpoint.tabletQuery} {
+    margin-bottom: 3rem 0;
+  }
 `;
 
 const cssBlogsCount = css`
