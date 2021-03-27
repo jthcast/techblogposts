@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 
-export const InfiniteScrollContext = createContext(undefined);
+export const InfiniteScrollContext = createContext<[string, (newValue: string) => void]>(undefined);
 
 export const InfiniteScrollProvider = ({ children }) => {
   const [isInfiniteLoad, rawSetInfiniteLoad] = useState('off');

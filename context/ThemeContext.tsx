@@ -1,9 +1,9 @@
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 
-export const ThemeContext = createContext(undefined);
+export const ThemeContext = createContext<[string, (newValue: string) => void]>(undefined);
 
 export const ThemeProvider = ({ children }) => {
-  const [colorMode, rawSetColorMode] = useState(undefined);
+  const [colorMode, rawSetColorMode] = useState<string>(undefined);
 
   const checkSystemPreference = useCallback(() => {
     const isClient = typeof window !== 'undefined';
