@@ -1,7 +1,7 @@
 import { css, cx } from '@emotion/css';
 import React, { useEffect, useRef, useState } from 'react';
 import globalCss, { rem } from '../../styles/global-css';
-import { IconSearch, IconSpinner } from '../atoms/Icons';
+import { IconSearch, IconSpinner, IconTimesCircle } from '../atoms/Icons';
 import Modal from '../atoms/Modal';
 import { icons, iconsCtx } from '../../lib/utils/icons';
 import Image from 'next/image';
@@ -156,6 +156,13 @@ const SearchModal = ({
     }
   }
 
+  const removeHandling = () => {
+    setInputValue('');
+    if (inputEl) {
+      inputEl.current.focus();
+    }
+  }
+
   useEffect(() => {
     if (isOpen) {
       router.push('?search', undefined, { shallow: true });
@@ -176,6 +183,7 @@ const SearchModal = ({
         <div className={cssInputWrapper(posts)}>
           {isLoading ? <IconSpinner spin className={cssLoadingIcon} /> : <IconSearch />}
           {children}
+          {inputValue && <IconTimesCircle onClick={removeHandling} className={cssIcon} /> }
         </div>
         {!error && posts && posts.length > 0 && (
           <ul className={cssList} ref={resultsList}>
@@ -210,6 +218,7 @@ const SearchModal = ({
                     rel="noreferrer"
                     aria-label={title}
                     onClick={() => gtagOutboundEvent(id, title)}
+                    title={title}
                   >
                     <p className={cssPostTitle}>{title}</p>
                     <ul className={cssItemDetail}>
@@ -398,4 +407,8 @@ const cssCompanyIcon = css`
 const cssNoResults = css`
   padding: 0.5rem 0.5rem;
   font-size: 1rem;
+`;
+
+const cssIcon = css`
+  cursor: pointer;
 `;
