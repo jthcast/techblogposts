@@ -16,6 +16,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLElement> {
     event: React.MouseEvent<HTMLElement, MouseEvent>
   ) => void | undefined;
   tabIndex?: number;
+  type?: "button" | "submit" | "reset";
 }
 
 const Button = ({
@@ -30,6 +31,7 @@ const Button = ({
   tabIndex,
   title,
   formTarget,
+  type = 'button'
 }: ButtonProps): React.ReactElement => {
   return (
     <button
@@ -43,7 +45,7 @@ const Button = ({
       disabled={loading || disabled || false}
       onClick={onClick}
       tabIndex={tabIndex}
-      type="button"
+      type={type}
       formTarget={formTarget}
       formAction={formAction}
       title={title}
