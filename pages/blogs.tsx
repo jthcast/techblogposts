@@ -63,6 +63,7 @@ export default function Blogs() {
                       target="_blank"
                       rel="noreferrer"
                       aria-label={title}
+                      title={title}
                     >
                       <div className={cssListItem}>
                         {icons[title] &&

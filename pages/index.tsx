@@ -109,6 +109,7 @@ export default function Home() {
                     rel="noreferrer"
                     aria-label={title}
                     onClick={() => gtagOutboundEvent(id, title)}
+                    title={title}
                   >
                     <p className={cssPostTitle}>{title}</p>
                     <ul className={cssItemDetail}>
