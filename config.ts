@@ -6,6 +6,7 @@ export default {
     email: `jthcast@gmail.com`,
   },
   description: `IT 기술 블로그들의 최신 포스트를 한곳에서 보세요.`,
+  keywords: `기술 블로그, 기술 블로그 모음, IT기술 블로그, IT기술 블로그 모음, 스타트업 기술 블로그`,
   siteUrl: `https://techblogposts.com`,
   githubUrl: `https://github.com/jthcast/techblogposts`,
   image: `/logo-seo.png`,

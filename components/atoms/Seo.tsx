@@ -22,6 +22,7 @@ const SEO = ({ description = '', lang = 'ko', title, image, author, publishDate 
   const defaultTitle = siteMetadata?.title;
   const defaultImage = siteMetadata?.image;
   const siteUrl = siteMetadata?.siteUrl;
+  const keywords = siteMetadata?.keywords;
 
   useEffect(() => {
     document.documentElement.lang = lang;
@@ -32,7 +33,7 @@ const SEO = ({ description = '', lang = 'ko', title, image, author, publishDate 
       <title>{defaultTitle && title ? defaultTitle !== title ? `${title} - ${defaultTitle}` : null : defaultTitle}</title>
       <meta httpEquiv="x-ua-compatible" content="ie=edge"></meta>
       <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'></meta>
-      <link rel="canonical" href="https://techblogposts.com"></link>
+      <link rel="canonical" href={siteUrl}></link>
       <link rel="manifest" href="/manifest.json"></link>
       <link href='/favicon.svg' rel='icon' type='image/svg+xml' sizes='16x16'></link>
       <link href='/favicon-32x32.png' rel='icon' type='image/png' sizes='32x32'></link>
@@ -45,7 +46,7 @@ const SEO = ({ description = '', lang = 'ko', title, image, author, publishDate 
       <link rel="apple-touch-icon" sizes='256x256' href="/icons/icon-256x256.png"></link>
       <link rel="apple-touch-icon" sizes='384x384' href="/icons/icon-384x384.png"></link>
       <link rel="apple-touch-icon" sizes='512x512' href="/icons/icon-512x512.png"></link>
-      <meta name="keywords" content="기술 블로그, 기술 블로그 모음, IT기술 블로그, IT기술 블로그 모음, 스타트업 기술 블로그"></meta>
+      <meta name="keywords" content={keywords}></meta>
       <meta name='description' content={metaDescription} />
       <meta name='author' content={metaAuthor} />
       <meta itemProp='datePublished' content={metaPublishDate} />
