@@ -35,7 +35,7 @@ const Footer = (): React.ReactElement => {
               © {new Date().getFullYear()} {config.copyright}.
             </a>
           </li>
-          <li>
+          <li className={cssLogo}>
             <a
               href={config.copyrightHomepage}
               target="_blank"
@@ -43,7 +43,7 @@ const Footer = (): React.ReactElement => {
               className={cssExternalLink}
               aria-label="JthCast"
             >
-              <IconJthLogoColored className={cssLogo} />
+              <IconJthLogoColored />
             </a>
           </li>
           {/* <li> */}
@@ -217,14 +217,17 @@ const cssItemsRight = css`
 `;
 
 const cssLogo = css`
-  display: none;
+display: none;
 
-  @media ${globalCss.breakpoint.mobileQuery} {
-    display: block;
+@media ${globalCss.breakpoint.mobileQuery} {
+  display: block;
+  
+  svg{
     font-size: 3rem;
     margin-right: 2rem;
     margin-top: 0.5rem;
   }
+}
 `;
 
 const cssIcon = css`
