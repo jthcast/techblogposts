@@ -79,7 +79,6 @@ const cssModal = (isOpen: boolean) => css`
   top: 0;
   background-color: ${globalCss.color.backgroundColorDownOpacity};
   backdrop-filter: blur(16px);
-  text-transform: uppercase;
   flex-direction: column;
   align-items: center;
   transition: opacity 0.3s cubic-bezier(0.19, 1, 0.22, 1);
