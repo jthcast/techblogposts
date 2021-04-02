@@ -132,11 +132,19 @@ const SearchModal = ({
     }
   }
 
+  const mouseWheelHandling = (event: Event) => {
+    if(movePosition){
+      setMovePosition(undefined);
+    }
+  }
+
   useEffect(() => {
     window.addEventListener('keydown', keyDownHandling);
+    window.addEventListener('mousewheel', mouseWheelHandling);
 
     return () => {
       window.removeEventListener('keydown', keyDownHandling);
+      window.removeEventListener('mousewheel', mouseWheelHandling);
     };
   }, [keyDownHandling]);
 
