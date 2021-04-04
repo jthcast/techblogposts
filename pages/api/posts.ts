@@ -10,6 +10,10 @@ interface Query {
   };
 }
 
+const checkId = (id: string) => {
+  return id ? id.replace(/\s/g, '%20') : null;
+};
+
 const posts = async (req: NowRequest, res: NowResponse) => {
   try {
     let query = {
@@ -47,7 +51,11 @@ const posts = async (req: NowRequest, res: NowResponse) => {
       },
     };
     if (req.query.sort) {
-      query.body['search_after'] = JSON.parse(req.query.sort + '');
+      const sort = JSON.parse(req.query.sort+ '');
+      const [publishDate, id] = sort;
+      query.body['search_after'] = [
+        publishDate, checkId(id)
+      ];
     }
     const { body } = await client.search<SearchResponse<Query>>(query);
     const result: API = {
