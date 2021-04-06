@@ -6,7 +6,7 @@ import { IconSpinner } from './Icons';
 interface SwitchProps {
   ariaLabel?: string;
   checked?: boolean;
-  checkedChildren?: string;
+  checkedChildren?: string | ReactElement;
   children?: ReactElement;
   className?: string;
   disabled?: boolean;
@@ -14,7 +14,7 @@ interface SwitchProps {
   onChange?: (event: React.FormEvent<HTMLButtonElement>) => void;
   onClick?: (event: React.FormEvent<HTMLButtonElement>) => void;
   tabIndex?: number;
-  unCheckedChildren?: string;
+  unCheckedChildren?: string | ReactElement;
   title?: string;
 }
 
