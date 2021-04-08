@@ -1,8 +1,10 @@
 import Layout from '../components/atoms/Layout';
 import { css } from '@emotion/css';
 import globalCss, { rem } from '../styles/global-css';
+import useScrollToTop from '../customHooks/useScrollToTop';
 
-export default function Policy() {
+export default function Privacy() {
+  useScrollToTop();
 
   return (
     <Layout title={'개인정보처리방침'}>

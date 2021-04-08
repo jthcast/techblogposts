@@ -4,11 +4,11 @@ import {
   IconArrowToTop,
   IconEnvelope,
   IconGithub,
-  IconJthLogoColored,
 } from './../atoms/Icons';
 import config from '../../config';
 import { css, cx } from '@emotion/css';
 import globalCss from '../../styles/global-css';
+import Link from 'next/link';
 
 const Footer = (): React.ReactElement => {
   const scrollToTop = () => {
@@ -35,27 +35,22 @@ const Footer = (): React.ReactElement => {
               © {new Date().getFullYear()} {config.copyright}.
             </a>
           </li>
-          <li className={cssLogo}>
-            <a
-              href={config.copyrightHomepage}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cssExternalLink}
-              aria-label="JthCast"
-            >
-              <IconJthLogoColored />
-            </a>
+          <li className={cssImportantLink}>
+            <Link href={`/privacy`}>
+              <a>
+                개인정보처리방침
+              </a>
+            </Link>
           </li>
-          {/* <li> */}
-          {/* <Link aria-label={`Terms of use`} to="/"> */}
-          {/* <span>Terms of use</span> */}
-          {/* </Link> */}
-          {/* </li> */}
-          {/* <li> */}
-          {/* <Link aria-label={`Privacy notice`} to="/404/"> */}
-          {/* <span>Privacy notice</span> */}
-          {/* </Link> */}
-          {/* </li> */}
+          <li>
+            <Link href={`/terms`}>
+              <a
+                className={cssExternalLink}
+              >
+                약관
+              </a>
+            </Link>
+          </li>
         </ul>
         {/* <ul className="jth-footer-items-center">
           <li>
@@ -99,7 +94,7 @@ export default Footer;
 const cssFooter = css`
   margin: auto auto 0 auto;
   width: 100%;
-  z-index: 1;
+  z-index: 0;
   max-width: ${globalCss.common.maxWidth};
   display: flex;
   flex-direction: column;
@@ -247,4 +242,23 @@ const cssScrollTopButton = css`
 
 const cssExternalLink = css`
   text-decoration: none;
+`;
+
+const cssImportantLink = css`
+  a {
+    text-decoration: none;
+    color: ${globalCss.color.secondaryBrandColor};
+
+    &:hover {
+      color: ${globalCss.color.secondaryBrandColor};
+    }
+
+    &:focus {
+      color: ${globalCss.color.secondaryBrandColor};
+    }
+
+    &:active {
+      color: ${globalCss.color.secondaryBrandColor};
+    }
+  }
 `;
