@@ -1,10 +1,8 @@
 import Layout from '../components/atoms/Layout';
-import { useContext, useEffect, useRef, useState } from 'react';
-import { css, keyframes } from '@emotion/css';
+import { useContext, useEffect, useState } from 'react';
+import { css } from '@emotion/css';
 import globalCss, { rem } from '../styles/global-css';
-import { IconMagnetColored, IconSpinner, IconTemplate } from '../components/atoms/Icons';
-import { InfiniteScrollContext } from '../context/InfiniteScrollContext';
-import useObserver from '../customHooks/useObserver';
+import { IconSpinner, IconTemplate } from '../components/atoms/Icons';
 import { icons, iconsCtx } from '../lib/utils/icons';
 import Image from 'next/image';
 import { gtagOutboundEvent } from '../lib/utils/googleAnalytics';
@@ -12,18 +10,9 @@ import ErrorSection from '../components/atoms/ErrorSection';
 import Button from '../components/atoms/Button';
 import { API } from '../lib/utils/api';
 import Bookmark from '../components/atoms/Bookmark';
+import { LoginContext } from '../context/LoginContext';
 
-interface PostItem {
-  inner_hits: {
-    bookmark: {
-      hits: {
-        total: {
-          value: number;
-        }
-      }
-    }
-  };
-  sort: Array<any>;
+export interface BookmarkItem {
   _source: {
     company: string;
     dataType: string;
@@ -35,70 +24,54 @@ interface PostItem {
   }
 }
 
-export default function Home() {
-  const [posts, setPosts] = useState<PostItem[]>([]);
+export default function Bookmarks() {
+  const [posts, setPosts] = useState<BookmarkItem[]>([]);
   const [isLoading, setLoading] = useState(false);
-  const [isInit, setInit] = useState(true);
-  const [isMorePostLoading, setMorePostLoading] = useState(false);
-  const [isInfiniteLoad, setInfiniteLoad] = useContext(InfiniteScrollContext);
-  const [sort, setSort] = useState(undefined);
-  const root = typeof window !== 'undefined' ? document.querySelector('#__next') : null;
   const [error, setError] = useState<[number, string]>(undefined);
+  const [loginInfo, setLogin] = useContext(LoginContext);
 
   const getPosts = async () => {
-    isInit ? setLoading(true) : setMorePostLoading(true);
+    setLoading(true);
     setError(undefined);
-    const fetchData = await fetch(`/api/posts${sort ? `?sort=${JSON.stringify(sort)}` : ''}`);
+    const fetchData = await fetch(`/api/bookmark?uid=${loginInfo.uid}&getType=parent`, {
+      method: 'GET',
+    });
     const result: API = await fetchData.json();
     const { isError, statusCode, message, data } = result;
+    const bookmarks: BookmarkItem[] = data;
     if (isError) {
-      setInit(true);
       setError([statusCode, message]);
       return;
     }
-    setPosts([...posts, ...data]);
-    setSort(data[data.length - 1].sort);
-    isInit ? setLoading(false) : setMorePostLoading(false);
+    const sortedData = bookmarks.sort((a, b) => b._source.publishDate - a._source.publishDate);
+    setPosts([...sortedData]);
+    setLoading(false);
   };
 
   useEffect(() => {
-    getPosts();
-    setInit(false);
-  }, []);
-
-  function infiniteScrollHandling() {
-    setInfiniteLoad(isInfiniteLoad === 'on' ? 'off' : 'on');
-  }
-
-  const morePostsButtonRef = useRef();
-
-  const observer = useObserver({
-    callback: (entry) => {
-      if (!isMorePostLoading && isInfiniteLoad === 'on' && entry.isIntersecting) {
-        getPosts();
-      }
-    }, root: root, rootMargin: '50%', threshold: 0
-  });
-
-  useEffect(() => {
-    if (morePostsButtonRef.current) {
-      observer([morePostsButtonRef.current]);
+    if(loginInfo){
+      getPosts();
     }
-  }, [morePostsButtonRef.current])
+  }, [loginInfo]);
 
   return (
-    <Layout title={'기술 블로그 모음'}>
+    <Layout title={'즐겨찾기'}>
       <section className={cssPosts}>
         {isLoading &&
           <div className={cssLoading}>
             <IconSpinner spin />
           </div>
         }
-        {!isLoading && !error && posts && posts.length > 0 && (
+        {!loginInfo && !isLoading && (
+          <h1 className={cssTitle}>로그인이 필요합니다 😅</h1>
+        )}
+        {loginInfo && !isLoading && !error && posts && posts.length === 0 && (
+          <h1 className={cssTitle}>아직 즐겨찾기에 추가한 포스트가 없어요 😅</h1>
+        )}
+        {loginInfo && !isLoading && !error && posts && posts.length > 0 && (
           <ul className={cssList}>
             {posts.map((post) => {
               const { company, id, publishDate, title, viewCount } = post._source;
-              const bookmarkCount = post.inner_hits.bookmark.hits.total.value;
               const nowDate = new Date();
               const postDate = new Date(publishDate);
               const todayMonth = (nowDate.getMonth() + 1).toString().length === 1 ? `0${nowDate.getMonth() + 1}` : nowDate.getMonth() + 1;
@@ -149,7 +122,7 @@ export default function Home() {
                       </div>
                     </li>
                     <li>
-                      <Bookmark count={bookmarkCount} parent={id} />
+                      <Bookmark parent={id} />
                     </li>
                   </ul>
                 </li>
@@ -157,17 +130,6 @@ export default function Home() {
             })}
           </ul>
         )}
-        {!error && sort &&
-          <button className={cssMorePostsButton} onClick={infiniteScrollHandling} ref={morePostsButtonRef}>
-            {isMorePostLoading ?
-              <IconSpinner spin /> :
-              <>
-                <span>More</span>
-                <div role="img" aria-label="More posts" className={cssBounce}><IconMagnetColored /></div>
-              </>
-            }
-          </button>
-        }
         {error &&
           <ErrorSection message={error[1]} statusCode={error[0]}>
             <Button ariaLabel="Retry" className={cssButton} onClick={getPosts}><IconTemplate iconName="IconReDo" /></Button>
@@ -286,48 +248,6 @@ const cssItemDetailLeft = css`
   align-items: center;
 `;
 
-const cssItemDetailRight = css`
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-  cursor: pointer;
-`;
-
-const cssMorePostsButton = css`
-  display: flex;
-  margin: 1rem auto;
-  padding: 0.5rem 2rem;
-  border: none;
-  border-radius: 0.25rem;
-  color: ${globalCss.color.white};
-  background-color: ${globalCss.color.secondaryBrandColor};
-  cursor: pointer;
-`;
-
-const keyFramesBounce = keyframes`
-  from, 20%, 53%, 80%, to {
-    transform: translate3d(0,0,0);
-  }
-
-  40%, 43% {
-    transform: translate3d(0, ${rem(-7)}, 0);
-  }
-
-  70% {
-    transform: translate3d(0, ${rem(-3)}, 0);
-  }
-
-  90% {
-    transform: translate3d(0,-${rem(-1)},0);
-  }
-`;
-
-const cssBounce = css`
-  margin-left: 0.25rem;
-  margin-top: 0.1rem;
-  animation: ${keyFramesBounce} 1s ease infinite;
-`;
-
 const cssCompanyIcon = css`
   width: 1rem;
   height: 1rem;
@@ -356,5 +276,19 @@ const cssButton = css`
   &:active {
     border: none;
     color: ${globalCss.color.color};
+  }
+`;
+
+const cssTitle = css`
+  font-size: 1.25rem;
+  text-align: center;
+  margin-bottom: 5rem;
+
+  @media ${globalCss.breakpoint.mobileQuery} {
+    margin-bottom: 1rem;
+  }
+
+  @media ${globalCss.breakpoint.tabletQuery} {
+    margin-bottom: 3rem 0;
   }
 `;

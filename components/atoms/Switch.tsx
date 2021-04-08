@@ -1,6 +1,6 @@
 import { css, cx } from '@emotion/css';
 import globalCss from '../../styles/global-css';
-import React, { ReactElement } from 'react';
+import React, { forwardRef, LegacyRef, ReactElement } from 'react';
 import { IconSpinner } from './Icons';
 
 interface SwitchProps {
@@ -18,7 +18,7 @@ interface SwitchProps {
   title?: string;
 }
 
-const Switch = ({
+const Switch = forwardRef(({
   ariaLabel,
   checked = false,
   checkedChildren,
@@ -31,7 +31,7 @@ const Switch = ({
   tabIndex,
   unCheckedChildren,
   title,
-}: SwitchProps): React.ReactElement => {
+}: SwitchProps, ref: LegacyRef<HTMLButtonElement>): React.ReactElement => {
   const onClickHandling = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -45,6 +45,7 @@ const Switch = ({
 
   return (
     <button
+      ref={ref}
       aria-checked={checked}
       aria-label={ariaLabel}
       className={cx(
@@ -69,7 +70,7 @@ const Switch = ({
       </span>
     </button>
   );
-};
+});
 
 export default Switch;
 

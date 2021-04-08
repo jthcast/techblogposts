@@ -30,6 +30,20 @@ const search = async (req: NowRequest, res: NowResponse) => {
                 },
               },
             ],
+            should: [
+              {
+                has_child: {
+                  type: 'bookmark',
+                  inner_hits: {
+                    _source: false,
+                    size: 0
+                  },
+                  query: {
+                    match_all: {}
+                  }
+                }
+              }
+            ],
             must: [
               {
                 multi_match: {

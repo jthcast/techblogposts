@@ -1,5 +1,5 @@
 import { css, cx } from '@emotion/css';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, LegacyRef, useCallback, useEffect, useRef, useState } from 'react';
 import globalCss from '../../styles/global-css';
 
 interface ScrollButtonProps {
@@ -14,7 +14,7 @@ interface ScrollButtonProps {
   title?: string;
 }
 
-const ScrollButton = ({
+const ScrollButton = forwardRef(({
   ariaLabel,
   children,
   className,
@@ -24,7 +24,7 @@ const ScrollButton = ({
   tabIndex,
   id,
   title
-}: ScrollButtonProps): React.ReactElement => {
+}: ScrollButtonProps, ref: LegacyRef<HTMLButtonElement>): React.ReactElement => {
   const [scrollState, setScrollState] = useState(false);
   const [isTopState, setIsTopState] = useState(false);
   const prevScrollRef = useRef(0);
@@ -72,6 +72,7 @@ const ScrollButton = ({
 
   return (
     <button
+      ref={ref}
       id={id}
       tabIndex={tabIndex}
       aria-label={ariaLabel}
@@ -87,7 +88,7 @@ const ScrollButton = ({
       {children || null}
     </button>
   );
-};
+});
 
 export default ScrollButton;
 

@@ -50,7 +50,7 @@ const Button = ({
       formAction={formAction}
       title={title}
     >
-      {loading && <IconSpinner spin className="loading" />}
+      {loading && <IconSpinner spin />}
       {children}
     </button>
   );
@@ -69,7 +69,7 @@ transition: all 0.2s;
 font-weight: normal;
 
 svg {
-  margin: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 &:hover {

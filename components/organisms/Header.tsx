@@ -1,12 +1,12 @@
 import { cx, css } from '@emotion/css';
 import globalCss from '../../styles/global-css';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import HeaderMessage from '../atoms/HeaderMessage';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { IconLogoColored } from '../atoms/Icons';
-import DarkModeSwitch from '../molecules/DarkModeSwitch';
-import InfiniteScrollSwitch from '../molecules/InfiniteScrollSwitch';
-import config from '../../config';
 import Link from 'next/link';
+import { LoginModalContext } from '../../context/LoginModalContext';
+import { LoginContext } from '../../context/LoginContext';
+import firebase from 'firebase/app';
+import Button from '../atoms/Button';
 
 interface HeaderProps {
   ghost?: boolean;
@@ -25,6 +25,9 @@ const Header = ({
   const prevScrollRef = useRef(0);
   const showTypeRef = useRef(showType);
   const hideRef = useRef(false);
+  const [isLoginModalOpen, setLoginModalOpen] = useContext(LoginModalContext);
+  const [loginInfo, setLogin] = useContext(LoginContext);
+  const [isLogoutLoading, setLogoutLoading] = useState(false);
 
   const scrollHandling = useCallback(() => {
     const scrollValue = window.scrollY;
@@ -49,13 +52,23 @@ const Header = ({
     };
   }, [scrollHandling]);
 
+  const logoutHandling = () => {
+    setLogoutLoading(true);
+    firebase.auth().signOut().then(() => {
+      setLogin(false);
+      setLogoutLoading(false);
+    }).catch((error) => {
+      setLogoutLoading(false);
+    });
+  };
+
   return (
     <>
-      <HeaderMessage allowClose>
+      {/* <HeaderMessage allowClose>
         <a href={`mailto:${config.author.email}`} aria-label="mail">
           건의 하기 📧
         </a>
-      </HeaderMessage>
+      </HeaderMessage> */}
       <header
         className={cx(
           { [cssHeader]: true },
@@ -97,12 +110,20 @@ const Header = ({
               </ul>
             ))} */}
           <ul className={cssHeaderItemsRight}>
-            <li>
-              <InfiniteScrollSwitch ariaLabel="자동 글 불러오기" title="자동 글 불러오기" />
-            </li>
-            <li>
-              <DarkModeSwitch ariaLabel="테마" title="테마" />
-            </li>
+            {!loginInfo && 
+              <li>
+                <Button className={cssLoginButton} onClick={() => setLoginModalOpen(!isLoginModalOpen)}>
+                  로그인
+                </Button>
+              </li>
+            }
+            {loginInfo &&
+              <li>
+                <Button className={cssLogoutButton} onClick={logoutHandling} loading={isLogoutLoading}>
+                  로그아웃
+                </Button>
+              </li>
+            }
           </ul>
         </nav>
       </header>
@@ -210,9 +231,9 @@ const cssHeaderItemsRight = css`
     }
   }
 
-  @media ${globalCss.breakpoint.mobileQuery} {
-    display: none;
-  }
+  // @media ${globalCss.breakpoint.mobileQuery} {
+  //   display: none;
+  // }
 `;
 
 const cssHeaderTitle = css`
@@ -229,7 +250,7 @@ const cssHeaderTitle = css`
 
   @media ${globalCss.breakpoint.mobileQuery} {
     width: 100%;
-    justify-content: center;
+    justify-content: flex-start;
     font-size: 1rem;
     margin: 0;
   }
@@ -254,5 +275,57 @@ const cssIcon = css`
   
   &:active {
     border: none;
+  }
+`;
+
+const cssLoginButton = css`
+  border: 0.1rem solid ${globalCss.color.secondaryBrandColor};
+  border-radius: 0.25rem;
+  color: ${globalCss.color.white};
+  background-color: ${globalCss.color.secondaryBrandColor};
+  padding: 0.25rem 0.75rem;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+    border: 0.1rem solid ${globalCss.color.secondaryBrandColor};
+    color: ${globalCss.color.white};
+  }
+  
+  &:focus {
+    opacity: 1;
+    border: 0.1rem solid ${globalCss.color.secondaryBrandColor};
+    color: ${globalCss.color.white};
+  }
+  
+  &:active {
+    border: 0.1rem solid ${globalCss.color.secondaryBrandColor};
+    color: ${globalCss.color.white};
+  }
+`;
+
+const cssLogoutButton = css`
+  border: 0.1rem solid ${globalCss.color.borderColor};
+  border-radius: 0.25rem;
+  color: ${globalCss.color.color};
+  background-color: transparent;
+  padding: 0.25rem 0.75rem;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+    border: 0.1rem solid ${globalCss.color.borderColor};
+    color: ${globalCss.color.color};
+  }
+  
+  &:focus {
+    opacity: 1;
+    border: 0.1rem solid ${globalCss.color.borderColor};
+    color: ${globalCss.color.color};
+  }
+  
+  &:active {
+    border: 0.1rem solid ${globalCss.color.borderColor};
+    color: ${globalCss.color.color};
   }
 `;

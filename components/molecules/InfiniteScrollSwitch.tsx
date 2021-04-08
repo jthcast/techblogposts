@@ -1,5 +1,5 @@
 import { css } from '@emotion/css';
-import React, { useContext } from 'react';
+import React, { forwardRef, Ref, useContext } from 'react';
 import { InfiniteScrollContext } from '../../context/InfiniteScrollContext';
 import { IconMagnetColored } from '../atoms/Icons';
 import Switch from '../atoms/Switch';
@@ -9,7 +9,7 @@ interface InfiniteScrollSwitchProps {
   ariaLabel?: string;
 }
 
-const InfiniteScrollSwitch = ({ title, ariaLabel }: InfiniteScrollSwitchProps): React.ReactElement => {
+const InfiniteScrollSwitch = forwardRef(({ title, ariaLabel }: InfiniteScrollSwitchProps, ref: Ref<HTMLButtonElement>): React.ReactElement => {
   const [isInfiniteLoad, setInfiniteLoad] = useContext(InfiniteScrollContext);
 
   const infiniteScrollHandling = (event: React.FormEvent<HTMLButtonElement>) => {
@@ -18,6 +18,7 @@ const InfiniteScrollSwitch = ({ title, ariaLabel }: InfiniteScrollSwitchProps): 
 
   return (
     <Switch
+      ref={ref}
       ariaLabel={ariaLabel}
       title={title}
       className={cssInfiniteScrollSwitch}
@@ -27,7 +28,7 @@ const InfiniteScrollSwitch = ({ title, ariaLabel }: InfiniteScrollSwitchProps): 
       <IconMagnetColored />
     </Switch>
   );
-};
+});
 
 export default InfiniteScrollSwitch;
 

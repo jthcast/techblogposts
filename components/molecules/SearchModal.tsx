@@ -1,7 +1,7 @@
 import { css, cx } from '@emotion/css';
 import React, { useEffect, useRef, useState } from 'react';
 import globalCss, { rem } from '../../styles/global-css';
-import { IconSearch, IconSpinner, IconTimesCircle } from '../atoms/Icons';
+import { IconSearch, IconSpinner, IconTemplate, IconTimesCircle } from '../atoms/Icons';
 import Modal from '../atoms/Modal';
 import { icons, iconsCtx } from '../../lib/utils/icons';
 import Image from 'next/image';
@@ -9,6 +9,7 @@ import { gtagOutboundEvent } from '../../lib/utils/googleAnalytics';
 import useDebounce from '../../customHooks/useDebounce';
 import ListItem from '../atoms/ListItem';
 import { useRouter } from 'next/router'
+import Bookmark from '../atoms/Bookmark';
 
 interface SearchModalProps {
   isOpen?: boolean;
@@ -19,6 +20,15 @@ interface SearchModalProps {
 }
 
 interface SearchSource {
+  inner_hits: {
+    bookmark: {
+      hits: {
+        total: {
+          value: number;
+        }
+      }
+    }
+  };
   _source: {
     dataType?: string;
     publishDate?: number;
@@ -26,7 +36,7 @@ interface SearchSource {
     id?: string;
     viewCount?: number;
     title?: string;
-  }
+  };
 }
 
 const SearchModal = ({
@@ -196,7 +206,8 @@ const SearchModal = ({
         {!error && posts && posts.length > 0 && (
           <ul className={cssList} ref={resultsList}>
             {posts.map((post, index) => {
-              const { publishDate, company, id, title } = post._source;
+              const { publishDate, company, id, title, viewCount } = post._source;
+              const bookmarkCount = post.inner_hits.bookmark.hits.total.value;
               const nowDate = new Date();
               const postDate = new Date(publishDate);
               const todayMonth = (nowDate.getMonth() + 1).toString().length === 1 ? `0${nowDate.getMonth() + 1}` : nowDate.getMonth() + 1;
@@ -220,15 +231,17 @@ const SearchModal = ({
                   key={id}
                   movePosition={movePosition}
                 >
-                  <a
-                    href={id}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={title}
-                    onClick={() => gtagOutboundEvent(id, title)}
-                    title={title}
-                  >
-                    <p className={cssPostTitle}>{title}</p>
+                  <>
+                    <a
+                      href={id}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={title}
+                      onClick={() => gtagOutboundEvent(id, title)}
+                      title={title}
+                    >
+                      <p className={cssPostTitle}>{title}</p>
+                    </a>
                     <ul className={cssItemDetail}>
                       <li className={cssItemDetailLeft}>
                         {icons[company] &&
@@ -244,15 +257,20 @@ const SearchModal = ({
                         }
                         {company}
                       </li>
-                      {/* <li>
-                        <span role="img" aria-label="viewCount">👀</span>{' '}
-                        {post.viewCount.N}
-                      </li> */}
                       <li>
                         <time dateTime={postDate.toISOString()}>{dateDiffer < 8 ? dateDifferString : postDateString}</time>
                       </li>
+                      <li>
+                        <div className={cssItemDetailItem}>
+                          <IconTemplate iconName="IconEye" />
+                          {viewCount}
+                        </div>
+                      </li>
+                      <li>
+                        <Bookmark count={bookmarkCount} parent={id} />
+                      </li>
                     </ul>
-                  </a>
+                  </>
                 </ListItem>
               )
             })}
@@ -302,16 +320,15 @@ const cssLoadingIcon = css`
 
 const cssSearchWrapper = css`
   width: 100%;
-  max-width: ${globalCss.common.maxWidth};
+  max-width: 70vw;
   transform: translateY(15vh);
-  padding: 0 5rem;
 
   @media ${globalCss.breakpoint.mobileQuery} {
-    padding: 0 1.25rem;
+    max-width: 85vw;
   }
 
   @media ${globalCss.breakpoint.tabletQuery} {
-    padding: 0 3rem;
+    max-width: 80vw;
   }
 `;
 
@@ -397,6 +414,22 @@ const cssItemDetail = css`
     &:nth-last-child(1) {
       margin-right: 0;
     }
+  }
+`;
+
+const cssItemDetailItem = css`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border: none;
+  background: none;
+  color: ${globalCss.color.colorDown};
+  height: 100%;
+
+  svg {
+    height: 100%;
+    margin-right: 0.25rem;
+    margin-top: 0.1rem;
   }
 `;
 

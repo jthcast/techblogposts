@@ -1,6 +1,6 @@
-import React, { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
 import DarkModeSwitch from '../molecules/DarkModeSwitch';
-import { IconBars, IconJthLogoColored, IconPaperWithSignalColored, IconSearch, IconTimes } from '../atoms/Icons';
+import { IconBars, IconCogWithCardColored, IconStarInTheBookColored, IconPaperWithLinesColored, IconPaperWithSignalColored, IconSearch, IconTemplate, IconTimes } from '../atoms/Icons';
 import ScrollButton from '../molecules/ScrollButton';
 import InfiniteScrollSwitch from '../molecules/InfiniteScrollSwitch';
 import { css, cx } from '@emotion/css';
@@ -8,6 +8,7 @@ import globalCss from '../../styles/global-css';
 import config from '../../config';
 import Link from 'next/link';
 import SearchModal from '../molecules/SearchModal';
+import { LoginContext } from '../../context/LoginContext';
 
 interface MenuListProps {
   showStartPosition?: 'bottom' | 'left' | 'none' | 'right' | 'top';
@@ -16,17 +17,11 @@ interface MenuListProps {
 const MenuList = ({
   showStartPosition = 'none',
 }: MenuListProps): React.ReactElement => {
-  let firstTabEl = undefined;
-  let lastTabEl = undefined;
-  const isClient = typeof window !== 'undefined';
-  if (isClient) {
-    firstTabEl = document.querySelectorAll(
-      '#menulist-items li:first-child > :first-child'
-    )[0] as HTMLButtonElement;
-    lastTabEl = document.querySelector(
-      '#scrollButton-menuList-menu'
-    ) as HTMLLIElement;
-  }
+  const [loginInfo, setLogin] = useContext(LoginContext);
+  const firstTabRef = useRef<HTMLButtonElement>();
+  const firstTabEl = firstTabRef.current;
+  const lastTabRef = useRef<HTMLButtonElement>();
+  const lastTabEl = lastTabRef.current;
   const [menuState, setMenuState] = useState(false);
 
   const menuListHandling = () => {
@@ -39,54 +34,53 @@ const MenuList = ({
     } else {
       document.body.style.removeProperty('overflow-y');
     }
-  }, [menuState])
+  }, [menuState]);
 
-  const keyDownHandling = useCallback(
-    (event: KeyboardEvent) => {
-      if (event.code === 'Escape' && menuState) {
-        setMenuState(false);
-      }
-      if (
-        menuState &&
-        event.code === 'Tab' &&
-        event.target === lastTabEl &&
-        !event.shiftKey
-      ) {
-        event.preventDefault();
-        firstTabEl.focus();
-      }
-      if (
-        menuState &&
-        event.code === 'Tab' &&
-        event.target === firstTabEl &&
-        event.shiftKey
-      ) {
-        event.preventDefault();
-        lastTabEl.focus();
-      }
-    },
-    [menuState, firstTabEl, lastTabEl]
-  );
+  const keyDownHandling = (event: KeyboardEvent) => {
+    if (event.code === 'Escape' && menuState) {
+      setMenuState(false);
+    }
+    if (
+      menuState &&
+      event.code === 'Tab' &&
+      event.target === lastTabEl &&
+      !event.shiftKey
+    ) {
+      event.preventDefault();
+      firstTabEl.focus();
+    }
+    if (
+      menuState &&
+      event.code === 'Tab' &&
+      event.target === firstTabEl &&
+      event.shiftKey
+    ) {
+      event.preventDefault();
+      lastTabEl.focus();
+    }
+  }
 
   useEffect(() => {
-    window.addEventListener('keydown', (event) => keyDownHandling(event));
+    window.addEventListener('keydown', keyDownHandling);
 
     return () => {
-      window.removeEventListener('keydown', (event) => keyDownHandling(event));
+      window.removeEventListener('keydown', keyDownHandling);
     };
-  }, [keyDownHandling]);
+  }, [menuState]);
 
   const [isSearchModalOpen, setSearchModalOpen] = useState(false);
 
   const searchHandling = () => {
     setSearchModalOpen(!isSearchModalOpen);
-  }
+  };
 
   const inputEl = useRef<HTMLInputElement>();
   const [inputValue, setInputValue] = useState<string>('');
+
   const inputChangeHandling = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
-  }
+  };
+
   const inputClickHandling = () => { //This function is only for mobile Safari input keyboard when focused
     setSearchModalOpen(!isSearchModalOpen);
     const fakeInput = document.createElement('input');
@@ -102,7 +96,7 @@ const MenuList = ({
       inputEl.current.focus();
       fakeInput.remove();
     }, 0);
-  }
+  };
 
   return (
     <>
@@ -119,14 +113,27 @@ const MenuList = ({
         aria-modal="true"
       >
         <div className={cssMenuListItems(menuState)}>
-          <ul id="menulist-items">
+          <ul className={cssTwoLineList} id="menulist-items">
             <li className={cssButtonGrid}>
-              <InfiniteScrollSwitch />
+              <InfiniteScrollSwitch ref={firstTabRef} />
               <span>자동 글 불러오기</span>
             </li>
             <li className={cssButtonGrid}>
               <DarkModeSwitch />
               <span>테마</span>
+            </li>
+            <li className={cssButtonGrid}>
+              <Link
+                href="/"
+              >
+                <a
+                  aria-label="post list"
+                  onClick={menuListHandling}
+                >
+                  <IconPaperWithLinesColored />
+                </a>
+              </Link>
+              <span>포스트 목록</span>
             </li>
             <li className={cssButtonGrid}>
               <Link
@@ -141,16 +148,58 @@ const MenuList = ({
               </Link>
               <span>블로그 목록</span>
             </li>
-            <li className={cssButtonGrid}>
+            {loginInfo && (
+              <>
+                <li className={cssButtonGrid}>
+                  <Link href="/bookmarks">
+                    <a
+                      aria-label="bookmark list"
+                      onClick={menuListHandling}
+                    >
+                      <IconStarInTheBookColored />
+                    </a>
+                  </Link>
+                  <span>즐겨찾기</span>
+                </li>
+                <li className={cssButtonGrid}>
+                  <Link href="/mypage">
+                    <a
+                      aria-label="mypage"
+                      onClick={menuListHandling}
+                    >
+                      <IconCogWithCardColored />
+                    </a>
+                  </Link>
+                  <span>계정 설정</span>
+                </li>
+              </>
+            )}
+          </ul>
+          <ul className={cssFlexRowList}>
+            <li className={cssIcon}>
+              <a href={`mailto:${config.author.email}`} aria-label="mail">
+                <IconTemplate iconName="IconEnvelope" />
+              </a>
+            </li>
+            <li className={cssIcon}>
               <a
                 href={config.copyrightHomepage}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="JthCast"
               >
-                <IconJthLogoColored />
+                <IconTemplate iconName="IconLogo" />
               </a>
-              <span>© {new Date().getFullYear()} {config.copyright}.</span>
+            </li>
+            <li className={cssIcon}>
+              <a
+                href={`${config.githubUrl}`}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="github"
+              >
+                <IconTemplate iconName="IconGithub" />
+              </a>
             </li>
           </ul>
         </div>
@@ -164,16 +213,7 @@ const MenuList = ({
         <input type='text' ref={inputEl} className={cssInput} placeholder='검색' onChange={inputChangeHandling} value={inputValue} />
       </SearchModal>
       <ScrollButton
-        ariaLabel="검색"
-        title="검색"
-        onClick={inputClickHandling}
-        showType="up"
-        className={cssSearchButton}
-      >
-        <IconSearch />
-      </ScrollButton>
-      <ScrollButton
-        id="scrollButton-menuList-menu"
+        ref={lastTabRef}
         ariaLabel="메뉴"
         title="메뉴"
         onClick={menuListHandling}
@@ -181,6 +221,15 @@ const MenuList = ({
         className={cssMenuButton}
       >
         {menuState ? <IconTimes /> : <IconBars />}
+      </ScrollButton>
+      <ScrollButton
+        ariaLabel="검색"
+        title="검색"
+        onClick={inputClickHandling}
+        showType="up"
+        className={cssSearchButton}
+      >
+        <IconSearch />
       </ScrollButton>
     </>
   );
@@ -193,7 +242,6 @@ const cssMenuList = css`
   width: 100%;
   position: fixed;
   top: 0;
-  // background-color: $primaryBrandColor;
   background-color: ${globalCss.color.backgroundColorDownOpacity};
   backdrop-filter: blur(16px);
   font-size: 2rem;
@@ -215,29 +263,37 @@ const cssMenuList = css`
 
 const cssMenuListItems = (menuState: boolean) => css`
   margin: auto;
+  transform: translateY(-15%);
+  ${menuState && 'transform: translateY(0)'};
+  transition: transform 830ms cubic-bezier(0.19, 1, 0.22, 1);
 
   ul {
     padding: 0;
     list-style: none;
-    display: flex;
     align-items: center;
-    flex-direction: column;
-    transition: transform 830ms cubic-bezier(0.19, 1, 0.22, 1);
-    transform: translateY(-15%);
-    ${menuState && 'transform: translateY(0)'};
+    margin-bottom: 3rem;
+  }
 
-    li {
-      margin-bottom: 1rem;
-
-      &:nth-last-child(1) {
-        margin-bottom: 0;
-      }
-    }
+  ul:nth-last-child(1) {
+    margin-bottom: 0;
   }
 
   @media ${globalCss.breakpoint.mobileQuery} {
     line-height: 160%;
   }
+`;
+
+const cssTwoLineList = css`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+`;
+
+const cssFlexRowList = css`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
 `;
 
 const cssShowPositionBottom = (menuState: boolean) => css`
@@ -312,5 +368,13 @@ const cssInput = css`
 
   &::placeholder{
     color: ${globalCss.color.borderColor};
+  }
+`;
+
+const cssIcon = css`
+  font-size: 1.5rem;
+
+  @media ${globalCss.breakpoint.mobileQuery} {
+    font-size: 2rem;
   }
 `;
