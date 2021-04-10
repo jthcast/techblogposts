@@ -6,6 +6,7 @@ import { IconLogoColored, IconGoogleColored, IconTemplate } from '../atoms/Icons
 import config from '../../config';
 import firebase from 'firebase/app';
 import { LoginContext } from '../../context/LoginContext';
+import { useRouter } from 'next/router';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -16,6 +17,7 @@ const LoginModal = ({ isOpen, openHandler }: LoginModalProps): React.ReactElemen
   const [loginInfo, setLoginInfo] = useContext(LoginContext);
   const firstEl = useRef<HTMLButtonElement>();
   const lastEl = useRef<HTMLButtonElement>();
+  const router = useRouter();
 
   const keyDownHandling = (event: KeyboardEvent) => {
     const firstElement = firstEl.current;
@@ -51,10 +53,15 @@ const LoginModal = ({ isOpen, openHandler }: LoginModalProps): React.ReactElemen
   }
 
   useEffect(() => {
-    window.addEventListener('keydown', keyDownHandling);
+    if (isOpen) {
+      window.addEventListener('keydown', keyDownHandling);
+      window.addEventListener('popstate', openHandling);
+      router.push('?login', undefined, { shallow: true });
+    }
 
     return () => {
       window.removeEventListener('keydown', keyDownHandling);
+      window.removeEventListener('popstate', openHandling);
     };
   }, [isOpen]);
 
@@ -62,6 +69,7 @@ const LoginModal = ({ isOpen, openHandler }: LoginModalProps): React.ReactElemen
     if(openHandler){
       openHandler();
     }
+    router.push('', undefined, { shallow: true });
   }
 
   const loginErrorHandling = (error: any) => {
