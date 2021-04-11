@@ -9,6 +9,7 @@ import config from '../../config';
 import Link from 'next/link';
 import SearchModal from '../molecules/SearchModal';
 import { LoginContext } from '../../context/LoginContext';
+import { useRouter } from 'next/router';
 
 interface MenuListProps {
   showStartPosition?: 'bottom' | 'left' | 'none' | 'right' | 'top';
@@ -23,9 +24,11 @@ const MenuList = ({
   const lastTabRef = useRef<HTMLButtonElement>();
   const lastTabEl = lastTabRef.current;
   const [menuState, setMenuState] = useState(false);
+  const router = useRouter();
 
   const menuListHandling = () => {
     setMenuState(!menuState);
+    router.push('', undefined, { shallow: true });
   };
 
   useEffect(() => {
@@ -61,10 +64,15 @@ const MenuList = ({
   }
 
   useEffect(() => {
-    window.addEventListener('keydown', keyDownHandling);
+    if(menuState){
+      window.addEventListener('keydown', keyDownHandling);
+      window.addEventListener('popstate', menuListHandling);
+      router.push('?menu', undefined, { shallow: true });
+    }
 
     return () => {
       window.removeEventListener('keydown', keyDownHandling);
+      window.removeEventListener('popstate', menuListHandling);
     };
   }, [menuState]);
 
