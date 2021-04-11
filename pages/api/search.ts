@@ -54,13 +54,6 @@ const search = async (req: NowRequest, res: NowResponse) => {
             ],
           },
         },
-        sort: [
-          {
-            publishDate: {
-              order: 'desc',
-            },
-          },
-        ],
       },
     });
     const result: API = {
