@@ -73,6 +73,7 @@ const icons = {
   핀다: `finda.png`,
   코인플러그: `coinplug.ico`,
   마이크로소프트: `microsoft.ico`,
+  엔씨소프트_DANBI: `plaync.ico`
 };
 
 export { icons, iconsCtx };
