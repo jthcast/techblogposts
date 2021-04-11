@@ -110,7 +110,7 @@ const Bookmark = ({
           [cssBookMarkCancel]: !isBookmarked,
         })}
       />
-      {bookmarkCount && <span>{bookmarkCount}</span>}
+      {/* {bookmarkCount && <span>{bookmarkCount}</span>} */}
     </button>
   );
 };
