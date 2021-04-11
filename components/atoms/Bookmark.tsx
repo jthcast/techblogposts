@@ -27,6 +27,7 @@ const Bookmark = ({
   const [loginInfo, setLoginInfo] = useContext(LoginContext);
   const [bookmarks, setBookmarks] = useContext(BookmarkContext);
   const [isLoginModalOpen, setLoginModalOpen] = useContext(LoginModalContext);
+  const [clicked, setClicked] = useState(false);
   
   const addBookmark = async () => {
     const body = {
@@ -64,6 +65,7 @@ const Bookmark = ({
   };
   
   const bookmarkHandling = () => {
+    setClicked(true);
     if(loginInfo && !isBookmarked){
       addBookmark();
     }else if(loginInfo && isBookmarked){
@@ -106,8 +108,8 @@ const Bookmark = ({
       <IconTemplate iconName={isBookmarked ? 'IconStarFilled' : 'IconStar'} 
         className={cx({
           [cssBookmark]: true,
-          [cssBookmarked]: isBookmarked,
-          [cssBookMarkCancel]: !isBookmarked,
+          [cssBookmarked]: isBookmarked && clicked,
+          [cssBookMarkCancel]: !isBookmarked && clicked,
         })}
       />
       {/* {bookmarkCount && <span>{bookmarkCount}</span>} */}
