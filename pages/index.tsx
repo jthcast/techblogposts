@@ -340,6 +340,11 @@ const cssButton = css`
   background-color: ${globalCss.color.secondaryBrandColor};
   border: none;
   color: ${globalCss.color.white};
+  padding: 0.25rem;
+
+  svg {
+    margin-right: 0;
+  }
 
   &:hover {
     opacity: 1;

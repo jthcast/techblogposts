@@ -241,27 +241,30 @@ const cssTitle = css`
 `;
 
 const cssButton = css`
+  background-color: ${globalCss.color.secondaryBrandColor};
   border: none;
-  color: ${globalCss.color.secondaryBrandColor};
-  width: fit-content;
-  background-color: transparent;
-  cursor: pointer;
+  color: ${globalCss.color.white};
+  padding: 0.25rem;
+
+  svg {
+    margin-right: 0;
+  }
 
   &:hover {
     opacity: 1;
     border: none;
-    color: ${globalCss.color.secondaryBrandColor};
+    color: ${globalCss.color.color};
   }
-
+  
   &:focus {
     opacity: 1;
     border: none;
-    color: ${globalCss.color.secondaryBrandColor};
+    color: ${globalCss.color.color};
   }
-
+  
   &:active {
     border: none;
-    color: ${globalCss.color.secondaryBrandColor};
+    color: ${globalCss.color.color};
   }
 `;
 
