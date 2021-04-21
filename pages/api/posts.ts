@@ -65,7 +65,17 @@ const posts = async (req: NowRequest, res: NowResponse) => {
       },
     };
     if (req.query.sort) {
-      const sort = JSON.parse(req.query.sort+ '');
+      const queryObject = req.query;
+      const keys = Object.keys(queryObject);
+      const queryString = keys.reduce((acc, key) => {
+        if(key === 'sort'){
+          acc += queryObject[key];
+        }else{
+          acc += `&${key}=${queryObject[key]}`;
+        }
+        return acc;
+      }, '');
+      const sort = JSON.parse(queryString);
       const [publishDate, id] = sort;
       query.body['search_after'] = [
         publishDate, checkId(id)
