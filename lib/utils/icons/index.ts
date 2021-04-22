@@ -75,7 +75,8 @@ const icons = {
   '마이크로소프트': `microsoft.ico`,
   '엔씨소프트_DANBI': `plaync.ico`,
   '29CM': `29cm.ico`,
-  '슈퍼브에이아이': `superbai.png`
+  '슈퍼브에이아이': `superbai.png`,
+  '모히톡': `mojitok.png`
 };
 
 export { icons, iconsCtx };
