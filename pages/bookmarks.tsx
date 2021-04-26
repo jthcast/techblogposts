@@ -132,7 +132,7 @@ export default function Bookmarks() {
         )}
         {error &&
           <ErrorSection message={error[1]} statusCode={error[0]}>
-            <Button ariaLabel="Retry" className={cssButton} onClick={getPosts}><IconTemplate iconName="IconReDo" /></Button>
+            <Button ariaLabel="Retry" onClick={getPosts}><IconTemplate iconName="IconReDo" /></Button>
           </ErrorSection>
         }
       </section>
@@ -254,34 +254,6 @@ const cssCompanyIcon = css`
   display: inline-block;
   margin-right: 0.25rem;
   margin-top: 0.15rem;
-`;
-
-const cssButton = css`
-  background-color: ${globalCss.color.secondaryBrandColor};
-  border: none;
-  color: ${globalCss.color.white};
-  padding: 0.25rem;
-
-  svg {
-    margin-right: 0;
-  }
-
-  &:hover {
-    opacity: 1;
-    border: none;
-    color: ${globalCss.color.color};
-  }
-  
-  &:focus {
-    opacity: 1;
-    border: none;
-    color: ${globalCss.color.color};
-  }
-  
-  &:active {
-    border: none;
-    color: ${globalCss.color.color};
-  }
 `;
 
 const cssTitle = css`

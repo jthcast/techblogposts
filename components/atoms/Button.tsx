@@ -1,6 +1,6 @@
 import { css, cx } from '@emotion/css';
 import globalCss from '../../styles/global-css';
-import { ButtonHTMLAttributes } from 'react';
+import { ButtonHTMLAttributes, forwardRef, LegacyRef } from 'react';
 import { IconSpinner } from './Icons';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLElement> {
@@ -9,6 +9,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLElement> {
   className?: string;
   danger?: boolean;
   disabled?: boolean;
+  ghost?: boolean;
   loading?: boolean;
   formAction?: string;
   formTarget?: string;
@@ -19,12 +20,13 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLElement> {
   type?: "button" | "submit" | "reset";
 }
 
-const Button = ({
+const Button = forwardRef(({
   ariaLabel,
   children,
   className,
   danger = false,
   disabled = false,
+  ghost = false,
   formAction,
   loading = false,
   onClick,
@@ -32,7 +34,7 @@ const Button = ({
   title,
   formTarget,
   type = 'button'
-}: ButtonProps): React.ReactElement => {
+}: ButtonProps, ref: LegacyRef<HTMLButtonElement>): React.ReactElement => {
   return (
     <button
       aria-label={ariaLabel}
@@ -40,6 +42,7 @@ const Button = ({
         { [cssButton]: true },
         { [cssDanger]: danger },
         { [cssDisabled]: loading || disabled },
+        { [cssGhost]: ghost },
         { [className]: true }
       )}
       disabled={loading || disabled || false}
@@ -49,70 +52,43 @@ const Button = ({
       formTarget={formTarget}
       formAction={formAction}
       title={title}
+      ref={ref}
     >
-      {loading && <IconSpinner spin />}
+      {loading && <IconSpinner className={cssSpinner} spin />}
       {children}
     </button>
   );
-};
+});
 
 export default Button;
 
 const cssButton = css`
-margin: 0;
-background-color: transparent;
-color: ${globalCss.color.color};
-border: 0.063rem solid ${globalCss.color.borderColor};
-border-radius: 0.125rem;
-cursor: pointer;
-transition: all 0.2s;
-font-weight: normal;
-
-svg {
-  margin-right: 0.5rem;
-}
-
-&:hover {
-  opacity: 0.8;
-  border: 0.063rem solid ${globalCss.color.secondaryBrandColor};
-  color: ${globalCss.color.secondaryBrandColor};
-}
-
-&:focus {
-  opacity: 0.8;
-  border: 0.063rem solid ${globalCss.color.secondaryBrandColor};
-  color: ${globalCss.color.secondaryBrandColor};
-}
-
-&:active {
-  border: 0.063rem solid ${globalCss.color.secondaryBrandColor};
-  color: ${globalCss.color.secondaryBrandColor};
-}
-
-&:before {
-  content: none;
-}
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  background-color: ${globalCss.color.secondaryBrandColor};
+  border: none;
+  color: ${globalCss.color.white};
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
 `;
 
 const cssDanger = css`
-border: 0.063rem solid ${globalCss.color.danger};
-color: ${globalCss.color.danger};
-
-&:hover {
-  color: ${globalCss.color.danger};
-}
-
-&:focus {
-  color: ${globalCss.color.danger};
-}
-
-&:active {
-  border: 0.063rem solid ${globalCss.color.danger};
-  color: ${globalCss.color.danger};
-}
+  background-color: ${globalCss.color.danger};
+  color: ${globalCss.color.white};
 `;
 
 const cssDisabled = css`
-cursor: not-allowed;
-opacity: 0.4;
+  cursor: not-allowed;
+  opacity: 0.4;
+`;
+
+const cssGhost = css`
+  color: ${globalCss.color.color};
+  background-color: transparent;
+  border: 0.1rem solid ${globalCss.color.borderColor};
+`;
+
+const cssSpinner = css`
+  margin-right: 0.4rem;
 `;

@@ -99,7 +99,7 @@ export default function Blogs() {
         }
         {error &&
           <ErrorSection message={error[1]} statusCode={error[0]}>
-            <Button ariaLabel="Retry" className={cssButton} onClick={getBlogs}><IconTemplate iconName="IconReDo" /></Button>
+            <Button ariaLabel="Retry" onClick={getBlogs}><IconTemplate iconName="IconReDo" /></Button>
           </ErrorSection>
         }
       </section>
@@ -208,34 +208,6 @@ const cssReport = css`
 
   @media ${globalCss.breakpoint.tabletQuery} {
     margin: 4rem 0;
-  }
-`;
-
-const cssButton = css`
-  background-color: ${globalCss.color.secondaryBrandColor};
-  border: none;
-  color: ${globalCss.color.white};
-  padding: 0.25rem;
-
-  svg {
-    margin-right: 0;
-  }
-
-  &:hover {
-    opacity: 1;
-    border: none;
-    color: ${globalCss.color.color};
-  }
-  
-  &:focus {
-    opacity: 1;
-    border: none;
-    color: ${globalCss.color.color};
-  }
-  
-  &:active {
-    border: none;
-    color: ${globalCss.color.color};
   }
 `;
 

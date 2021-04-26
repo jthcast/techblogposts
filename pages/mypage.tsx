@@ -173,7 +173,7 @@ export default function Mypage() {
         )}
         {error &&
           <ErrorSection message={error[1]} statusCode={error[0]}>
-            <Button ariaLabel="Retry" className={cssButton} onClick={getAccountInfo}><IconTemplate iconName="IconReDo" /></Button>
+            <Button ariaLabel="Retry" onClick={getAccountInfo}><IconTemplate iconName="IconReDo" /></Button>
           </ErrorSection>
         }
       </section>
@@ -240,55 +240,11 @@ const cssTitle = css`
   }
 `;
 
-const cssButton = css`
-  background-color: ${globalCss.color.secondaryBrandColor};
-  border: none;
-  color: ${globalCss.color.white};
-  padding: 0.25rem;
-
-  svg {
-    margin-right: 0;
-  }
-
-  &:hover {
-    opacity: 1;
-    border: none;
-    color: ${globalCss.color.color};
-  }
-  
-  &:focus {
-    opacity: 1;
-    border: none;
-    color: ${globalCss.color.color};
-  }
-  
-  &:active {
-    border: none;
-    color: ${globalCss.color.color};
-  }
-`;
-
 const cssDeleteButton = css`
   border: none;
   color: ${globalCss.color.danger};
   width: fit-content;
   background-color: transparent;
   cursor: pointer;
-
-  &:hover {
-    opacity: 1;
-    border: none;
-    color: ${globalCss.color.danger};
-  }
-  
-  &:focus {
-    opacity: 1;
-    border: none;
-    color: ${globalCss.color.danger};
-  }
-  
-  &:active {
-    border: none;
-    color: ${globalCss.color.danger};
-  }
+  padding: 0;
 `;

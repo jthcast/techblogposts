@@ -112,14 +112,14 @@ const Header = ({
           <ul className={cssHeaderItemsRight}>
             {!loginInfo && 
               <li>
-                <Button className={cssLoginButton} onClick={() => setLoginModalOpen(!isLoginModalOpen)}>
+                <Button onClick={() => setLoginModalOpen(!isLoginModalOpen)}>
                   로그인
                 </Button>
               </li>
             }
             {loginInfo &&
               <li>
-                <Button className={cssLogoutButton} onClick={logoutHandling} loading={isLogoutLoading}>
+                <Button ghost onClick={logoutHandling} loading={isLogoutLoading}>
                   로그아웃
                 </Button>
               </li>
@@ -275,57 +275,5 @@ const cssIcon = css`
   
   &:active {
     border: none;
-  }
-`;
-
-const cssLoginButton = css`
-  border: 0.1rem solid ${globalCss.color.secondaryBrandColor};
-  border-radius: 0.25rem;
-  color: ${globalCss.color.white};
-  background-color: ${globalCss.color.secondaryBrandColor};
-  padding: 0.25rem 0.75rem;
-  cursor: pointer;
-
-  &:hover {
-    opacity: 1;
-    border: 0.1rem solid ${globalCss.color.secondaryBrandColor};
-    color: ${globalCss.color.white};
-  }
-  
-  &:focus {
-    opacity: 1;
-    border: 0.1rem solid ${globalCss.color.secondaryBrandColor};
-    color: ${globalCss.color.white};
-  }
-  
-  &:active {
-    border: 0.1rem solid ${globalCss.color.secondaryBrandColor};
-    color: ${globalCss.color.white};
-  }
-`;
-
-const cssLogoutButton = css`
-  border: 0.1rem solid ${globalCss.color.borderColor};
-  border-radius: 0.25rem;
-  color: ${globalCss.color.color};
-  background-color: transparent;
-  padding: 0.25rem 0.75rem;
-  cursor: pointer;
-
-  &:hover {
-    opacity: 1;
-    border: 0.1rem solid ${globalCss.color.borderColor};
-    color: ${globalCss.color.color};
-  }
-  
-  &:focus {
-    opacity: 1;
-    border: 0.1rem solid ${globalCss.color.borderColor};
-    color: ${globalCss.color.color};
-  }
-  
-  &:active {
-    border: 0.1rem solid ${globalCss.color.borderColor};
-    color: ${globalCss.color.color};
   }
 `;

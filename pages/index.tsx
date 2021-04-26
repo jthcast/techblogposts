@@ -1,6 +1,6 @@
 import Layout from '../components/atoms/Layout';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { css, keyframes } from '@emotion/css';
+import { css, cx, keyframes } from '@emotion/css';
 import globalCss, { rem } from '../styles/global-css';
 import { IconMagnetColored, IconSpinner, IconTemplate } from '../components/atoms/Icons';
 import { InfiniteScrollContext } from '../context/InfiniteScrollContext';
@@ -158,7 +158,8 @@ export default function Home() {
           </ul>
         )}
         {!error && sort &&
-          <button className={cssMorePostsButton} onClick={infiniteScrollHandling} ref={morePostsButtonRef}>
+          <Button onClick={infiniteScrollHandling} ref={morePostsButtonRef}
+                  className={cx({ [cssMoreButton]: true, [cssMorePostLoading]: isMorePostLoading})}>
             {isMorePostLoading ?
               <IconSpinner spin /> :
               <>
@@ -166,11 +167,11 @@ export default function Home() {
                 <div role="img" aria-label="More posts" className={cssBounce}><IconMagnetColored /></div>
               </>
             }
-          </button>
+          </Button>
         }
         {error &&
           <ErrorSection message={error[1]} statusCode={error[0]}>
-            <Button ariaLabel="Retry" className={cssButton} onClick={getPosts}><IconTemplate iconName="IconReDo" /></Button>
+            <Button ariaLabel="Retry" onClick={getPosts}><IconTemplate iconName="IconReDo" /></Button>
           </ErrorSection>
         }
       </section>
@@ -293,15 +294,14 @@ const cssItemDetailRight = css`
   cursor: pointer;
 `;
 
-const cssMorePostsButton = css`
-  display: flex;
-  margin: 1rem auto;
-  padding: 0.5rem 2rem;
-  border: none;
-  border-radius: 0.25rem;
-  color: ${globalCss.color.white};
-  background-color: ${globalCss.color.secondaryBrandColor};
-  cursor: pointer;
+const cssMoreButton = css`
+  margin: auto;
+`;
+
+const cssMorePostLoading = css`
+  background-color: transparent;
+  color: ${globalCss.color.secondaryBrandColor};
+  cursor: default;
 `;
 
 const keyFramesBounce = keyframes`
@@ -334,32 +334,4 @@ const cssCompanyIcon = css`
   display: inline-block;
   margin-right: 0.25rem;
   margin-top: 0.15rem;
-`;
-
-const cssButton = css`
-  background-color: ${globalCss.color.secondaryBrandColor};
-  border: none;
-  color: ${globalCss.color.white};
-  padding: 0.25rem;
-
-  svg {
-    margin-right: 0;
-  }
-
-  &:hover {
-    opacity: 1;
-    border: none;
-    color: ${globalCss.color.color};
-  }
-  
-  &:focus {
-    opacity: 1;
-    border: none;
-    color: ${globalCss.color.color};
-  }
-  
-  &:active {
-    border: none;
-    color: ${globalCss.color.color};
-  }
 `;
