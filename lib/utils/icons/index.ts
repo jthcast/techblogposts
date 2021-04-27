@@ -76,7 +76,8 @@ const icons = {
   '엔씨소프트_DANBI': `plaync.ico`,
   '29CM': `29cm.ico`,
   '슈퍼브에이아이': `superbai.png`,
-  '모히톡': `mojitok.png`
+  '모히톡': `mojitok.png`,
+  '가비아': `gabia.ico`
 };
 
 export { icons, iconsCtx };
