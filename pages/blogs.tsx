@@ -91,7 +91,9 @@ export default function Blogs() {
             <h3>원하시는 기업의 기술 블로그가 목록에 없나요?</h3>
             <p>저에게 알려주세요. 추가하겠습니다. 🙌</p>
             <a
-              href={`mailto:${config.author.email}`} aria-label="mail"
+              href={`mailto:${config.author.email}`}
+              aria-label="mail"
+              className={cssAnchorButton}
             >
               제보 하기 📧
             </a>
@@ -194,14 +196,6 @@ const cssReport = css`
   text-align: center;
   margin: 5rem 0;
 
-  a {
-    background-color: ${globalCss.color.color};
-    color: ${globalCss.color.backgroundCode};
-    text-decoration: none;
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.2rem;
-  }
-
   @media ${globalCss.breakpoint.mobileQuery} {
     margin: 3rem 0;
   }
@@ -227,4 +221,13 @@ const cssTitle = css`
 
 const cssBlogsCount = css`
   color: ${globalCss.color.primaryBrandColor};
+`;
+
+const cssAnchorButton = css`
+  background-color: ${globalCss.color.secondaryBrandColor};
+  color: ${globalCss.color.white};
+  text-decoration: none;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  line-height: 1.55;
 `;
