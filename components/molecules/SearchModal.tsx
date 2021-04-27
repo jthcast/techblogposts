@@ -7,7 +7,7 @@ import { icons, iconsCtx } from '../../lib/utils/icons';
 import Image from 'next/image';
 import { gtagOutboundEvent } from '../../lib/utils/googleAnalytics';
 import useDebounce from '../../customHooks/useDebounce';
-import ListItem from '../atoms/ListItem';
+import SearchListItem from '../atoms/SearchListItem';
 import { useRouter } from 'next/router'
 import Bookmark from '../atoms/Bookmark';
 
@@ -222,7 +222,7 @@ const SearchModal = ({
               const dateDifferString = dateDiffer === 0 ? `오늘` : `${dateDiffer}일 전`;
 
               return (
-                <ListItem className={cx(
+                <SearchListItem className={cx(
                   { [cssListItem]: true },
                   { [cssListItemFocused]: index === indexValue },
                 )}
@@ -271,14 +271,14 @@ const SearchModal = ({
                       </li>
                     </ul>
                   </>
-                </ListItem>
+                </SearchListItem>
               )
             })}
           </ul>
         )}
         {!error && posts && !posts.length && inputValue &&
           <ul className={cssList} ref={resultsList}>
-            <ListItem className={cx(
+            <SearchListItem className={cx(
               { [cssNoResults]: true },
               { [cssListItemFocused]: true },
             )}
@@ -292,19 +292,19 @@ const SearchModal = ({
               >
                 <div className={cssNoResults}>검색 결과가 없습니다. 구글로 검색할까요? 👉</div>
               </a>
-            </ListItem>
+            </SearchListItem>
           </ul>
         }
         {error &&
           <ul className={cssList} ref={resultsList}>
-            <ListItem className={cx(
+            <SearchListItem className={cx(
               { [cssNoResults]: true },
               { [cssListItemFocused]: true },
             )}
               onFocus={focusHandling}
             >
               <div className={cssNoResults}>{error[1]} 😥</div>
-            </ListItem>
+            </SearchListItem>
           </ul>
         }
       </div>
