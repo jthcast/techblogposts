@@ -26,7 +26,7 @@ export interface BookmarkItem {
 
 export default function Bookmarks() {
   const [posts, setPosts] = useState<BookmarkItem[]>([]);
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState<[number, string]>(undefined);
   const [loginInfo, setLogin] = useContext(LoginContext);
 
@@ -41,6 +41,7 @@ export default function Bookmarks() {
     const bookmarks: BookmarkItem[] = data;
     if (isError) {
       setError([statusCode, message]);
+      setLoading(false);
       return;
     }
     const sortedData = bookmarks.sort((a, b) => b._source.publishDate - a._source.publishDate);
@@ -49,9 +50,11 @@ export default function Bookmarks() {
   };
 
   useEffect(() => {
-    if(loginInfo){
-      getPosts();
+    if(!loginInfo){
+      setLoading(false);
+      return;
     }
+    getPosts();
   }, [loginInfo]);
 
   return (

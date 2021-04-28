@@ -13,7 +13,7 @@ import { BookmarkContext } from '../context/BookmarkContext';
 import { useRouter } from 'next/router';
 
 export default function Mypage() {
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const [isDeleteLoading, setDeleteLoading] = useState(false);
   const [error, setError] = useState<[number, string]>(undefined);
   const [loginInfo, setLogin] = useContext(LoginContext);
@@ -50,6 +50,7 @@ export default function Mypage() {
 
   useEffect(() => {
     if(!loginInfo){
+      setLoading(false);
       return;
     }
     getAccountInfo();
