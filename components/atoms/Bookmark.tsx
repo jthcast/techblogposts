@@ -108,7 +108,7 @@ const Bookmark = ({
       <IconTemplate iconName={isBookmarked ? 'IconStarFilled' : 'IconStar'} 
         className={cx({
           [cssBookmark]: true,
-          [cssBookmarked]: isBookmarked && clicked,
+          [cssBookmarked]: isBookmarked,
           [cssBookMarkCancel]: !isBookmarked && clicked,
         })}
       />
