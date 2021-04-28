@@ -66,9 +66,9 @@ export default function Home() {
     setInit(false);
   }, []);
 
-  function infiniteScrollHandling() {
+  const infiniteScrollHandling = () => {
     setInfiniteLoad(isInfiniteLoad === 'on' ? 'off' : 'on');
-  }
+  };
 
   const morePostsButtonRef = useRef();
 
@@ -84,7 +84,17 @@ export default function Home() {
     if (morePostsButtonRef.current) {
       observer([morePostsButtonRef.current]);
     }
-  }, [morePostsButtonRef.current])
+  }, [morePostsButtonRef.current]);
+
+  const clickHandling = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    const button = event.button;
+    if(button === 0 || button === 1){
+      const target = event.currentTarget;
+      const id = target.getAttribute('href');
+      const title = target.getAttribute('aria-label');
+      gtagOutboundEvent(id, title);
+    }
+  };
 
   return (
     <Layout title={'기술 블로그 모음'}>
@@ -119,7 +129,8 @@ export default function Home() {
                     target="_blank"
                     rel="noreferrer"
                     aria-label={title}
-                    onClick={() => gtagOutboundEvent(id, title)}
+                    onClick={clickHandling}
+                    onAuxClick={clickHandling}
                     title={title}
                   >
                     <p className={cssPostTitle}>{title}</p>
