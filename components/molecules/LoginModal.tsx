@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/css';
 import globalCss from '../../styles/global-css';
 import Modal from '../atoms/Modal';
-import { IconLogoColored, IconGoogleColored, IconTemplate } from '../atoms/Icons';
+import { IconLogoColored, IconGoogleColored, IconTemplate, IconSpinner } from '../atoms/Icons';
 import config from '../../config';
 import firebase from 'firebase/app';
 import { LoginContext } from '../../context/LoginContext';
@@ -15,6 +15,7 @@ interface LoginModalProps {
 
 const LoginModal = ({ isOpen, openHandler }: LoginModalProps): React.ReactElement => {
   const [loginInfo, setLoginInfo] = useContext(LoginContext);
+  const [isLoading, setLoading] = useState(false);
   const firstEl = useRef<HTMLButtonElement>();
   const lastEl = useRef<HTMLButtonElement>();
   const router = useRouter();
@@ -91,13 +92,16 @@ const LoginModal = ({ isOpen, openHandler }: LoginModalProps): React.ReactElemen
   }
 
   const loginHandling = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setLoading(true);
     const providerId = event.currentTarget.getAttribute('data-providerid');
     const provider = makeProvider(providerId);
     firebase.auth().signInWithPopup(provider).then((result) => {
       openHandling();
       setLoginInfo(true);
+      setLoading(false);
     }).catch((error) => {
       loginErrorHandling(error);
+      setLoading(false);
     });
   };
 
@@ -108,14 +112,23 @@ const LoginModal = ({ isOpen, openHandler }: LoginModalProps): React.ReactElemen
           <div className={cssFormWrapper}>
             <IconLogoColored className={cssLogo} />
             <p>{config.title}</p>
-            <button className={cssGoogleLoginButton} ref={firstEl} onClick={loginHandling} data-providerid='google.com'>
-              <IconGoogleColored className={cssIcon}/>
-              <span>Google 로그인</span>
-            </button>
-            <button className={cssGithubLoginButton} ref={lastEl} onClick={loginHandling} data-providerid='github.com'>
-              <IconTemplate iconName="IconGithubCircle" className={cssIcon}/>
-              <span>Github 로그인</span>
-            </button>
+            {isLoading &&
+              <div className={cssLoading}>
+                <IconSpinner spin />
+              </div>
+            }
+            {!isLoading &&
+              <>
+                <button className={cssGoogleLoginButton} ref={firstEl} onClick={loginHandling} data-providerid='google.com'>
+                  <IconGoogleColored className={cssIcon}/>
+                  <span>Google 로그인</span>
+                </button>
+                <button className={cssGithubLoginButton} ref={lastEl} onClick={loginHandling} data-providerid='github.com'>
+                  <IconTemplate iconName="IconGithubCircle" className={cssIcon}/>
+                  <span>Github 로그인</span>
+                </button>
+              </>
+            }
           </div>
         </Modal>
       }
@@ -197,4 +210,11 @@ const cssGithubLoginButton = css`
 
 const cssIcon = css`
   margin-right: 0.5rem;
+`;
+
+const cssLoading = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${globalCss.color.secondaryBrandColor};
 `;
