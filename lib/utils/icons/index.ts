@@ -77,7 +77,9 @@ const icons = {
   '29CM': `29cm.ico`,
   '슈퍼브에이아이': `superbai.png`,
   '모히톡': `mojitok.png`,
-  '가비아': `gabia.ico`
+  '가비아': `gabia.ico`,
+  '8퍼센트': `8percent.ico`,
+  '스마일게이트AI': `smilegate_ai.png`
 };
 
 export { icons, iconsCtx };
