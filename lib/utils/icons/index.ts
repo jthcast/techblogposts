@@ -79,7 +79,15 @@ const icons = {
   '모히톡': `mojitok.png`,
   '가비아': `gabia.ico`,
   '8퍼센트': `8percent.ico`,
-  '스마일게이트AI': `smilegate_ai.png`
+  '스마일게이트AI': `smilegate_ai.png`,
+  '직방': `zigbang.ico`,
+  '빅웨이브에이아이': `bigwaveai.png`,
+  'AITRICS': `aitrics.ico`,
+  '뷰노': `vuno.png`,
+  '매드업': `madup.ico`,
+  'IMQA': `imqa.ico`,
+  '옵스나우': `opsnow.png`,
+  '클라우드메이트': `cloudmt.ico`,
 };
 
 export { icons, iconsCtx };
