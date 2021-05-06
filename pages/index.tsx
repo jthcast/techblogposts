@@ -170,8 +170,8 @@ export default function Home() {
         )}
         {!error && sort &&
           <Button onClick={infiniteScrollHandling} ref={morePostsButtonRef}
-                  className={cx({ [cssMoreButton]: true, [cssMorePostLoading]: isMorePostLoading})}>
-            {isMorePostLoading ?
+                  className={cx({ [cssMoreButton]: true, [cssMorePostLoading]: isInfiniteLoad === 'on'})}>
+            {isInfiniteLoad === 'on' ?
               <IconSpinner spin /> :
               <>
                 <span>More</span>
