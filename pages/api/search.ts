@@ -17,43 +17,57 @@ const search = async (req: NowRequest, res: NowResponse) => {
       size: 100,
       body: {
         query: {
-          bool: {
-            filter: [
-              {
-                term: {
-                  dataType: 'post',
-                },
-              },
-              {
-                term: {
-                  isShow: true,
-                },
-              },
-            ],
-            should: [
-              {
-                has_child: {
-                  type: 'bookmark',
-                  inner_hits: {
-                    _source: false,
-                    size: 0
+          function_score: {
+            query: {
+              bool: {
+                filter: [
+                  {
+                    term: {
+                      dataType: 'post',
+                    },
                   },
-                  query: {
-                    match_all: {}
+                  {
+                    term: {
+                      isShow: true,
+                    },
+                  },
+                ],
+                should: [
+                  {
+                    has_child: {
+                      type: 'bookmark',
+                      inner_hits: {
+                        _source: false,
+                        size: 0
+                      },
+                      query: {
+                        match_all: {}
+                      }
+                    }
+                  }
+                ],
+                must: [
+                  {
+                    multi_match: {
+                      query,
+                      fields: ['title', 'company'],
+                    },
+                  },
+                ],
+              },
+            },
+            functions: [
+              {
+                gauss: {
+                  publishDate: {
+                    origin: new Date().getTime(),
+                    scale: 864000000
                   }
                 }
               }
-            ],
-            must: [
-              {
-                multi_match: {
-                  query,
-                  fields: ['title', 'company'],
-                },
-              },
-            ],
-          },
-        },
+            ]
+          }
+        }
       },
     });
     const result: API = {
