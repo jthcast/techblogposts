@@ -24,6 +24,13 @@ export interface BookmarkItem {
   }
 }
 
+export interface Bookmark {
+  _source: {
+    parent: string;
+    publishDate: number;
+  }
+}
+
 export default function Bookmarks() {
   const [posts, setPosts] = useState<BookmarkItem[]>([]);
   const [isLoading, setLoading] = useState(true);
@@ -33,19 +40,35 @@ export default function Bookmarks() {
   const getPosts = async () => {
     setLoading(true);
     setError(undefined);
-    const fetchData = await fetch(`/api/bookmark?uid=${loginInfo.uid}&getType=parent`, {
+    const postsFetch = await fetch(`/api/bookmark?uid=${loginInfo.uid}&getType=parent`, {
       method: 'GET',
     });
-    const result: API = await fetchData.json();
-    const { isError, statusCode, message, data } = result;
-    const bookmarks: BookmarkItem[] = data;
+    const postsResult: API = await postsFetch.json();
+    const { isError, statusCode, message, data } = postsResult;
     if (isError) {
       setError([statusCode, message]);
       setLoading(false);
       return;
     }
-    const sortedData = bookmarks.sort((a, b) => b._source.publishDate - a._source.publishDate);
-    setPosts([...sortedData]);
+    const posts: BookmarkItem[] = data;
+    const bookmarksFetch = await fetch(`/api/bookmark?uid=${loginInfo.uid}&getType=children`, {
+      method: 'GET',
+    });
+    const bookmarksResult: API = await bookmarksFetch.json();
+    const isBookmarksError = bookmarksResult.isError;
+    if (isBookmarksError) {
+      setError([statusCode, message]);
+      setLoading(false);
+      return;
+    }
+    const bookmarks: Bookmark[] = bookmarksResult.data;
+    const bookmarkPublishedDates = bookmarks.reduce((acc, bookmark) => {
+      const source = bookmark._source;
+      acc[source.parent] = source.publishDate;
+      return acc;
+    }, {});
+    posts.sort((a, b) => bookmarkPublishedDates[b._source.id] - bookmarkPublishedDates[a._source.id]);
+    setPosts([...posts]);
     setLoading(false);
   };
 

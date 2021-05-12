@@ -76,7 +76,7 @@ const bookmark = async (req: NowRequest, res: NowResponse) => {
         query = {
           index,
           size: 100,
-          _source_includes: 'parent',
+          _source_includes: ['parent', 'publishDate'],
           body: {
             query: {
               bool: {
