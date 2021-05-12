@@ -57,7 +57,7 @@ export default function Home() {
       return;
     }
     setPosts([...posts, ...data]);
-    setSort(data[data.length - 1].sort);
+    setSort(data[data.length - 1]?.sort);
     isInit ? setLoading(false) : setMorePostLoading(false);
   };
 
