@@ -88,6 +88,7 @@ const icons = {
   'IMQA': `imqa.ico`,
   '옵스나우': `opsnow.png`,
   '클라우드메이트': `cloudmt.ico`,
+  '토스': `toss.ico`
 };
 
 export { icons, iconsCtx };
