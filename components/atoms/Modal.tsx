@@ -37,7 +37,7 @@ const Modal = ({
   const keyDownHandling = useCallback(
     (event: KeyboardEvent) => {
       if (event.code === 'Escape' && escClose && isOpen) {
-        openHandler();
+        openHandling();
       }
     },
     [isOpen]
