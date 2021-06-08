@@ -13,7 +13,7 @@ const icons = {
   '브랜디': `brandi.png`,
   '스타일쉐어': `styleshare.ico`,
   '쏘카': `socar.png`,
-  '씨앤텍시스템즈': 'cntechsystems.ico',
+  '씨앤텍시스템즈': `cntechsystems.ico`,
   '왓챠': `watcha.ico`,
   '우아한형제들': `woowahan.ico`,
   '이스트소프트': `estsoft.ico`,
@@ -89,7 +89,10 @@ const icons = {
   '옵스나우': `opsnow.png`,
   '클라우드메이트': `cloudmt.ico`,
   '토스': `toss.ico`,
-  '무신사': `musinsa.ico`
+  '무신사': `musinsa.ico`,
+  '비브로스': `bbros.ico`,
+  '스캐터랩_핑퐁': `pingpong.png`,
+  '한국그린데이터': `greendata.png`,
 };
 
 export { icons, iconsCtx };
