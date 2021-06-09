@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
 import DarkModeSwitch from '../molecules/DarkModeSwitch';
-import { IconBars, IconCogWithCardColored, IconStarInTheBookColored, IconPaperWithLinesColored, IconPaperWithSignalColored, IconSearch, IconTemplate, IconTimes } from '../atoms/Icons';
+import Icon from '../atoms/Icon';
 import ScrollButton from '../molecules/ScrollButton';
 import InfiniteScrollSwitch from '../molecules/InfiniteScrollSwitch';
 import { css, cx } from '@emotion/css';
@@ -138,7 +138,7 @@ const MenuList = ({
                   aria-label="post list"
                   onClick={menuListHandling}
                 >
-                  <IconPaperWithLinesColored />
+                  <Icon iconName='paperWithLinesColored' />
                 </a>
               </Link>
               <span>포스트 목록</span>
@@ -151,7 +151,7 @@ const MenuList = ({
                   aria-label="blog list"
                   onClick={menuListHandling}
                 >
-                  <IconPaperWithSignalColored />
+                  <Icon iconName='paperWithSignalColored' />
                 </a>
               </Link>
               <span>블로그 목록</span>
@@ -164,7 +164,7 @@ const MenuList = ({
                       aria-label="bookmark list"
                       onClick={menuListHandling}
                     >
-                      <IconStarInTheBookColored />
+                      <Icon iconName='starInTheBookColored' />
                     </a>
                   </Link>
                   <span>즐겨찾기</span>
@@ -175,7 +175,7 @@ const MenuList = ({
                       aria-label="mypage"
                       onClick={menuListHandling}
                     >
-                      <IconCogWithCardColored />
+                      <Icon iconName='cogWithCardColored' />
                     </a>
                   </Link>
                   <span>계정 설정</span>
@@ -186,7 +186,7 @@ const MenuList = ({
           <ul className={cssFlexRowList}>
             <li className={cssIcon}>
               <a href={`mailto:${config.author.email}`} aria-label="mail">
-                <IconTemplate iconName="IconEnvelope" />
+                <Icon iconName='envelope' />
               </a>
             </li>
             <li className={cssIcon}>
@@ -196,7 +196,7 @@ const MenuList = ({
                 rel="noopener noreferrer"
                 aria-label="JthCast"
               >
-                <IconTemplate iconName="IconLogo" />
+                <Icon iconName='logo' />
               </a>
             </li>
             <li className={cssIcon}>
@@ -206,7 +206,7 @@ const MenuList = ({
                 rel="noreferrer"
                 aria-label="github"
               >
-                <IconTemplate iconName="IconGithub" />
+                <Icon iconName='github' />
               </a>
             </li>
           </ul>
@@ -228,7 +228,7 @@ const MenuList = ({
         showType="up"
         className={cssMenuButton}
       >
-        {menuState ? <IconTimes /> : <IconBars />}
+        {menuState ? <Icon iconName='times' /> : <Icon iconName='bars' />}
       </ScrollButton>
       <ScrollButton
         ariaLabel="검색"
@@ -237,7 +237,7 @@ const MenuList = ({
         showType="up"
         className={cssSearchButton}
       >
-        <IconSearch />
+        <Icon iconName='search' />
       </ScrollButton>
     </>
   );

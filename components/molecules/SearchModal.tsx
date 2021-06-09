@@ -1,7 +1,7 @@
 import { css, cx } from '@emotion/css';
 import React, { useEffect, useRef, useState } from 'react';
 import globalCss, { rem } from '../../styles/global-css';
-import { IconSearch, IconSpinner, IconTemplate, IconTimesCircle } from '../atoms/Icons';
+import Icon from '../atoms/Icon';
 import Modal from '../atoms/Modal';
 import { icons, iconsCtx } from '../../lib/utils/icons';
 import Image from 'next/image';
@@ -199,9 +199,9 @@ const SearchModal = ({
     <Modal isOpen={isOpen} openHandler={openHandling} escClose={false}>
       <div className={cssSearchWrapper}>
         <div className={cssInputWrapper(posts)}>
-          {isLoading ? <IconSpinner spin className={cssLoadingIcon} /> : <IconSearch />}
+          {isLoading ? <Icon iconName='spinner' spin className={cssLoadingIcon} /> : <Icon iconName='search' />}
           {children}
-          {inputValue && <IconTimesCircle onClick={removeHandling} className={cssIcon} /> }
+          {inputValue && <Icon iconName='timesCircle' onClick={removeHandling} className={cssIcon} /> }
         </div>
         {!error && posts && posts.length > 0 && (
           <ul className={cssList} ref={resultsList}>
@@ -262,7 +262,7 @@ const SearchModal = ({
                       </li>
                       <li>
                         <div className={cssItemDetailItem}>
-                          <IconTemplate iconName="IconEye" />
+                          <Icon iconName='eye' />
                           {viewCount}
                         </div>
                       </li>

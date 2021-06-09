@@ -2,7 +2,7 @@ import Layout from '../components/atoms/Layout';
 import { css } from '@emotion/css';
 import globalCss from '../styles/global-css';
 import { useEffect, useState } from 'react';
-import { IconSpinner, IconTemplate } from '../components/atoms/Icons';
+import Icon from '../components/atoms/Icon';
 import { icons, iconsCtx } from '../lib/utils/icons';
 import Image from 'next/image';
 import config from '../config';
@@ -31,6 +31,7 @@ export default function Blogs() {
     const result: API = await fetchData.json();
     const { isError, statusCode, message, data } = result;
     if (isError) {
+      setLoading(false);
       setError([statusCode, message]);
       return;
     }
@@ -47,7 +48,7 @@ export default function Blogs() {
       <section className={cssBlogs}>
         {isLoading && !error &&
           <div className={cssLoading}>
-            <IconSpinner spin />
+            <Icon iconName='spinner' spin />
           </div>
         }
         {!isLoading && !error && blogs && blogs.length > 0 && (
@@ -101,7 +102,7 @@ export default function Blogs() {
         }
         {error &&
           <ErrorSection message={error[1]} statusCode={error[0]}>
-            <Button ariaLabel="Retry" onClick={getBlogs}><IconTemplate iconName="IconReDo" /></Button>
+            <Button ariaLabel="Retry" onClick={getBlogs}><Icon iconName="redo" /></Button>
           </ErrorSection>
         }
       </section>

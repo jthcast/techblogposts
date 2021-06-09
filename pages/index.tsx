@@ -2,7 +2,7 @@ import Layout from '../components/atoms/Layout';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { css, cx, keyframes } from '@emotion/css';
 import globalCss, { rem } from '../styles/global-css';
-import { IconMagnetColored, IconSpinner, IconTemplate } from '../components/atoms/Icons';
+import Icon from '../components/atoms/Icon';
 import { InfiniteScrollContext } from '../context/InfiniteScrollContext';
 import useObserver from '../customHooks/useObserver';
 import { icons, iconsCtx } from '../lib/utils/icons';
@@ -53,6 +53,7 @@ export default function Home() {
     const { isError, statusCode, message, data } = result;
     if (isError) {
       setInit(true);
+      setLoading(false);
       setError([statusCode, message]);
       return;
     }
@@ -101,7 +102,7 @@ export default function Home() {
       <section className={cssPosts}>
         {isLoading &&
           <div className={cssLoading}>
-            <IconSpinner spin />
+            <Icon iconName='spinner' spin />
           </div>
         }
         {!isLoading && !error && posts && posts.length > 0 && (
@@ -155,7 +156,7 @@ export default function Home() {
                     </li>
                     <li>
                       <div className={cssItemDetailItem}>
-                        <IconTemplate iconName="IconEye" />
+                        <Icon iconName='eye' />
                         {viewCount}
                       </div>
                     </li>
@@ -172,17 +173,17 @@ export default function Home() {
           <Button onClick={infiniteScrollHandling} ref={morePostsButtonRef}
                   className={cx({ [cssMoreButton]: true, [cssMorePostLoading]: isInfiniteLoad === 'on'})}>
             {isInfiniteLoad === 'on' ?
-              <IconSpinner spin /> :
+              <Icon iconName='spinner' spin /> :
               <>
                 <span>More</span>
-                <div role="img" aria-label="More posts" className={cssBounce}><IconMagnetColored /></div>
+                <div role="img" aria-label="More posts" className={cssBounce}><Icon iconName='magnetColored' /></div>
               </>
             }
           </Button>
         }
         {error &&
           <ErrorSection message={error[1]} statusCode={error[0]}>
-            <Button ariaLabel="Retry" onClick={getPosts}><IconTemplate iconName="IconReDo" /></Button>
+            <Button ariaLabel="Retry" onClick={getPosts}><Icon iconName='redo' /></Button>
           </ErrorSection>
         }
       </section>

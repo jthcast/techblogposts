@@ -3,7 +3,7 @@ import Switch from './../atoms/Switch';
 import { ThemeContext } from '../../context/ThemeContext';
 import { css } from '@emotion/css';
 import globalCss from '../../styles/global-css';
-import { IconMoonAndStarsColored, IconTemplate } from '../atoms/Icons';
+import Icon from '../atoms/Icon';
 
 interface DarkmodeSwitchProps {
   title?: string;
@@ -36,8 +36,8 @@ const DarkModeSwitch = ({ title, ariaLabel }: DarkmodeSwitchProps): React.ReactE
       title={title}
       className={cssDarkModeSwitch}
       checked={colorMode === 'dark'}
-      unCheckedChildren={<IconTemplate iconName="IconSun" className={cssIconSun}/>}
-      checkedChildren={<IconMoonAndStarsColored />}
+      unCheckedChildren={<Icon iconName='sun' />}
+      checkedChildren={<Icon iconName='moonAndStarsColored' />}
       onClick={darkModeHandling}
     />
   );
@@ -46,14 +46,10 @@ const DarkModeSwitch = ({ title, ariaLabel }: DarkmodeSwitchProps): React.ReactE
 export default DarkModeSwitch;
 
 const cssDarkModeSwitch = css`
-  background-color: ${globalCss.color.borderColor};
+  background-color: ${globalCss.color.colorDown};
 
   span {
     font-size: 2rem;
   }
-`;
-
-const cssIconSun = css`
-  color: ${globalCss.color.primaryBrandColor};
 `;
 

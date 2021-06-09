@@ -2,7 +2,7 @@ import Layout from '../components/atoms/Layout';
 import { useContext, useEffect, useState } from 'react';
 import { css } from '@emotion/css';
 import globalCss, { rem } from '../styles/global-css';
-import { IconSpinner, IconTemplate } from '../components/atoms/Icons';
+import Icon from '../components/atoms/Icon';
 import { icons, iconsCtx } from '../lib/utils/icons';
 import Image from 'next/image';
 import { gtagOutboundEvent } from '../lib/utils/googleAnalytics';
@@ -85,7 +85,7 @@ export default function Bookmarks() {
       <section className={cssPosts}>
         {isLoading &&
           <div className={cssLoading}>
-            <IconSpinner spin />
+            <Icon iconName='spinner' spin />
           </div>
         }
         {!loginInfo && !isLoading && (
@@ -143,7 +143,7 @@ export default function Bookmarks() {
                     </li>
                     <li>
                       <div className={cssItemDetailItem}>
-                        <IconTemplate iconName="IconEye" />
+                        <Icon iconName='eye' />
                         {viewCount}
                       </div>
                     </li>
@@ -158,7 +158,7 @@ export default function Bookmarks() {
         )}
         {error &&
           <ErrorSection message={error[1]} statusCode={error[0]}>
-            <Button ariaLabel="Retry" onClick={getPosts}><IconTemplate iconName="IconReDo" /></Button>
+            <Button ariaLabel="Retry" onClick={getPosts}><Icon iconName="redo" /></Button>
           </ErrorSection>
         }
       </section>

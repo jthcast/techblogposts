@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/css';
 import globalCss from '../../styles/global-css';
 import Modal from '../atoms/Modal';
-import { IconLogoColored, IconGoogleColored, IconTemplate, IconSpinner } from '../atoms/Icons';
+import Icon from '../atoms/Icon';
 import config from '../../config';
 import firebase from 'firebase/app';
 import { LoginContext } from '../../context/LoginContext';
@@ -110,21 +110,21 @@ const LoginModal = ({ isOpen, openHandler }: LoginModalProps): React.ReactElemen
       {!loginInfo && 
         <Modal isOpen={isOpen} openHandler={openHandling}>
           <div className={cssFormWrapper}>
-            <IconLogoColored className={cssLogo} />
+            <Icon iconName='logoColored' className={cssLogo} />
             <p>{config.title}</p>
             {isLoading &&
               <div className={cssLoading}>
-                <IconSpinner spin />
+                <Icon iconName='spinner' spin />
               </div>
             }
             {!isLoading &&
               <>
                 <button className={cssGoogleLoginButton} ref={firstEl} onClick={loginHandling} data-providerid='google.com'>
-                  <IconGoogleColored className={cssIcon}/>
+                  <Icon iconName='googleColored' className={cssIcon} />
                   <span>Google 로그인</span>
                 </button>
                 <button className={cssGithubLoginButton} ref={lastEl} onClick={loginHandling} data-providerid='github.com'>
-                  <IconTemplate iconName="IconGithubCircle" className={cssIcon}/>
+                  <Icon iconName='githubCircle' className={cssIcon} />
                   <span>Github 로그인</span>
                 </button>
               </>

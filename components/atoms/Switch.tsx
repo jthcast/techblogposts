@@ -1,7 +1,7 @@
 import { css, cx } from '@emotion/css';
 import globalCss from '../../styles/global-css';
 import React, { forwardRef, LegacyRef, ReactElement } from 'react';
-import { IconSpinner } from './Icons';
+import Icon from './Icon';
 
 interface SwitchProps {
   ariaLabel?: string;
@@ -63,7 +63,7 @@ const Switch = forwardRef(({
       title={title}
     >
       <span className={cssSwitchInner}>
-        {loading && <IconSpinner spin />}
+        {loading && <Icon iconName='spinner' spin />}
         {!loading && unCheckedChildren && !checked && unCheckedChildren}
         {!loading && checkedChildren && checked && checkedChildren}
         {children}
@@ -86,7 +86,7 @@ const cssSwitch = css`
   min-height: 2.5rem;
   line-height: 1rem;
   vertical-align: middle;
-  background-color: ${globalCss.color.borderColor};
+  background-color: ${globalCss.color.colorDown};
   border: 0;
   border-radius: 50%;
   cursor: pointer;
@@ -104,6 +104,6 @@ const cssSwitchDisabled = css`
 `;
 
 const cssSwitchInner = css`
-  color: ${globalCss.color.white};
+  color: ${globalCss.color.borderColor};
   font-size: 1rem;
 `;

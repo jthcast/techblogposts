@@ -1,7 +1,7 @@
 import { css } from '@emotion/css';
 import React, { forwardRef, Ref, useContext } from 'react';
 import { InfiniteScrollContext } from '../../context/InfiniteScrollContext';
-import { IconMagnetColored } from '../atoms/Icons';
+import Icon from '../atoms/Icon';
 import Switch from '../atoms/Switch';
 
 interface InfiniteScrollSwitchProps {
@@ -25,7 +25,7 @@ const InfiniteScrollSwitch = forwardRef(({ title, ariaLabel }: InfiniteScrollSwi
       checked={isInfiniteLoad === 'on'}
       onClick={infiniteScrollHandling}
     >
-      <IconMagnetColored />
+      <Icon iconName='magnet' />
     </Switch>
   );
 });

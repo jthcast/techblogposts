@@ -1,6 +1,6 @@
 import { css, keyframes } from '@emotion/css';
 import globalCss, { rem } from '../../styles/global-css';
-import { IconEnvelope } from './Icons';
+import Icon from './Icon';
 import config from '../../config';
 
 interface ErrorSectionProps {
@@ -24,7 +24,7 @@ const ErrorSection = ({ statusCode, message, children }: ErrorSectionProps): Rea
           <>
             <p>죄송합니다 😥 오류를 제보 부탁드립니다.({statusCode})</p>
             <a className={cssIcon} href={`mailto:${config.author.email}`} aria-label="mail">
-              <IconEnvelope />
+              <Icon iconName='envelope' />
             </a>
           </>
         }

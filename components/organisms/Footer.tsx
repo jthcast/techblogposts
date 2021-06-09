@@ -1,10 +1,6 @@
 import React from 'react';
 import ScrollButton from './../molecules/ScrollButton';
-import {
-  IconArrowToTop,
-  IconEnvelope,
-  IconGithub,
-} from './../atoms/Icons';
+import Icon from '../atoms/Icon';
 import config from '../../config';
 import { css, cx } from '@emotion/css';
 import globalCss from '../../styles/global-css';
@@ -20,7 +16,6 @@ const Footer = (): React.ReactElement => {
     <footer
       className={cx(
         { [cssFooter]: true },
-        // { [cssFooter]: true },//container
       )}
     >
       <nav className={cssFooterContainer}>
@@ -60,17 +55,17 @@ const Footer = (): React.ReactElement => {
         <ul className={cssItemsRight}>
           <li className={cssIcon}>
             <a href={`mailto:${config.author.email}`} aria-label="mail">
-              <IconEnvelope />
+              <Icon iconName='envelope' />
             </a>
           </li>
           <li className={cssIcon}>
             <a
-              href={`${config.githubUrl}`}
+              href={config.githubUrl}
               target="_blank"
               rel="noreferrer"
               aria-label="github"
             >
-              <IconGithub />
+              <Icon iconName='github' />
             </a>
           </li>
         </ul>
@@ -83,7 +78,7 @@ const Footer = (): React.ReactElement => {
         showType="notTopAndUp"
         className={cssScrollTopButton}
       >
-        <IconArrowToTop />
+        <Icon iconName='arrowToTop' />
       </ScrollButton>
     </footer>
   );

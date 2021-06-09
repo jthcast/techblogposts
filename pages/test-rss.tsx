@@ -2,7 +2,7 @@ import Layout from '../components/atoms/Layout';
 import { FormEvent, useRef, useState } from 'react';
 import { css, keyframes } from '@emotion/css';
 import globalCss, { rem } from '../styles/global-css';
-import { IconSpinner } from '../components/atoms/Icons';
+import Icon from '../components/atoms/Icon';
 
 export default function RssTest() {
   const [posts, setPosts] = useState([]);
@@ -40,7 +40,7 @@ export default function RssTest() {
           <input placeholder='Company' ref={inputCompanyRef} className={cssInput} />
           <button type='submit' className={cssMorePostsButton}>
             {isLoading ?
-              <IconSpinner spin /> :
+              <Icon iconName='spinner' spin /> :
               <p>Test{' '}
                 <span role="img" aria-label="Test" className={cssBounce}>✨</span>
               </p>

@@ -1,7 +1,7 @@
 import { css } from '@emotion/css';
 import globalCss from '../../styles/global-css';
 import React, { useContext } from 'react';
-import { IconTimes } from './Icons';
+import Icon from './Icon';
 import { HeaderMessageContext } from '../../context/HeaderMessageContext';
 
 interface HeaderMessageProps {
@@ -31,7 +31,7 @@ const HeaderMessage = ({
                 onClick={closeHandling}
                 className={cssButton}
               >
-                <IconTimes />
+                <Icon iconName='times' />
               </button>
             )}
           </div>

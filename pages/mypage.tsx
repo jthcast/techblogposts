@@ -6,7 +6,7 @@ import { LoginContext } from '../context/LoginContext';
 import { useContext, useEffect, useState } from 'react';
 import ErrorSection from '../components/atoms/ErrorSection';
 import Button from '../components/atoms/Button';
-import { IconSpinner, IconTemplate } from '../components/atoms/Icons';
+import Icon from '../components/atoms/Icon';
 import firebase from 'firebase/app';
 import { API } from '../lib/utils/api';
 import { BookmarkContext } from '../context/BookmarkContext';
@@ -154,7 +154,7 @@ export default function Mypage() {
       <section className={cssContainer}>
         {isLoading &&
           <div className={cssLoading}>
-            <IconSpinner spin />
+            <Icon iconName='spinner' spin />
           </div>
         }
         {!loginInfo && !isLoading && (
@@ -174,7 +174,7 @@ export default function Mypage() {
         )}
         {error &&
           <ErrorSection message={error[1]} statusCode={error[0]}>
-            <Button ariaLabel="Retry" onClick={getAccountInfo}><IconTemplate iconName="IconReDo" /></Button>
+            <Button ariaLabel='Retry' onClick={getAccountInfo}><Icon iconName='redo' /></Button>
           </ErrorSection>
         }
       </section>

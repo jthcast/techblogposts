@@ -1,7 +1,7 @@
 import { cx, css } from '@emotion/css';
 import globalCss from '../../styles/global-css';
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { IconLogoColored } from '../atoms/Icons';
+import Icon from '../atoms/Icon';
 import Link from 'next/link';
 import { LoginModalContext } from '../../context/LoginModalContext';
 import { LoginContext } from '../../context/LoginContext';
@@ -90,7 +90,7 @@ const Header = ({
               <li>
                 <Link href="/">
                   <a className={cssHeaderTitle}>
-                    <IconLogoColored />
+                    <Icon iconName='logoColored' />
                     {title}
                     {subTitle && <span>{subTitle}</span>}
                   </a>

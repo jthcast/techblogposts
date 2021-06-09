@@ -1,7 +1,7 @@
 import { css, cx } from '@emotion/css';
 import globalCss from '../../styles/global-css';
 import { ButtonHTMLAttributes, forwardRef, LegacyRef } from 'react';
-import { IconSpinner } from './Icons';
+import Icon from './Icon';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLElement> {
   ariaLabel?: string;
@@ -54,7 +54,7 @@ const Button = forwardRef(({
       title={title}
       ref={ref}
     >
-      {loading && <IconSpinner className={cssSpinner} spin />}
+      {loading && <Icon className={cssSpinner} iconName='spinner' spin />}
       {children}
     </button>
   );

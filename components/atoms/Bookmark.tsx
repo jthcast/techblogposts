@@ -1,7 +1,7 @@
 import { css, cx, keyframes } from '@emotion/css';
 import globalCss from '../../styles/global-css';
 import React, { useContext, useEffect, useState } from 'react';
-import { IconTemplate } from './Icons';
+import Icon from './Icon';
 import { LoginContext } from '../../context/LoginContext';
 import { LoginModalContext } from '../../context/LoginModalContext';
 import { API } from '../../lib/utils/api';
@@ -105,7 +105,7 @@ const Bookmark = ({
       title='즐겨찾기'
       onClick={bookmarkHandling}
     >
-      <IconTemplate iconName={isBookmarked ? 'IconStarFilled' : 'IconStar'} 
+      <Icon iconName={isBookmarked ? 'starFilled' : 'star'} 
         className={cx({
           [cssBookmark]: true,
           [cssBookmarked]: isBookmarked,
