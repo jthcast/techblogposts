@@ -475,11 +475,12 @@ const Icon = ({
       aria-hidden="true"
       onClick={onClick}
     >
-      {paths.map((path) => {
+      {paths.map((path, index) => {
         const { fill, d } = path;
 
         return(
           <path
+            key={`${d}${index}`}
             transform={
               rotate
                 ? `rotate(${rotate} ${getRotateDegree(viewBox)})`
