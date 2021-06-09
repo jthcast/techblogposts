@@ -1,6 +1,7 @@
-import { css } from '@emotion/css';
+import { css, cx } from '@emotion/css';
 import React, { forwardRef, Ref, useContext } from 'react';
 import { InfiniteScrollContext } from '../../context/InfiniteScrollContext';
+import globalCss from '../../styles/global-css';
 import Icon from '../atoms/Icon';
 import Switch from '../atoms/Switch';
 
@@ -21,7 +22,10 @@ const InfiniteScrollSwitch = forwardRef(({ title, ariaLabel }: InfiniteScrollSwi
       ref={ref}
       ariaLabel={ariaLabel}
       title={title}
-      className={cssInfiniteScrollSwitch}
+      className={cx(
+        { [cssInfiniteScrollSwitch]: true },
+        { [cssInfiniteScrollSwitchOn]: isInfiniteLoad === 'on' },
+      )}
       checked={isInfiniteLoad === 'on'}
       onClick={infiniteScrollHandling}
     >
@@ -36,5 +40,11 @@ const cssInfiniteScrollSwitch = css`
   span {
     margin-top: 0.1rem;
     font-size: 1.35rem;
+  }
+`;
+
+const cssInfiniteScrollSwitchOn = css`
+  span {
+    color: ${globalCss.color.white};
   }
 `;
