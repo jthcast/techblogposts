@@ -142,6 +142,17 @@ const SearchModal = ({
     }
   }
 
+  const clickHandling = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    const button = event.button;
+    console.log('??', button)
+    if(button === 0 || button === 1){
+      const target = event.currentTarget;
+      const id = target.getAttribute('href');
+      const title = target.getAttribute('aria-label');
+      gtagOutboundEvent(id, title);
+    }
+  };
+
   const mouseWheelHandling = (event: Event) => {
     if(movePosition){
       setMovePosition(undefined);
@@ -237,7 +248,8 @@ const SearchModal = ({
                       target="_blank"
                       rel="noreferrer"
                       aria-label={title}
-                      onClick={() => gtagOutboundEvent(id, title)}
+                      onClick={clickHandling}
+                      onAuxClick={clickHandling}
                       title={title}
                     >
                       <p className={cssPostTitle}>{title}</p>
