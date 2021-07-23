@@ -93,7 +93,8 @@ const icons = {
   '비브로스': `bbros.ico`,
   '스캐터랩_핑퐁': `pingpong.png`,
   '한국그린데이터': `greendata.png`,
-  '딥네츄럴': `deepnatural.ico`
+  '딥네츄럴': `deepnatural.ico`,
+  '똑똑한개발자': `toktokhan.ico`
 };
 
 export { icons, iconsCtx };
