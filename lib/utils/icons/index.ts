@@ -94,7 +94,8 @@ const icons = {
   '스캐터랩_핑퐁': `pingpong.png`,
   '한국그린데이터': `greendata.png`,
   '딥네츄럴': `deepnatural.ico`,
-  '똑똑한개발자': `toktokhan.ico`
+  '똑똑한개발자': `toktokhan.ico`,
+  '데보션': `devocean.ico`,
 };
 
 export { icons, iconsCtx };
