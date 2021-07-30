@@ -39,7 +39,7 @@ const icons = {
   'SKCNC': `skcnc.ico`,
   '엘리시아': `elysia.ico`,
   '센드버드': `sendbird.png`,
-  '지그재그': `zigzag.ico`,
+  '카카오스타일': `kakao.ico`,
   '엔라이즈': `nrise.ico`,
   '데이블': `dable.png`,
   '뤼이드': `riiid.png`,
