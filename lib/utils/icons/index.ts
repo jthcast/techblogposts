@@ -96,6 +96,7 @@ const icons = {
   '딥네츄럴': `deepnatural.ico`,
   '똑똑한개발자': `toktokhan.ico`,
   '데보션': `devocean.ico`,
+  '레모네이드': `lemonade.png`
 };
 
 export { icons, iconsCtx };
