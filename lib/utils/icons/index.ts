@@ -98,6 +98,7 @@ const icons = {
   '데보션': `devocean.ico`,
   '레모네이드': `lemonade.png`,
   '일루넥스': `illunex.png`,
+  '로플랫': `loplat.ico`,
 };
 
 export { icons, iconsCtx };
