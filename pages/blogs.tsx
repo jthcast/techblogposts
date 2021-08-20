@@ -1,83 +1,74 @@
-import Layout from '../components/atoms/Layout';
-import { css } from '@emotion/css';
-import globalCss from '../styles/global-css';
-import { useEffect, useState } from 'react';
-import Icon from '../components/atoms/Icon';
-import { icons, iconsCtx } from '../lib/utils/icons';
-import Image from 'next/image';
-import config from '../config';
-import ErrorSection from '../components/atoms/ErrorSection';
-import Button from '../components/atoms/Button';
-import { API } from '../lib/utils/api';
+import { css } from '@emotion/css'
+import globalCss from '../styles/global-css'
+import { useEffect, useState } from 'react'
+import Icon from '../components/atoms/Icon'
+import { icons, iconsCtx } from '../lib/utils/icons'
+import Image from 'next/image'
+import config from '../config'
+import ErrorSection from '../components/atoms/ErrorSection'
+import Button from '../components/atoms/Button'
+import { API } from '../lib/utils/api'
+import SEO from '../components/atoms/Seo'
 
 interface BlogItem {
   _source: {
-    id: string;
-    title: string;
+    id: string
+    title: string
   }
 }
 
 export default function Blogs() {
-  const [isLoading, setLoading] = useState(true);
-  const [blogs, setBlogs] = useState<BlogItem[]>([]);
-  const [error, setError] = useState<[number, string]>(undefined);
+  const [isLoading, setLoading] = useState(true)
+  const [blogs, setBlogs] = useState<BlogItem[]>([])
+  const [error, setError] = useState<[number, string]>(undefined)
 
   async function getBlogs() {
-    setLoading(true);
-    setError(undefined);
+    setLoading(true)
+    setError(undefined)
     const fetchData = await fetch(`/api/blogs`, {
       method: 'GET',
-    });
-    const result: API = await fetchData.json();
-    const { isError, statusCode, message, data } = result;
+    })
+    const result: API = await fetchData.json()
+    const { isError, statusCode, message, data } = result
     if (isError) {
-      setLoading(false);
-      setError([statusCode, message]);
-      return;
+      setLoading(false)
+      setError([statusCode, message])
+      return
     }
-    setBlogs([...data]);
-    setLoading(false);
-  };
+    setBlogs([...data])
+    setLoading(false)
+  }
 
   useEffect(() => {
-    getBlogs();
-  }, []);
+    getBlogs()
+  }, [])
 
   return (
-    <Layout title={'기술 블로그 목록'}>
+    <>
+      <SEO title={'기술 블로그 목록'} />
       <section className={cssBlogs}>
-        {isLoading && !error &&
+        {isLoading && !error && (
           <div className={cssLoading}>
-            <Icon iconName='spinner' spin />
+            <Icon iconName="spinner" spin />
           </div>
-        }
+        )}
         {!isLoading && !error && blogs && blogs.length > 0 && (
           <>
-            <h1 className={cssTitle}>현재 <span className={cssBlogsCount}>{blogs.length}</span>개의 기술 블로그를 구독중입니다 ✨</h1>
+            <h1 className={cssTitle}>
+              현재 <span className={cssBlogsCount}>{blogs.length}</span>개의 기술 블로그를 구독중입니다 ✨
+            </h1>
             <ul className={cssList}>
               {blogs.map((blog) => {
-                const { id, title } = blog._source;
+                const { id, title } = blog._source
                 return (
                   <li key={id}>
-                    <a
-                      href={id}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label={title}
-                      title={title}
-                    >
+                    <a href={id} target="_blank" rel="noreferrer" aria-label={title} title={title}>
                       <div className={cssListItem}>
-                        {icons[title] &&
+                        {icons[title] && (
                           <div className={cssCompanyIcon}>
-                            <Image
-                              src={`${iconsCtx}${icons[title]}`}
-                              alt={title}
-                              width='fill'
-                              height='fill'
-                              layout='responsive'
-                            />
+                            <Image src={`${iconsCtx}${icons[title]}`} alt={title} width="fill" height="fill" layout="responsive" />
                           </div>
-                        }
+                        )}
                         <span>{title}</span>
                       </div>
                     </a>
@@ -87,27 +78,25 @@ export default function Blogs() {
             </ul>
           </>
         )}
-        {!isLoading && !error &&
+        {!isLoading && !error && (
           <div className={cssReport}>
             <h3>원하시는 기업의 기술 블로그가 목록에 없나요?</h3>
             <p>저에게 알려주세요. 추가하겠습니다. 🙌</p>
-            <a
-              href={`mailto:${config.author.email}`}
-              aria-label="mail"
-              className={cssAnchorButton}
-            >
+            <a href={`mailto:${config.author.email}`} aria-label="mail" className={cssAnchorButton}>
               제보 하기 📧
             </a>
           </div>
-        }
-        {error &&
+        )}
+        {error && (
           <ErrorSection message={error[1]} statusCode={error[0]}>
-            <Button ariaLabel="Retry" onClick={getBlogs}><Icon iconName="redo" /></Button>
+            <Button ariaLabel="Retry" onClick={getBlogs}>
+              <Icon iconName="redo" />
+            </Button>
           </ErrorSection>
-        }
+        )}
       </section>
-    </Layout>
-  );
+    </>
+  )
 }
 
 const cssBlogs = css`
@@ -127,7 +116,7 @@ const cssBlogs = css`
   @media ${globalCss.breakpoint.tabletQuery} {
     padding: 0 3rem;
   }
-`;
+`
 
 const cssLoading = css`
   display: flex;
@@ -136,7 +125,7 @@ const cssLoading = css`
   font-size: 5rem;
   color: ${globalCss.color.secondaryBrandColor};
   margin: 5rem 0;
-`;
+`
 
 const cssList = css`
   display: grid;
@@ -147,8 +136,7 @@ const cssList = css`
   list-style: none;
 
   li {
-
-    a{
+    a {
       text-decoration: none;
       color: ${globalCss.color.color};
     }
@@ -162,7 +150,7 @@ const cssList = css`
   @media ${globalCss.breakpoint.tabletQuery} {
     grid-template-columns: 1fr 1fr 1fr;
   }
-`;
+`
 
 const cssListItem = css`
   margin: 1rem 0;
@@ -179,14 +167,14 @@ const cssListItem = css`
     margin-right: 0;
     margin-top: 0;
   }
-`;
+`
 
 const cssCompanyIcon = css`
   width: 1rem;
   height: 1rem;
   margin-right: 0.25rem;
   margin-top: 0.15rem;
-`;
+`
 
 const cssReport = css`
   display: grid;
@@ -204,7 +192,7 @@ const cssReport = css`
   @media ${globalCss.breakpoint.tabletQuery} {
     margin: 4rem 0;
   }
-`;
+`
 
 const cssTitle = css`
   font-size: 1.25rem;
@@ -218,11 +206,11 @@ const cssTitle = css`
   @media ${globalCss.breakpoint.tabletQuery} {
     margin-bottom: 3rem 0;
   }
-`;
+`
 
 const cssBlogsCount = css`
   color: ${globalCss.color.primaryBrandColor};
-`;
+`
 
 const cssAnchorButton = css`
   background-color: ${globalCss.color.secondaryBrandColor};
@@ -231,4 +219,4 @@ const cssAnchorButton = css`
   padding: 0.25rem 0.75rem;
   border-radius: 0.25rem;
   line-height: 1.55;
-`;
+`

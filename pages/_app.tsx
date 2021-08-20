@@ -6,9 +6,10 @@ import { InfiniteScrollProvider } from '../context/InfiniteScrollContext'
 import { HeaderMessageProvider } from '../context/HeaderMessageContext'
 import { LoginModalProvider } from '../context/LoginModalContext'
 import { LoginProvider } from '../context/LoginContext'
-import firebase from 'firebase/app';
-import 'firebase/auth';
+import firebase from 'firebase/app'
+import 'firebase/auth'
 import { BookmarkProvider } from '../context/BookmarkContext'
+import Layout from '../components/atoms/Layout'
 
 function App({ Component, pageProps }: AppProps) {
   const firebaseConfig = {
@@ -18,13 +19,13 @@ function App({ Component, pageProps }: AppProps) {
     storageBucket: process.env.FB_AUTH_STORAGE_BUCKET,
     messagingSenderId: process.env.FB_AUTH_MESSAGING_SENDER_ID,
     appId: process.env.FB_AUTH_APP_ID,
-    measurementId: process.env.FB_AUTH_MEASUREMENT_ID
-  };
+    measurementId: process.env.FB_AUTH_MEASUREMENT_ID,
+  }
 
   if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
+    firebase.initializeApp(firebaseConfig)
   }
-  
+
   return (
     <LoginProvider>
       <BookmarkProvider>
@@ -32,7 +33,9 @@ function App({ Component, pageProps }: AppProps) {
           <InfiniteScrollProvider>
             <HeaderMessageProvider>
               <LoginModalProvider>
-                <Component {...pageProps} />
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
               </LoginModalProvider>
             </HeaderMessageProvider>
           </InfiniteScrollProvider>

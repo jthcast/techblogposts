@@ -1,78 +1,75 @@
-import Layout from '../components/atoms/Layout';
-import { FormEvent, useRef, useState } from 'react';
-import { css, keyframes } from '@emotion/css';
-import globalCss, { rem } from '../styles/global-css';
-import Icon from '../components/atoms/Icon';
+import { FormEvent, useRef, useState } from 'react'
+import { css, keyframes } from '@emotion/css'
+import globalCss, { rem } from '../styles/global-css'
+import Icon from '../components/atoms/Icon'
 
 export default function RssTest() {
-  const [posts, setPosts] = useState([]);
-  const [error, setError] = useState('');
-  const [isLoading, setLoading] = useState(false);
-  const inputURLRef = useRef<HTMLInputElement>();
-  const inputCompanyRef = useRef<HTMLInputElement>();
+  const [posts, setPosts] = useState([])
+  const [error, setError] = useState('')
+  const [isLoading, setLoading] = useState(false)
+  const inputURLRef = useRef<HTMLInputElement>()
+  const inputCompanyRef = useRef<HTMLInputElement>()
 
   async function getRSS(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+    event.preventDefault()
     try {
-      setLoading(true);
-      const url = encodeURI(inputURLRef.current.value);
-      const company = inputCompanyRef.current.value;
-      const feedResponse = await fetch(`/api/test-rss?url=${url}&company=${company}`);
-      const feed = await feedResponse.json();
-      const items = feed.rssItems;
-      setPosts(items);
-      setError(undefined);
-      setLoading(false);
-      return null;
+      setLoading(true)
+      const url = encodeURI(inputURLRef.current.value)
+      const company = inputCompanyRef.current.value
+      const feedResponse = await fetch(`/api/test-rss?url=${url}&company=${company}`)
+      const feed = await feedResponse.json()
+      const items = feed.rssItems
+      setPosts(items)
+      setError(undefined)
+      setLoading(false)
+      return null
     } catch (err) {
-      console.log(err);
-      setPosts([]);
-      setError(err.toString());
-      setLoading(false);
+      console.log(err)
+      setPosts([])
+      setError(err.toString())
+      setLoading(false)
     }
   }
 
   return (
-    <Layout title={`RSS 테스트`}>
+    <>
       <section className={cssPosts}>
         <form onSubmit={getRSS} className={cssForm}>
-          <input placeholder='URL' ref={inputURLRef} className={cssInput} />
-          <input placeholder='Company' ref={inputCompanyRef} className={cssInput} />
-          <button type='submit' className={cssMorePostsButton}>
-            {isLoading ?
-              <Icon iconName='spinner' spin /> :
-              <p>Test{' '}
-                <span role="img" aria-label="Test" className={cssBounce}>✨</span>
+          <input placeholder="URL" ref={inputURLRef} className={cssInput} />
+          <input placeholder="Company" ref={inputCompanyRef} className={cssInput} />
+          <button type="submit" className={cssMorePostsButton}>
+            {isLoading ? (
+              <Icon iconName="spinner" spin />
+            ) : (
+              <p>
+                Test{' '}
+                <span role="img" aria-label="Test" className={cssBounce}>
+                  ✨
+                </span>
               </p>
-            }
+            )}
           </button>
         </form>
         {!isLoading && posts && posts.length > 0 && (
           <ul className={cssList}>
             {posts.map((post, index) => {
-              const nowDate = new Date();
-              const today = new Date(`${nowDate.getFullYear()}-${nowDate.getMonth() + 1}-${nowDate.getDate()}`);
-              const postDate = new Date(parseInt(post.publishDate));
-              const postDay = new Date(`${postDate.getFullYear()}-${postDate.getMonth() + 1}-${postDate.getDate()}`);
-              const dateDiffer = Math.floor((today.getTime() - postDay.getTime()) / 60 / 1000 / 60 / 24);
-              const dateDifferString = dateDiffer === 0 ? `오늘` : `${dateDiffer}일 전`;
-              const postDateMonth = (postDate.getMonth() + 1).toString().length === 1 ? `0${postDate.getMonth() + 1}` : postDate.getMonth() + 1;
-              const postDateDate = postDate.getDate().toString().length === 1 ? `0${postDate.getDate()}` : postDate.getDate();
-              const postDateString = `${postDate.getFullYear()}-${postDateMonth}-${postDateDate}`;
+              const nowDate = new Date()
+              const today = new Date(`${nowDate.getFullYear()}-${nowDate.getMonth() + 1}-${nowDate.getDate()}`)
+              const postDate = new Date(parseInt(post.publishDate))
+              const postDay = new Date(`${postDate.getFullYear()}-${postDate.getMonth() + 1}-${postDate.getDate()}`)
+              const dateDiffer = Math.floor((today.getTime() - postDay.getTime()) / 60 / 1000 / 60 / 24)
+              const dateDifferString = dateDiffer === 0 ? `오늘` : `${dateDiffer}일 전`
+              const postDateMonth =
+                (postDate.getMonth() + 1).toString().length === 1 ? `0${postDate.getMonth() + 1}` : postDate.getMonth() + 1
+              const postDateDate = postDate.getDate().toString().length === 1 ? `0${postDate.getDate()}` : postDate.getDate()
+              const postDateString = `${postDate.getFullYear()}-${postDateMonth}-${postDateDate}`
 
               return (
                 <li key={`${post.link}${index}`} className={cssListItem}>
-                  <a
-                    href={post.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={post.title}
-                  >
+                  <a href={post.link} target="_blank" rel="noreferrer" aria-label={post.title}>
                     <p className={cssPostTitle}>{post.title}</p>
                     <ul className={cssItemDetail}>
-                      <li className={cssItemDetailLeft}>
-                        {post.company}
-                      </li>
+                      <li className={cssItemDetailLeft}>{post.company}</li>
                       {/* <li>
                         <span role="img" aria-label="viewCount">👀</span>{' '}
                         {post.viewCount}
@@ -87,14 +84,10 @@ export default function RssTest() {
             })}
           </ul>
         )}
-        {!isLoading && error && (
-          <section className={cssError}>
-            {error}
-          </section>
-        )}
+        {!isLoading && error && <section className={cssError}>{error}</section>}
       </section>
-    </Layout>
-  );
+    </>
+  )
 }
 
 const cssPosts = css`
@@ -114,11 +107,11 @@ const cssPosts = css`
   @media ${globalCss.breakpoint.tabletQuery} {
     padding: 0 3rem;
   }
-`;
+`
 
 const cssList = css`
   list-style: none;
-`;
+`
 
 const cssListItem = css`
   padding: 1rem 0;
@@ -127,8 +120,8 @@ const cssListItem = css`
   &:nth-last-child(1) {
     border-bottom: none;
   }
-  
-  a{
+
+  a {
     display: flex;
     flex-direction: column;
     text-decoration: none;
@@ -146,12 +139,12 @@ const cssListItem = css`
       color: ${globalCss.color.color};
     }
   }
-`;
+`
 
 const cssPostTitle = css`
   font-size: 1rem;
   font-weight: ${globalCss.common.fontNormal};
-`;
+`
 
 const cssItemDetail = css`
   font-size: 0.9rem;
@@ -167,17 +160,17 @@ const cssItemDetail = css`
     &:nth-child(1) {
       margin-right: auto;
     }
-  
+
     &:nth-last-child(1) {
       margin-right: 0;
     }
   }
-`;
+`
 
 const cssItemDetailLeft = css`
   display: flex;
   align-items: center;
-`;
+`
 
 const cssMorePostsButton = css`
   margin: 0 auto;
@@ -187,7 +180,7 @@ const cssMorePostsButton = css`
   color: ${globalCss.color.white};
   background-color: ${globalCss.color.secondaryBrandColor};
   cursor: pointer;
-`;
+`
 
 const keyFramesBounce = keyframes`
   from, 20%, 53%, 80%, to {
@@ -205,12 +198,12 @@ const keyFramesBounce = keyframes`
   90% {
     transform: translate3d(0,-${rem(-1)},0);
   }
-`;
+`
 
 const cssBounce = css`
   display: inline-block;
   animation: ${keyFramesBounce} 1s ease infinite;
-`;
+`
 
 const cssForm = css`
   display: grid;
@@ -220,7 +213,7 @@ const cssForm = css`
   @media ${globalCss.breakpoint.mobileQuery} {
     grid-template-columns: 1fr;
   }
-`;
+`
 
 const cssInput = css`
   padding: 0.5rem;
@@ -237,8 +230,8 @@ const cssInput = css`
   @media ${globalCss.breakpoint.mobileQuery} {
     margin-bottom: 1rem;
   }
-`;
+`
 
 const cssError = css`
   margin-top: 3rem;
-`;
+`

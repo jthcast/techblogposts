@@ -1,115 +1,115 @@
-import Layout from '../components/atoms/Layout';
-import { useContext, useEffect, useState } from 'react';
-import { css } from '@emotion/css';
-import globalCss, { rem } from '../styles/global-css';
-import Icon from '../components/atoms/Icon';
-import { icons, iconsCtx } from '../lib/utils/icons';
-import Image from 'next/image';
-import { gtagOutboundEvent } from '../lib/utils/googleAnalytics';
-import ErrorSection from '../components/atoms/ErrorSection';
-import Button from '../components/atoms/Button';
-import { API } from '../lib/utils/api';
-import Bookmark from '../components/atoms/Bookmark';
-import { LoginContext } from '../context/LoginContext';
+import { useContext, useEffect, useState } from 'react'
+import { css } from '@emotion/css'
+import globalCss, { rem } from '../styles/global-css'
+import Icon from '../components/atoms/Icon'
+import { icons, iconsCtx } from '../lib/utils/icons'
+import Image from 'next/image'
+import { gtagOutboundEvent } from '../lib/utils/googleAnalytics'
+import ErrorSection from '../components/atoms/ErrorSection'
+import Button from '../components/atoms/Button'
+import { API } from '../lib/utils/api'
+import Bookmark from '../components/atoms/Bookmark'
+import { LoginContext } from '../context/LoginContext'
+import SEO from '../components/atoms/Seo'
 
 export interface BookmarkItem {
   _source: {
-    company: string;
-    dataType: string;
-    id: string;
-    isShow: boolean;
-    publishDate: number;
-    title: string;
-    viewCount: number;
+    company: string
+    dataType: string
+    id: string
+    isShow: boolean
+    publishDate: number
+    title: string
+    viewCount: number
   }
 }
 
 export interface Bookmark {
   _source: {
-    parent: string;
-    publishDate: number;
+    parent: string
+    publishDate: number
   }
 }
 
 export default function Bookmarks() {
-  const [posts, setPosts] = useState<BookmarkItem[]>([]);
-  const [isLoading, setLoading] = useState(true);
-  const [error, setError] = useState<[number, string]>(undefined);
-  const [loginInfo, setLogin] = useContext(LoginContext);
+  const [posts, setPosts] = useState<BookmarkItem[]>([])
+  const [isLoading, setLoading] = useState(true)
+  const [error, setError] = useState<[number, string]>(undefined)
+  const [loginInfo, setLogin] = useContext(LoginContext)
 
   const getPosts = async () => {
-    setLoading(true);
-    setError(undefined);
+    setLoading(true)
+    setError(undefined)
     const postsFetch = await fetch(`/api/bookmark?uid=${loginInfo.uid}&getType=parent`, {
       method: 'GET',
-    });
-    const postsResult: API = await postsFetch.json();
-    const { isError, statusCode, message, data } = postsResult;
+    })
+    const postsResult: API = await postsFetch.json()
+    const { isError, statusCode, message, data } = postsResult
     if (isError) {
-      setError([statusCode, message]);
-      setLoading(false);
-      return;
+      setError([statusCode, message])
+      setLoading(false)
+      return
     }
-    const posts: BookmarkItem[] = data;
+    const posts: BookmarkItem[] = data
     const bookmarksFetch = await fetch(`/api/bookmark?uid=${loginInfo.uid}&getType=children`, {
       method: 'GET',
-    });
-    const bookmarksResult: API = await bookmarksFetch.json();
-    const isBookmarksError = bookmarksResult.isError;
+    })
+    const bookmarksResult: API = await bookmarksFetch.json()
+    const isBookmarksError = bookmarksResult.isError
     if (isBookmarksError) {
-      setError([statusCode, message]);
-      setLoading(false);
-      return;
+      setError([statusCode, message])
+      setLoading(false)
+      return
     }
-    const bookmarks: Bookmark[] = bookmarksResult.data;
+    const bookmarks: Bookmark[] = bookmarksResult.data
     const bookmarkPublishedDates = bookmarks.reduce((acc, bookmark) => {
-      const source = bookmark._source;
-      acc[source.parent] = source.publishDate;
-      return acc;
-    }, {});
-    posts.sort((a, b) => bookmarkPublishedDates[b._source.id] - bookmarkPublishedDates[a._source.id]);
-    setPosts([...posts]);
-    setLoading(false);
-  };
+      const source = bookmark._source
+      acc[source.parent] = source.publishDate
+      return acc
+    }, {})
+    posts.sort((a, b) => bookmarkPublishedDates[b._source.id] - bookmarkPublishedDates[a._source.id])
+    setPosts([...posts])
+    setLoading(false)
+  }
 
   useEffect(() => {
-    if(!loginInfo){
-      setLoading(false);
-      return;
+    if (!loginInfo) {
+      setLoading(false)
+      return
     }
-    getPosts();
-  }, [loginInfo]);
+    getPosts()
+  }, [loginInfo])
 
   return (
-    <Layout title={'즐겨찾기'}>
+    <>
+      <SEO title={'즐겨찾기'} />
       <section className={cssPosts}>
-        {isLoading &&
+        {isLoading && (
           <div className={cssLoading}>
-            <Icon iconName='spinner' spin />
+            <Icon iconName="spinner" spin />
           </div>
-        }
-        {!loginInfo && !isLoading && (
-          <h1 className={cssTitle}>로그인이 필요합니다 😅</h1>
         )}
+        {!loginInfo && !isLoading && <h1 className={cssTitle}>로그인이 필요합니다 😅</h1>}
         {loginInfo && !isLoading && !error && posts && posts.length === 0 && (
           <h1 className={cssTitle}>아직 즐겨찾기에 추가한 포스트가 없어요 😅</h1>
         )}
         {loginInfo && !isLoading && !error && posts && posts.length > 0 && (
           <ul className={cssList}>
             {posts.map((post) => {
-              const { company, id, publishDate, title, viewCount } = post._source;
-              const nowDate = new Date();
-              const postDate = new Date(publishDate);
-              const todayMonth = (nowDate.getMonth() + 1).toString().length === 1 ? `0${nowDate.getMonth() + 1}` : nowDate.getMonth() + 1;
-              const todayDate = nowDate.getDate().toString().length === 1 ? `0${nowDate.getDate()}` : nowDate.getDate();
-              const todayString = `${nowDate.getFullYear()}-${todayMonth}-${todayDate}`;
-              const today = new Date(todayString);
-              const postDateMonth = (postDate.getMonth() + 1).toString().length === 1 ? `0${postDate.getMonth() + 1}` : postDate.getMonth() + 1;
-              const postDateDate = postDate.getDate().toString().length === 1 ? `0${postDate.getDate()}` : postDate.getDate();
-              const postDateString = `${postDate.getFullYear()}-${postDateMonth}-${postDateDate}`;
-              const postDay = new Date(postDateString);
-              const dateDiffer = Math.floor((today.getTime() - postDay.getTime()) / 60 / 1000 / 60 / 24);
-              const dateDifferString = dateDiffer === 0 ? `오늘` : `${dateDiffer}일 전`;
+              const { company, id, publishDate, title, viewCount } = post._source
+              const nowDate = new Date()
+              const postDate = new Date(publishDate)
+              const todayMonth = (nowDate.getMonth() + 1).toString().length === 1 ? `0${nowDate.getMonth() + 1}` : nowDate.getMonth() + 1
+              const todayDate = nowDate.getDate().toString().length === 1 ? `0${nowDate.getDate()}` : nowDate.getDate()
+              const todayString = `${nowDate.getFullYear()}-${todayMonth}-${todayDate}`
+              const today = new Date(todayString)
+              const postDateMonth =
+                (postDate.getMonth() + 1).toString().length === 1 ? `0${postDate.getMonth() + 1}` : postDate.getMonth() + 1
+              const postDateDate = postDate.getDate().toString().length === 1 ? `0${postDate.getDate()}` : postDate.getDate()
+              const postDateString = `${postDate.getFullYear()}-${postDateMonth}-${postDateDate}`
+              const postDay = new Date(postDateString)
+              const dateDiffer = Math.floor((today.getTime() - postDay.getTime()) / 60 / 1000 / 60 / 24)
+              const dateDifferString = dateDiffer === 0 ? `오늘` : `${dateDiffer}일 전`
 
               return (
                 <li key={id} className={cssListItem}>
@@ -125,17 +125,11 @@ export default function Bookmarks() {
                   </a>
                   <ul className={cssItemDetail}>
                     <li className={cssItemDetailLeft}>
-                      {icons[company] &&
+                      {icons[company] && (
                         <div className={cssCompanyIcon}>
-                          <Image
-                            src={`${iconsCtx}${icons[company]}`}
-                            alt={company}
-                            width='fill'
-                            height='fill'
-                            layout='responsive'
-                          />
+                          <Image src={`${iconsCtx}${icons[company]}`} alt={company} width="fill" height="fill" layout="responsive" />
                         </div>
-                      }
+                      )}
                       {company}
                     </li>
                     <li>
@@ -143,7 +137,7 @@ export default function Bookmarks() {
                     </li>
                     <li>
                       <div className={cssItemDetailItem}>
-                        <Icon iconName='eye' />
+                        <Icon iconName="eye" />
                         {viewCount}
                       </div>
                     </li>
@@ -156,14 +150,16 @@ export default function Bookmarks() {
             })}
           </ul>
         )}
-        {error &&
+        {error && (
           <ErrorSection message={error[1]} statusCode={error[0]}>
-            <Button ariaLabel="Retry" onClick={getPosts}><Icon iconName="redo" /></Button>
+            <Button ariaLabel="Retry" onClick={getPosts}>
+              <Icon iconName="redo" />
+            </Button>
           </ErrorSection>
-        }
+        )}
       </section>
-    </Layout>
-  );
+    </>
+  )
 }
 
 const cssPosts = css`
@@ -183,7 +179,7 @@ const cssPosts = css`
   @media ${globalCss.breakpoint.tabletQuery} {
     padding: 0 3rem;
   }
-`;
+`
 
 const cssLoading = css`
   display: flex;
@@ -192,11 +188,11 @@ const cssLoading = css`
   font-size: 5rem;
   color: ${globalCss.color.secondaryBrandColor};
   margin: 5rem 0;
-`;
+`
 
 const cssList = css`
   list-style: none;
-`;
+`
 
 const cssListItem = css`
   padding: 1rem 0;
@@ -205,8 +201,8 @@ const cssListItem = css`
   &:nth-last-child(1) {
     border-bottom: none;
   }
-  
-  a{
+
+  a {
     display: flex;
     flex-direction: column;
     text-decoration: none;
@@ -224,12 +220,12 @@ const cssListItem = css`
       color: ${globalCss.color.color};
     }
   }
-`;
+`
 
 const cssPostTitle = css`
   font-size: 1rem;
   font-weight: ${globalCss.common.fontNormal};
-`;
+`
 
 const cssItemDetail = css`
   font-size: 0.9rem;
@@ -246,12 +242,12 @@ const cssItemDetail = css`
     &:nth-child(1) {
       margin-right: auto;
     }
-  
+
     &:nth-last-child(1) {
       margin-right: 0;
     }
   }
-`;
+`
 
 const cssItemDetailItem = css`
   display: flex;
@@ -267,12 +263,12 @@ const cssItemDetailItem = css`
     margin-right: 0.25rem;
     margin-top: 0.1rem;
   }
-`;
+`
 
 const cssItemDetailLeft = css`
   display: flex;
   align-items: center;
-`;
+`
 
 const cssCompanyIcon = css`
   width: 1rem;
@@ -280,7 +276,7 @@ const cssCompanyIcon = css`
   display: inline-block;
   margin-right: 0.25rem;
   margin-top: 0.15rem;
-`;
+`
 
 const cssTitle = css`
   font-size: 1.25rem;
@@ -294,4 +290,4 @@ const cssTitle = css`
   @media ${globalCss.breakpoint.tabletQuery} {
     margin-bottom: 3rem 0;
   }
-`;
+`
