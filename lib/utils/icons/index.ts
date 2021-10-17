@@ -99,6 +99,7 @@ const icons = {
   '레모네이드': `lemonade.png`,
   '일루넥스': `illunex.png`,
   '로플랫': `loplat.ico`,
+  '유비케어': `ubcare.png`,
 };
 
 export { icons, iconsCtx };
