@@ -114,7 +114,7 @@ const LoginModal = ({ isOpen, openHandler }: LoginModalProps): React.ReactElemen
             <p>{config.title}</p>
             {isLoading &&
               <div className={cssLoading}>
-                <Icon iconName='spinner' spin />
+                <Icon iconName='spinner' isSpin />
               </div>
             }
             {!isLoading &&

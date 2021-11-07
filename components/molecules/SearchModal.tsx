@@ -210,7 +210,7 @@ const SearchModal = ({
     <Modal isOpen={isOpen} openHandler={openHandling} escClose={false}>
       <div className={cssSearchWrapper}>
         <div className={cssInputWrapper(posts)}>
-          {isLoading ? <Icon iconName='spinner' spin className={cssLoadingIcon} /> : <Icon iconName='search' />}
+          {isLoading ? <Icon iconName='spinner' isSpin className={cssLoadingIcon} /> : <Icon iconName='search' />}
           {children}
           {inputValue && <Icon iconName='timesCircle' onClick={removeHandling} className={cssIcon} /> }
         </div>

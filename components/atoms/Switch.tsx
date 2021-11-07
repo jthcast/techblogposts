@@ -67,7 +67,7 @@ const Switch = forwardRef(
         title={title}
       >
         <span className={cssSwitchInner}>
-          {loading && <Icon iconName="spinner" spin />}
+          {loading && <Icon iconName="spinner" isSpin />}
           {!loading && unCheckedChildren && !checked && unCheckedChildren}
           {!loading && checkedChildren && checked && checkedChildren}
           {children}
