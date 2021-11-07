@@ -7,6 +7,8 @@ import globalCss from '../../styles/global-css';
 import Link from 'next/link';
 
 const Footer = (): React.ReactElement => {
+  const { copyrightHomepage, copyright, author, siteUrl, githubUrl} = config
+
   const scrollToTop = () => {
     const root = document.querySelector('#__next');
     root.scrollTo(0, 0);
@@ -22,12 +24,12 @@ const Footer = (): React.ReactElement => {
         <ul className={cssItemsLeft}>
           <li>
             <a
-              href={config.copyrightHomepage}
+              href={copyrightHomepage}
               target="_blank"
               rel="noopener noreferrer"
               className={cssExternalLink}
             >
-              © {new Date().getFullYear()} {config.copyright}.
+              © {new Date().getFullYear()} {copyright}.
             </a>
           </li>
           <li className={cssImportantLink}>
@@ -54,13 +56,13 @@ const Footer = (): React.ReactElement => {
         </ul> */}
         <ul className={cssItemsRight}>
           <li className={cssIcon}>
-            <a href={`mailto:${config.author.email}`} aria-label="mail">
+            <a href={`mailto:${author.email}`} aria-label="mail">
               <Icon iconName='envelope' />
             </a>
           </li>
           <li className={cssIcon}>
             <a
-              href={config.githubUrl}
+              href={githubUrl}
               target="_blank"
               rel="noreferrer"
               aria-label="github"
@@ -68,6 +70,16 @@ const Footer = (): React.ReactElement => {
               <Icon iconName='github' />
             </a>
           </li>
+          <li className={cssIcon}>
+              <a
+                href={`${siteUrl}/rss.xml`}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="rss"
+              >
+                <Icon iconName='rss' />
+              </a>
+            </li>
         </ul>
       </nav>
       <ScrollButton
