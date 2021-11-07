@@ -1,31 +1,21 @@
 import { css, cx, keyframes } from '@emotion/css'
-import React, { CSSProperties, SVGAttributes } from 'react'
+import React, { CSSProperties, forwardRef, Ref, SVGAttributes } from 'react'
 
-export interface IconProps extends SVGAttributes<SVGElement> {
+export type IconName = keyof typeof icons
+
+interface IconProps extends SVGAttributes<SVGElement> {
   className?: string
-  style?: CSSProperties
-  spin?: boolean
+  isSpin?: boolean
+  iconName: IconName
   rotate?: number
-  onClick?: () => void
-}
-
-interface IconContentProps {
-  className?: string
   style?: CSSProperties
-  spin?: boolean
-  rotate?: number
   onClick?: () => void
-  iconName: string
+  ref?: Ref<SVGSVGElement>
 }
 
-interface IconDetailProps {
-  [name: string]: {
-    viewBox: string
-    paths: { fill?: string; d: string }[]
-  }
-}
+interface Path extends SVGAttributes<SVGPathElement> {}
 
-const icons: IconDetailProps = {
+const icons = {
   angleDown: {
     viewBox: '0 0 320 512',
     paths: [
@@ -449,53 +439,51 @@ const getRotateDegree = (viewBox: string) => {
   return `${+viewBoxArray[2] / 2} ${+viewBoxArray[3] / 2}`
 }
 
-const Icon = ({
-  className,
-  style,
-  spin,
-  rotate,
-  onClick,
-  iconName,
-}: IconContentProps): React.ReactElement => {
+const Icon = forwardRef(function Icon({ className = ``, isSpin, rotate, style, onClick, iconName, ...rest }: IconProps, ref: Ref<SVGSVGElement>) {
   const { viewBox, paths } = icons[iconName]
 
   return (
-    <svg
-      viewBox={viewBox}
-      focusable="false"
-      className={cx(
-        { [cssIcon]: true },
-        { [cssSpin]: spin },
-        { [className]: !!className }
-      )}
-      style={style}
-      width="1em"
-      height="1em"
-      fill="currentColor"
-      aria-hidden="true"
-      onClick={onClick}
-    >
-      {paths.map((path, index) => {
-        const { fill, d } = path
+    <div className={cssIconWrapper}>
+      <svg
+        ref={ref}
+        viewBox={viewBox}
+        focusable="false"
+        className={cx({ [cssIcon]: true }, { [cssSpin]: isSpin }, { [className]: !!className })}
+        style={style}
+        width="1em"
+        height="1em"
+        fill="currentColor"
+        aria-hidden="true"
+        onClick={onClick}
+        {...rest}
+      >
+        {paths.map((path, index) => {
+          const { fill, stroke, strokeWidth, d, ...rest } = path as Path
 
-        return (
-          <path
-            key={`${d}${index}`}
-            transform={
-              rotate
-                ? `rotate(${rotate} ${getRotateDegree(viewBox)})`
-                : undefined
-            }
-            fill={fill}
-            d={d}
-          />
-        )
-      })}
-    </svg>
+          return (
+            <path
+              key={`${d}${index}`}
+              transform={rotate ? `rotate(${rotate} ${getRotateDegree(viewBox)})` : undefined}
+              fill={fill}
+              d={d}
+              stroke={stroke}
+              strokeWidth={strokeWidth}
+              {...rest}
+            />
+          )
+        })}
+      </svg>
+    </div>
   )
-}
+})
 
 export default Icon
+
+const cssIconWrapper = css`
+  display: flex;
+  align-items: center;
+  line-height: 0;
+`
 
 const keyFrameSpin = keyframes`
   100% {
