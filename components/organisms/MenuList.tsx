@@ -25,6 +25,7 @@ const MenuList = ({
   const lastTabEl = lastTabRef.current;
   const [menuState, setMenuState] = useState(false);
   const router = useRouter();
+  const { copyrightHomepage, author, siteUrl, githubUrl} = config
 
   const menuListHandling = () => {
     setMenuState(!menuState);
@@ -184,14 +185,9 @@ const MenuList = ({
             )}
           </ul>
           <ul className={cssFlexRowList}>
-            <li className={cssIcon}>
-              <a href={`mailto:${config.author.email}`} aria-label="mail">
-                <Icon iconName='envelope' />
-              </a>
-            </li>
-            <li className={cssIcon}>
+          <li className={cssIcon}>
               <a
-                href={config.copyrightHomepage}
+                href={copyrightHomepage}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="JthCast"
@@ -200,13 +196,28 @@ const MenuList = ({
               </a>
             </li>
             <li className={cssIcon}>
+              <a href={`mailto:${author.email}`} aria-label="mail">
+                <Icon iconName='envelope' />
+              </a>
+            </li>
+            <li className={cssIcon}>
               <a
-                href={`${config.githubUrl}`}
+                href={`${githubUrl}`}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="github"
               >
                 <Icon iconName='github' />
+              </a>
+            </li>
+            <li className={cssIcon}>
+              <a
+                href={`${siteUrl}/rss.xml`}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="rss"
+              >
+                <Icon iconName='rss' />
               </a>
             </li>
           </ul>
