@@ -12,5 +12,13 @@ module.exports = withPWA({
     FB_AUTH_MESSAGING_SENDER_ID: process.env.FB_AUTH_MESSAGING_SENDER_ID,
     FB_AUTH_APP_ID: process.env.FB_AUTH_APP_ID,
     FB_AUTH_MEASUREMENT_ID: process.env.FB_AUTH_MEASUREMENT_ID
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/rss.xml',
+        destination: '/api/rss',
+      },
+    ]
   }
 });
