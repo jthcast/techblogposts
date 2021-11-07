@@ -14,7 +14,7 @@ interface AtomPostItem {
   }
 }
 
-export default async function checkItems(req: NowRequest, res: NowResponse) {
+export default async function atom(req: NowRequest, res: NowResponse) {
   const getPosts = async () => {
     const query = {
       index,
