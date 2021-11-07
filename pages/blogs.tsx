@@ -49,7 +49,7 @@ export default function Blogs() {
       <section className={cssBlogs}>
         {isLoading && !error && (
           <div className={cssLoading}>
-            <Icon iconName="spinner" spin />
+            <Icon iconName="spinner" isSpin />
           </div>
         )}
         {!isLoading && !error && blogs && blogs.length > 0 && (

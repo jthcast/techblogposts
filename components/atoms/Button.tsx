@@ -58,7 +58,7 @@ const Button = forwardRef(
         title={title}
         ref={ref}
       >
-        {loading && <Icon className={cssSpinner} iconName="spinner" spin />}
+        {loading && <Icon className={cssSpinner} iconName="spinner" isSpin />}
         {children}
       </button>
     )

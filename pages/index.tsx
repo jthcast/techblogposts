@@ -106,7 +106,7 @@ export default function Home() {
       <section className={cssPosts}>
         {isLoading && (
           <div className={cssLoading}>
-            <Icon iconName="spinner" spin />
+            <Icon iconName="spinner" isSpin />
           </div>
         )}
         {!isLoading && !error && posts && posts.length > 0 && (
@@ -175,7 +175,7 @@ export default function Home() {
             className={cx({ [cssMoreButton]: true, [cssMorePostLoading]: isInfiniteLoad === 'on' })}
           >
             {isInfiniteLoad === 'on' ? (
-              <Icon iconName="spinner" spin />
+              <Icon iconName="spinner" isSpin />
             ) : (
               <>
                 <span>More</span>

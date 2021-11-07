@@ -39,7 +39,7 @@ export default function RssTest() {
           <input placeholder="Company" ref={inputCompanyRef} className={cssInput} />
           <button type="submit" className={cssMorePostsButton}>
             {isLoading ? (
-              <Icon iconName="spinner" spin />
+              <Icon iconName="spinner" isSpin />
             ) : (
               <p>
                 Test{' '}

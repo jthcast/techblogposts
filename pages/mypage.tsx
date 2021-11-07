@@ -164,7 +164,7 @@ export default function Mypage() {
       <section className={cssContainer}>
         {isLoading && (
           <div className={cssLoading}>
-            <Icon iconName="spinner" spin />
+            <Icon iconName="spinner" isSpin />
           </div>
         )}
         {!loginInfo && !isLoading && <h1 className={cssTitle}>로그인이 필요합니다 😅</h1>}
