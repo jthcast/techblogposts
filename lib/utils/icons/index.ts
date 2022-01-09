@@ -101,7 +101,7 @@ const icons = {
   '로플랫': `loplat.ico`,
   '유비케어': `ubcare.png`,
   '야놀자': `yanolja.ico`,
-  '베스핀글로벌': `bespinglobal.ico`,
+  '베스핀글로벌': `bespinglobal.png`,
   '테이블링': `tabling.ico`,
 };
 
