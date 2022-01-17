@@ -103,6 +103,7 @@ const icons = {
   '야놀자': `yanolja.ico`,
   '베스핀글로벌': `bespinglobal.png`,
   '테이블링': `tabling.ico`,
+  '넷마블': `netmarble.ico`,
 };
 
 export { icons, iconsCtx };
