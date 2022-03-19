@@ -27,14 +27,13 @@ body {
 #__next {
   display: flex;
   flex-direction: column;
-  flex: 1 auto;
   overflow-x: hidden;
   overflow-y: overlay;
-  height: 100%;
-  width: 100%;
+  min-height: 100%;
 }
 
 :root {
+  --full-height: 1vh;
   --background-base: #ffffff;
   --background-base-opacity: rgba(255, 255, 255, 0.85);
   --background-down-opacity: rgba(255, 255, 255, 0.2);

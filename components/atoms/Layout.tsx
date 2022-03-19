@@ -15,7 +15,7 @@ export default function Layout({ children }) {
   }
 
   useEffect(() => {
-    document.documentElement.removeAttribute('style')
+    document.documentElement.style.removeProperty(`background-color`)
     unFocus()
   }, [])
 
