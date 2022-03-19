@@ -22,12 +22,12 @@ html {
 body {
   height: 100%;
   line-height: 1.8;
+  overflow-x: hidden;
 }
 
 #__next {
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
   min-height: 100%;
 }
 
