@@ -42,7 +42,6 @@ export default function Home() {
   const [isMorePostLoading, setMorePostLoading] = useState(false)
   const [isInfiniteLoad, setInfiniteLoad] = useContext(InfiniteScrollContext)
   const [sort, setSort] = useState(undefined)
-  const root = typeof window !== 'undefined' ? document.querySelector('#__next') : null
   const [error, setError] = useState<[number, string]>(undefined)
 
   const getPosts = async () => {
@@ -79,7 +78,6 @@ export default function Home() {
         getPosts()
       }
     },
-    root: root,
     rootMargin: '50%',
     threshold: 0,
   })
