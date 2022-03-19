@@ -4,6 +4,7 @@ import { ThemeContext } from '../../context/ThemeContext';
 import { css } from '@emotion/css';
 import globalCss from '../../styles/global-css';
 import Icon from '../atoms/Icon';
+import Head from 'next/head'
 
 interface DarkmodeSwitchProps {
   title?: string;
@@ -12,6 +13,10 @@ interface DarkmodeSwitchProps {
 
 const DarkModeSwitch = ({ title, ariaLabel }: DarkmodeSwitchProps): React.ReactElement => {
   const [colorMode, setColorMode] = useContext(ThemeContext);
+  const themeColor = {
+    light: `#ffffff`,
+    dark: `#000000`,
+  }
 
   const darkModeHandling = (event: React.FormEvent<HTMLButtonElement>) => {
     setColorMode(colorMode === 'dark' ? 'light' : 'dark');
@@ -31,15 +36,20 @@ const DarkModeSwitch = ({ title, ariaLabel }: DarkmodeSwitchProps): React.ReactE
   }, [colorMode]);
 
   return (
-    <Switch
-      ariaLabel={ariaLabel}
-      title={title}
-      className={cssDarkModeSwitch}
-      checked={colorMode === 'dark'}
-      unCheckedChildren={<Icon iconName='sun' />}
-      checkedChildren={<Icon iconName='moonAndStarsColored' />}
-      onClick={darkModeHandling}
-    />
+    <>
+      <Head>
+        <meta name="theme-color" content={themeColor[colorMode]}></meta>
+      </Head>
+      <Switch
+        ariaLabel={ariaLabel}
+        title={title}
+        className={cssDarkModeSwitch}
+        checked={colorMode === 'dark'}
+        unCheckedChildren={<Icon iconName='sun' />}
+        checkedChildren={<Icon iconName='moonAndStarsColored' />}
+        onClick={darkModeHandling}
+      />
+    </>
   );
 };
 
