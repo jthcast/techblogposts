@@ -261,9 +261,7 @@ const SearchModal = ({
                             <Image
                               src={`${iconsCtx}${icons[company]}`}
                               alt={company}
-                              width='fill'
-                              height='fill'
-                              layout='responsive'
+                              layout='fill'
                             />
                           </div>
                         }
@@ -450,6 +448,7 @@ const cssItemDetailLeft = css`
   align-items: center;
 `;
 const cssCompanyIcon = css`
+  position: relative;
   width: 1rem;
   height: 1rem;
   display: inline-block;

@@ -145,7 +145,7 @@ export default function Home() {
                     <li className={cssItemDetailLeft}>
                       {icons[company] && (
                         <div className={cssCompanyIcon}>
-                          <Image src={`${iconsCtx}${icons[company]}`} alt={company} width="fill" height="fill" layout="responsive" />
+                          <Image src={`${iconsCtx}${icons[company]}`} alt={company} layout="fill" />
                         </div>
                       )}
                       {company}
@@ -348,6 +348,7 @@ const cssBounce = css`
 `
 
 const cssCompanyIcon = css`
+  position: relative;
   width: 1rem;
   height: 1rem;
   display: inline-block;

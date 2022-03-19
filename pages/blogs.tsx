@@ -66,7 +66,7 @@ export default function Blogs() {
                       <div className={cssListItem}>
                         {icons[title] && (
                           <div className={cssCompanyIcon}>
-                            <Image src={`${iconsCtx}${icons[title]}`} alt={title} width="fill" height="fill" layout="responsive" />
+                            <Image src={`${iconsCtx}${icons[title]}`} alt={title} layout="fill" />
                           </div>
                         )}
                         <span>{title}</span>
@@ -170,6 +170,7 @@ const cssListItem = css`
 `
 
 const cssCompanyIcon = css`
+  position: relative;
   width: 1rem;
   height: 1rem;
   margin-right: 0.25rem;
