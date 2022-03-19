@@ -10,6 +10,7 @@ import Link from 'next/link';
 import SearchModal from '../molecules/SearchModal';
 import { LoginContext } from '../../context/LoginContext';
 import { useRouter } from 'next/router';
+import { getScrollbarWidth } from '../../lib/utils'
 
 interface MenuListProps {
   showStartPosition?: 'bottom' | 'left' | 'none' | 'right' | 'top';
@@ -24,6 +25,7 @@ const MenuList = ({
   const lastTabRef = useRef<HTMLButtonElement>();
   const lastTabEl = lastTabRef.current;
   const [menuState, setMenuState] = useState(false);
+  const [scrollbarWidth, setScrollbarWidth] = useState(0);
   const router = useRouter();
   const { copyrightHomepage, author, siteUrl, githubUrl} = config
 
@@ -33,10 +35,17 @@ const MenuList = ({
   };
 
   useEffect(() => {
+    const scrollbarWidth = getScrollbarWidth()
+    setScrollbarWidth(scrollbarWidth)
+
     if (menuState) {
-      document.body.style.setProperty('overflow-y', 'hidden');
+      document.body.style.setProperty('overflow-y', 'hidden')
+      if(scrollbarWidth) {
+        document.body.style.setProperty('padding-right', `${scrollbarWidth}px`)
+      }
     } else {
-      document.body.style.removeProperty('overflow-y');
+      document.body.style.removeProperty('overflow-y')
+      document.body.style.removeProperty('padding-right')
     }
   }, [menuState]);
 
@@ -237,7 +246,7 @@ const MenuList = ({
         title="메뉴"
         onClick={menuListHandling}
         showType="up"
-        className={cssMenuButton}
+        className={cssMenuButton(menuState, scrollbarWidth)}
       >
         {menuState ? <Icon iconName='times' /> : <Icon iconName='bars' />}
       </ScrollButton>
@@ -246,7 +255,7 @@ const MenuList = ({
         title="검색"
         onClick={inputClickHandling}
         showType="up"
-        className={cssSearchButton}
+        className={cssSearchButton(menuState, scrollbarWidth)}
       >
         <Icon iconName='search' />
       </ScrollButton>
@@ -343,16 +352,18 @@ const cssBackdrop = css`
   z-index: -1;
 `;
 
-const cssSearchButton = css`
+const cssSearchButton = (menuState: boolean, scrollbarWidth: number) => css`
   position: fixed;
   right: 1.5rem;
+  margin-right: ${menuState && `${scrollbarWidth}px`};
   bottom: 6rem;
   z-index: 1;
 `;
 
-const cssMenuButton = css`
+const cssMenuButton = (menuState: boolean, scrollbarWidth: number) => css`
   position: fixed;
   right: 1.5rem;
+  margin-right: ${menuState && `${scrollbarWidth}px`};
   bottom: 1.5rem;
   z-index: 2;
 `;

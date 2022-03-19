@@ -28,7 +28,6 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  overflow-y: overlay;
   min-height: 100%;
 }
 

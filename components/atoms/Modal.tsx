@@ -1,13 +1,14 @@
-import { useCallback, useEffect } from 'react';
-import { css } from '@emotion/css';
-import globalCss from '../../styles/global-css';
+import { useCallback, useEffect } from 'react'
+import { css } from '@emotion/css'
+import globalCss from '../../styles/global-css'
+import { getScrollbarWidth } from '../../lib/utils'
 
 interface ModalProps {
-  isOpen?: boolean;
-  openHandler?: () => void;
-  onClose?: () => void;
-  children?: React.ReactElement;
-  escClose?: boolean;
+  isOpen?: boolean
+  openHandler?: () => void
+  onClose?: () => void
+  children?: React.ReactElement
+  escClose?: boolean
 }
 
 const Modal = ({
@@ -19,37 +20,43 @@ const Modal = ({
 }: ModalProps): React.ReactElement => {
   const openHandling = () => {
     if (openHandler) {
-      openHandler();
+      openHandler()
     }
     if (isOpen === false && onClose) {
-      onClose();
+      onClose()
     }
-  };
+  }
 
   useEffect(() => {
+    const scrollbarWidth = getScrollbarWidth()
+    
     if (isOpen) {
-      document.body.style.setProperty('overflow-y', 'hidden');
+      document.body.style.setProperty('overflow-y', 'hidden')
+      if(scrollbarWidth) {
+        document.body.style.setProperty('padding-right', `${scrollbarWidth}px`)
+      }
     } else {
-      document.body.style.removeProperty('overflow-y');
+      document.body.style.removeProperty('overflow-y')
+      document.body.style.removeProperty('padding-right')
     }
   }, [isOpen])
 
   const keyDownHandling = useCallback(
     (event: KeyboardEvent) => {
       if (event.code === 'Escape' && escClose && isOpen) {
-        openHandling();
+        openHandling()
       }
     },
     [isOpen]
-  );
+  )
 
   useEffect(() => {
-    window.addEventListener('keydown', keyDownHandling);
+    window.addEventListener('keydown', keyDownHandling)
 
     return () => {
-      window.removeEventListener('keydown', keyDownHandling);
-    };
-  }, [keyDownHandling]);
+      window.removeEventListener('keydown', keyDownHandling)
+    }
+  }, [keyDownHandling])
 
   return (
     <>
@@ -66,10 +73,10 @@ const Modal = ({
         />
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Modal;
+export default Modal
 
 const cssModal = (isOpen: boolean) => css`
   ${isOpen ? 'display: flex' : 'display: none'};

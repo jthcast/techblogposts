@@ -42,7 +42,7 @@ const ScrollButton = forwardRef(
     const showTypeRef = useRef(showType)
 
     const scrollHandling = useCallback(() => {
-      const scrollValue = document.querySelector('#__next').scrollTop
+      const scrollValue = window.scrollY
 
       if (scrollValue === 0) {
         setIsTopState(true)
@@ -73,11 +73,10 @@ const ScrollButton = forwardRef(
 
     useEffect(() => {
       scrollHandling()
-      const root = document.querySelector('#__next')
-      root.addEventListener('scroll', scrollHandling)
+      window.addEventListener('scroll', scrollHandling)
 
       return () => {
-        root.removeEventListener('scroll', scrollHandling)
+        window.removeEventListener('scroll', scrollHandling)
       }
     }, [scrollHandling])
 
@@ -113,7 +112,7 @@ const cssScrollButton = css`
   justify-content: center;
   align-items: center;
   opacity: 0;
-  transition: 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease, visibility 0.2s ease;
   transform: translateY(100%);
   visibility: hidden;
   border: none;
