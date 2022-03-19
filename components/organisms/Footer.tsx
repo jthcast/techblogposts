@@ -10,8 +10,7 @@ const Footer = (): React.ReactElement => {
   const { copyrightHomepage, copyright, author, siteUrl, githubUrl} = config
 
   const scrollToTop = () => {
-    const root = document.querySelector('#__next');
-    root.scrollTo(0, 0);
+    window.scrollTo(0, 0);
   };
 
   return (
