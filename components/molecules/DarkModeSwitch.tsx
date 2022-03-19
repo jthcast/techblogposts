@@ -32,7 +32,6 @@ const DarkModeSwitch = ({ title, ariaLabel }: DarkmodeSwitchProps): React.ReactE
   useEffect(() => {
     if (colorMode) {
       document.documentElement.setAttribute('data-theme', colorMode);
-      console.log('???', themeColor[colorMode])
     }
   }, [colorMode]);
 
