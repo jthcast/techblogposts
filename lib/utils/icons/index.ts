@@ -105,6 +105,7 @@ const icons = {
   '테이블링': `tabling.ico`,
   '넷마블': `netmarble.ico`,
   '더블유클럽': `wclub.png`,
+  '버즈빌': `buzzvil.png`,
 };
 
 export { icons, iconsCtx };
