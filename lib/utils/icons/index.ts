@@ -110,7 +110,7 @@ const icons = {
   '여기어때': `goodchoice.png`,
   '아이디어스': `idus.ico`,
   '11번가': `11st.ico`,
-  '롯데ON': `lotteon.ico`,
+  '롯데ON': `lotteon.png`,
 };
 
 export { icons, iconsCtx };
