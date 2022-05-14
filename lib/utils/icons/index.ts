@@ -101,11 +101,16 @@ const icons = {
   '로플랫': `loplat.ico`,
   '유비케어': `ubcare.png`,
   '야놀자': `yanolja.ico`,
+  '야놀자클라우드': `yanolja.ico`,
   '베스핀글로벌': `bespinglobal.png`,
   '테이블링': `tabling.ico`,
   '넷마블': `netmarble.ico`,
   '더블유클럽': `wclub.png`,
   '버즈빌': `buzzvil.png`,
+  '여기어때': `goodchoice.png`,
+  '아이디어스': `idus.ico`,
+  '11번가': `11st.ico`,
+  '롯데ON': `lotteon.ico`,
 };
 
 export { icons, iconsCtx };
