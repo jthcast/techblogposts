@@ -111,6 +111,8 @@ const icons = {
   '아이디어스': `idus.ico`,
   '11번가': `11st.ico`,
   '롯데ON': `lotteon.png`,
+  'PRND': `prnd.png`,
+  '비사이드소프트': `besidesoft.png`,
 };
 
 export { icons, iconsCtx };
