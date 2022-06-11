@@ -113,6 +113,7 @@ const icons = {
   '롯데ON': `lotteon.png`,
   'PRND': `prnd.png`,
   '비사이드소프트': `besidesoft.png`,
+  '데브시스터즈': `devsisters.png`,
 };
 
 export { icons, iconsCtx };
