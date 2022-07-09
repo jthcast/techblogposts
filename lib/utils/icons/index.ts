@@ -114,6 +114,7 @@ const icons = {
   'PRND': `prnd.png`,
   '비사이드소프트': `besidesoft.png`,
   '데브시스터즈': `devsisters.png`,
+  'AWS': `aws.ico`,
 };
 
 export { icons, iconsCtx };
