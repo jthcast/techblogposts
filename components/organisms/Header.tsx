@@ -7,6 +7,7 @@ import { LoginModalContext } from '../../context/LoginModalContext';
 import { LoginContext } from '../../context/LoginContext';
 import firebase from 'firebase/app';
 import Button from '../atoms/Button';
+import HeaderMessage from '../atoms/HeaderMessage'
 
 interface HeaderProps {
   ghost?: boolean;
@@ -69,6 +70,9 @@ const Header = ({
           건의 하기 📧
         </a>
       </HeaderMessage> */}
+      <HeaderMessage allowClose={false}>
+        <span>현재 AWS OpenSearch Service에 이상이 생겨 데이터를 불러 올 수 없는 상황입니다.<br /> 빠르게 복구할 수 있도록 노력하겠습니다. 🙇‍♂️</span>
+      </HeaderMessage>
       <header
         className={cx(
           { [cssHeader]: true },
