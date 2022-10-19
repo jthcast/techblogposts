@@ -70,9 +70,9 @@ const Header = ({
           건의 하기 📧
         </a>
       </HeaderMessage> */}
-      <HeaderMessage allowClose={false}>
+      {/* <HeaderMessage allowClose={false}>
         <span>현재 AWS OpenSearch Service에 이상이 생겨 데이터를 불러 올 수 없는 상황입니다.<br /> 빠르게 복구할 수 있도록 노력하겠습니다. 🙇‍♂️</span>
-      </HeaderMessage>
+      </HeaderMessage> */}
       <header
         className={cx(
           { [cssHeader]: true },
