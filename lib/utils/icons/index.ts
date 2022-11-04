@@ -116,6 +116,7 @@ const icons = {
   '데브시스터즈': `devsisters.png`,
   '지마켓글로벌': `gmarket.ico`,
   'AWS': `aws.ico`,
+  '메가존클라우드': `megazone.png`,
 };
 
 export { icons, iconsCtx };
