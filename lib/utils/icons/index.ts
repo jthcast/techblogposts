@@ -117,6 +117,7 @@ const icons = {
   '지마켓글로벌': `gmarket.ico`,
   'AWS': `aws.ico`,
   '메가존클라우드': `megazone.png`,
+  '카카오헤어샵': `kakaohairshop.png`,
 };
 
 export { icons, iconsCtx };
