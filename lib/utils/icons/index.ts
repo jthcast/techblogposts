@@ -118,6 +118,8 @@ const icons = {
   'AWS': `aws.ico`,
   '메가존클라우드': `megazone.png`,
   '카카오헤어샵': `kakaohairshop.png`,
+  '카카오엔터테인먼트FE': `kakaoent.png`,
+  '오토피디아': `autopedia.ico`,
 };
 
 export { icons, iconsCtx };
