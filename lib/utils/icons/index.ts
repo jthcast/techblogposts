@@ -120,6 +120,7 @@ const icons = {
   '카카오헤어샵': `kakaohairshop.png`,
   '카카오엔터테인먼트FE': `kakaoent.png`,
   '오토피디아': `autopedia.ico`,
+  '카카오페이': `kakaopay.png`,
 };
 
 export { icons, iconsCtx };
