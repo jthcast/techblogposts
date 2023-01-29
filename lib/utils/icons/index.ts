@@ -121,6 +121,7 @@ const icons = {
   '카카오엔터테인먼트FE': `kakaoent.png`,
   '오토피디아': `autopedia.ico`,
   '카카오페이': `kakaopay.png`,
+  '트렌비': `trenbe.ico`,
 };
 
 export { icons, iconsCtx };
