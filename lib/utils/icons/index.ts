@@ -4,7 +4,7 @@ const icons = {
   '네이버': `naver.ico`,
   '글루시스': `gluesys.png`,
   '당근마켓': `daangn.ico`,
-  '딜리버리히어로': `deliveryhero.ico`,
+  '요기요': `yogiyo.png`,
   '라인': `line.ico`,
   '레진': `lezhin.png`,
   '드라마앤컴퍼니': `dramancompany.png`,
