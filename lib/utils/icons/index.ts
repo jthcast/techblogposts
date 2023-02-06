@@ -114,7 +114,7 @@ const icons = {
   'PRND': `prnd.png`,
   '비사이드소프트': `besidesoft.png`,
   '데브시스터즈': `devsisters.png`,
-  '지마켓글로벌': `gmarket.ico`,
+  '지마켓': `gmarket.ico`,
   'AWS': `aws.ico`,
   '메가존클라우드': `megazone.png`,
   '카카오헤어샵': `kakaohairshop.png`,
