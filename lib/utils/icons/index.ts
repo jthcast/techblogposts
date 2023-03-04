@@ -122,6 +122,7 @@ const icons = {
   '오토피디아': `autopedia.ico`,
   '카카오페이': `kakaopay.png`,
   '트렌비': `trenbe.ico`,
+  'SK플래닛': `skplanet.png`,
 };
 
 export { icons, iconsCtx };
