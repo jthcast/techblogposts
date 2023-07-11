@@ -123,6 +123,7 @@ const icons = {
   '카카오페이': `kakaopay.png`,
   '트렌비': `trenbe.ico`,
   'SK플래닛': `skplanet.ico`,
+  '쿼타랩': `quotalab.png`,
 };
 
 export { icons, iconsCtx };
