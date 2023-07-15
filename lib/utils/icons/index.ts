@@ -124,6 +124,7 @@ const icons = {
   '트렌비': `trenbe.ico`,
   'SK플래닛': `skplanet.ico`,
   '쿼타랩': `quotalab.png`,
+  'CJ온스타일': `cjonstyle.png`,
 };
 
 export { icons, iconsCtx };
