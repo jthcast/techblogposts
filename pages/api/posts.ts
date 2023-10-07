@@ -71,8 +71,8 @@ const posts = async (req: NowRequest, res: NowResponse) => {
         }
         return acc;
       }, '');
-      const sort = JSON.parse(queryString);
-      query.body['search_after'] = sort
+      const [publishDate, id] = JSON.parse(queryString);
+      query.body['search_after'] = [publishDate, encodeURIComponent(id)]
     }
     const { body } = await client.search<SearchResponse<Query>>(query);
     const result: API = {
