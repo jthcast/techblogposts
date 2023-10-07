@@ -10,10 +10,6 @@ interface Query {
   };
 }
 
-const checkId = (id: string) => {
-  return id ? id.replace(/\s/g, '%20') : null;
-};
-
 const posts = async (req: NowRequest, res: NowResponse) => {
   try {
     let query = {
@@ -76,10 +72,7 @@ const posts = async (req: NowRequest, res: NowResponse) => {
         return acc;
       }, '');
       const sort = JSON.parse(queryString);
-      const [publishDate, id] = sort;
-      query.body['search_after'] = [
-        publishDate, checkId(id)
-      ];
+      query.body['search_after'] = sort
     }
     const { body } = await client.search<SearchResponse<Query>>(query);
     const result: API = {
