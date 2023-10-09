@@ -125,6 +125,7 @@ const icons = {
   'SK플래닛': `skplanet.ico`,
   '쿼타랩': `quotalab.png`,
   'CJ온스타일': `cjonstyle.png`,
+  '덴티움': `dentium.ico`
 };
 
 export { icons, iconsCtx };
