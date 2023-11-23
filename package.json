@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "pnpm prepare && next dev --turbo",
+    "prepare": "pnpm sucrase-node prepare.ts",
+    "check-types": "tsc -p tsconfig.json",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -20,7 +22,10 @@
     "eslint": "^8",
     "eslint-config-next": "14.0.3",
     "eslint-config-prettier": "^9.0.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.1.0",
     "prettier": "^3.1.0",
+    "sucrase": "^3.34.0",
     "typescript": "^5"
   }
 }

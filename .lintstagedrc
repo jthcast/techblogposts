@@ -1,0 +1,7 @@
+{
+  "**/*.[jt]s?(x)": [
+    "eslint --fix --max-warnings 0 --no-ignore",
+    "prettier --write"
+  ],
+  "**/*.{json,html,md}": "prettier --write"
+}
