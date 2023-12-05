@@ -1,8 +1,9 @@
+import ReactQueryClientProvider from '@/app/providers/ReactQueryClientProvider/ReactQueryClientProvider'
 import { locales } from '@/libs/i18n/i18n'
 import { notFound } from 'next/navigation'
 import { ReactNode } from 'react'
 
-interface LocaleLayoutProps {
+interface RootLayoutProps {
   children?: ReactNode
   params: {
     locale: string
@@ -12,12 +13,14 @@ interface LocaleLayoutProps {
 export default function RootLayout({
   children,
   params: { locale },
-}: LocaleLayoutProps) {
+}: RootLayoutProps) {
   if (!locales.includes(locale)) notFound()
 
   return (
     <html lang={locale}>
-      <body>{children}</body>
+      <body>
+        <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
+      </body>
     </html>
   )
 }
