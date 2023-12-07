@@ -1,4 +1,4 @@
-import { palette } from '@/app/providers/ThemeProvider/palette'
+import { palette } from '@/providers/ThemeProvider/palette'
 import { createGlobalTheme, globalStyle } from '@vanilla-extract/css'
 
 export const vars = createGlobalTheme('[data-theme="light"]', {

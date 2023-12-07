@@ -1,6 +1,6 @@
 'use client'
 
-import { palette } from '@/app/providers/ThemeProvider/palette'
+import { palette } from '@/providers/ThemeProvider/palette'
 import { useEffect } from 'react'
 
 export default function ThemeProvider() {
