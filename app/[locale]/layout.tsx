@@ -5,6 +5,7 @@ import { notoSansKR } from '@/providers/ThemeProvider/typography'
 import { locales } from '@/libs/i18n/i18n'
 import { notFound } from 'next/navigation'
 import { ReactNode } from 'react'
+import { NextIntlClientProvider, useMessages } from 'next-intl'
 
 interface RootLayoutProps {
   children?: ReactNode
@@ -32,11 +33,15 @@ export default function RootLayout({
 }: RootLayoutProps) {
   if (!locales.includes(locale)) notFound()
 
+  const messages = useMessages()
+
   return (
     <html lang={locale}>
       <body className={notoSansKR.variable}>
         <ThemeProvider />
-        <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   )
