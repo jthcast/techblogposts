@@ -8,5 +8,5 @@ export const main = style({
   alignItems: 'center',
   padding: '6rem',
   minHeight: '100vh',
-  backgroundColor: vars.colors.backgrounds.default.primary,
+  backgroundColor: vars.colors.backgrounds.primary,
 })

@@ -1,5 +1,6 @@
 'use client'
 
+import { palette } from '@/app/providers/ThemeProvider/palette'
 import { useEffect } from 'react'
 
 export default function ThemeProvider() {
@@ -28,8 +29,8 @@ export default function ThemeProvider() {
     document.documentElement.style.setProperty(
       'background-color',
       theme === 'light'
-        ? '#ffffff'
-        : '#000000',
+        ? ${palette.light.default.white}
+        : ${palette.dark.default.black},
     )
   })()`
 
