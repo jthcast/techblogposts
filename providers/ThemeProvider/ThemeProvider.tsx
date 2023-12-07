@@ -29,8 +29,8 @@ export default function ThemeProvider() {
     document.documentElement.style.setProperty(
       'background-color',
       theme === 'light'
-        ? ${palette.light.default.white}
-        : ${palette.dark.default.black},
+        ? '${palette.light.default.white}'
+        : '${palette.dark.default.black}',
     )
   })()`
 
