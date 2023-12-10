@@ -13,6 +13,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@elastic/elasticsearch": "7.13.0",
     "@tanstack/query-sync-storage-persister": "^5.12.1",
     "@tanstack/react-query": "^5.12.2",
     "@tanstack/react-query-devtools": "^5.12.2",
