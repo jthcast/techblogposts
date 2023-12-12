@@ -10,6 +10,7 @@ import {
   Updater,
 } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { GetPostsRequest } from '@/app/api/v1/posts/postsTypes'
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -53,7 +54,7 @@ export default function ReactQueryClientProvider({
 }
 
 export const queryKeys = {
-  // getItem: (request: GetItemRequest) => ['getItem', { ...request }],
+  getPosts: (request: GetPostsRequest) => ['getPosts', { ...request }],
 } as const
 
 export function setQueryData<T>({

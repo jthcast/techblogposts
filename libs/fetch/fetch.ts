@@ -2,10 +2,15 @@ const protocol = process.env.NEXT_PUBLIC_API_PROTOCOL
 const host = process.env.NEXT_PUBLIC_API_HOST
 const port = process.env.NEXT_PUBLIC_API_PORT
 
+type App = 'frontend' | 'backend'
 type ApiVersion = 'v1'
-type SearchParamsType = Record<string, string | number | undefined>
+type SearchParamsType = Record<
+  string,
+  string | number | Array<unknown> | undefined
+>
 type RequestURLConfigType =
   | {
+      app?: App
       version: ApiVersion
       path: string
       params?: SearchParamsType
@@ -28,6 +33,14 @@ export const responseInterceptorMap: Map<
   (response: Response) => Response | Promise<Response>
 > = new Map()
 
+const returnResponse = async (response: Response) => {
+  try {
+    return await response.json()
+  } catch {
+    return response
+  }
+}
+
 export const customFetch = async (
   requestURLConfig: RequestURLConfigType,
   init?: RequestInit,
@@ -47,7 +60,7 @@ export const customFetch = async (
     throw {
       status: response.status,
       statusText: response.statusText,
-      data: await response.json(),
+      data: await returnResponse(response),
     }
   }
 
@@ -93,7 +106,13 @@ export const getRequestURL = (configs: RequestURLConfigType) => {
     return configs.url
   }
 
-  const { version, path, params } = configs
+  const { app = 'frontend', version, path, params } = configs
+
+  if (app === 'frontend') {
+    return `${protocol}://${host}:${port}/api/${version}${path}${getSearch(
+      params || {},
+    )}`
+  }
 
   if (!(protocol && host && port && version && path)) {
     throw new Error()
