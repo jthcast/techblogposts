@@ -13,7 +13,7 @@ export function Observer({
   condition,
   indicator,
   options = {
-    rootMargin: '10%',
+    rootMargin: '30%',
   },
   ...props
 }: ObserverProps) {
