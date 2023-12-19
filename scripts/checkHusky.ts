@@ -1,42 +1,43 @@
 import { exec } from 'child_process'
-import { access, constants } from 'fs'
-import { resolve } from 'path'
+import { promisify } from 'util'
 
-export default function checkHusky() {
-  const husky = resolve('./.husky/_/husky.sh')
+import { checkFile } from './utils'
 
-  access(husky, constants.F_OK, (err) => {
-    if (err) {
-      console.log(
-        `\u001B[1m\u001B[31m[FAILED]\u001B[39m\u001B[22m Husky is not installed!`,
-      )
-      console.log(
-        `\u001B[1m\u001B[33m[INSTALL]\u001B[39m\u001B[22m Husky is installing...`,
-      )
+const execute = promisify(exec)
 
-      exec('pnpm husky install', (error, stdout, stderr) => {
-        if (error) {
-          return console.log(error.message)
-        }
-        if (stderr) {
-          return console.log(stderr)
-        }
-        console.log(stdout)
+const huskyShFilePath = '.husky/_/husky.sh'
+
+/* eslint-disable no-console */
+export async function checkHusky() {
+  await checkFile({
+    path: huskyShFilePath,
+    onSuccess: () => {
+      console.log(` 
+\u001B[1m\u001B[32m[PASSED]\u001B[39m\u001B[22m husky is already installed!
+    `)
+    },
+    onError: async () => {
+      console.log(` 
+\u001B[1m\u001B[33m[NOT FOUND]\u001B[39m\u001B[22m husky is not installed!
+\u001B[1m\u001B[32m[INSTALL]\u001B[39m\u001B[22m husky is installing...
+    `)
+      await execute(`
+    #!/bin/bash
+    pnpm husky install
+  `)
+      await checkFile({
+        path: huskyShFilePath,
+        onSuccess: () => {
+          console.log(` 
+\u001B[1m\u001B[32m[INSTALLED]\u001B[39m\u001B[22m husky is installed successfully!
+    `)
+        },
+        onError: () => {
+          console.log(` 
+\u001B[1m\u001B[31m[ERROR]\u001B[39m\u001B[22m husky is not installed due to an unknown error!
+    `)
+        },
       })
-
-      if (husky) {
-        console.log(
-          `\u001B[1m\u001B[32m[SUCCESS]\u001B[39m\u001B[22m Husky is installed successfully!`,
-        )
-      } else {
-        console.log(
-          `\u001B[1m\u001B[31m[FAILED]\u001B[39m\u001B[22m fail to install Husky!`,
-        )
-      }
-    } else {
-      console.log(
-        `\u001B[1m\u001B[32m[PASSED]\u001B[39m\u001B[22m Husky is already installed!`,
-      )
-    }
+    },
   })
 }

@@ -49,7 +49,7 @@ export default function Root() {
                       <Post.RightContent>
                         <Post.Time time={publishDate} />
                         <Post.ViewCount>{viewCount}</Post.ViewCount>
-                        <Post.Bookmark id={id} />
+                        {/* <Post.Bookmark id={id} /> */}
                       </Post.RightContent>
                     </Post.Content>
                   </Post.Item>

@@ -1,16 +1,21 @@
 {
   "name": "techblogposts",
   "version": "0.1.0",
+  "engines": {
+    "node": ">=18.17.0"
+  },
   "private": true,
   "scripts": {
     "dev": "pnpm prepare && next dev",
-    "prepare": "pnpm sucrase-node prepare.ts",
     "check-types": "tsc -p tsconfig.json",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "prepare": "sucrase-node prepare.ts",
+    "assets": "sucrase-node scripts/makeAssets.ts",
+    "routes": "sucrase-node scripts/makeRoutes.ts"
   },
   "dependencies": {
     "@elastic/elasticsearch": "7.13.0",

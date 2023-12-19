@@ -4,6 +4,7 @@ import { formatDistanceToNowStrict, formatISO } from 'date-fns'
 import { getDateFnsLocale } from '@/libs/date-fns/date-fns'
 import { useParams } from 'next/navigation'
 import Image from 'next/image'
+import { Eye } from '@/components/atom/Icon'
 
 type PostListProps = HTMLAttributes<HTMLUListElement>
 
@@ -84,13 +85,10 @@ type PostViewCountProps = HTMLAttributes<HTMLDivElement>
 
 export function ViewCount({ children, ...props }: PostViewCountProps) {
   return (
-    <div {...props}>
-      {/* <Icon iconName="eye" /> */}
+    <div className={styles.viewCount} {...props}>
+      <Eye />
       {children}
     </div>
-    // <li>
-    //   <Bookmark count={bookmarkCount} parent={id} />
-    // </li>
   )
 }
 

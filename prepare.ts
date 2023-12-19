@@ -1,3 +1,3 @@
-import checkHusky from './scripts/checkHusky'
+import { checkHusky } from './scripts/checkHusky'
 
 checkHusky()

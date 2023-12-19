@@ -23,7 +23,7 @@ export const item = style({
 })
 
 export const title = style({
-  // TODO @ted
+  // TODO
   ...typography.headline.regular,
 })
 
@@ -47,4 +47,11 @@ export const rightContent = style({
   gap: '0.5rem',
   marginLeft: 'auto',
   alignItems: 'center',
+})
+
+export const viewCount = style({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: '0.2rem',
 })
