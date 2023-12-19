@@ -43,7 +43,7 @@ export default function Root() {
                     </ExternalLink>
                     <Post.Content>
                       <Post.LeftContent>
-                        {/* <Post.CompanyIcon company={company} /> */}
+                        <Post.CompanyIcon company={company} />
                         <Post.Company>{company}</Post.Company>
                       </Post.LeftContent>
                       <Post.RightContent>

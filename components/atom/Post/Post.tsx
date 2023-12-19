@@ -5,6 +5,7 @@ import { getDateFnsLocale } from '@/libs/date-fns/date-fns'
 import { useParams } from 'next/navigation'
 import Image from 'next/image'
 import { Eye } from '@/components/atom/Icon'
+import { companyIcons } from '@/public/company-icon'
 
 type PostListProps = HTMLAttributes<HTMLUListElement>
 
@@ -50,11 +51,21 @@ type PostCompanyIconProps = Omit<
 }
 
 export function CompanyIcon({ company, ...props }: PostCompanyIconProps) {
-  // TODO
+  const icon = companyIcons[company as keyof typeof companyIcons]
+
   return (
-    <div>
-      <Image src={`/company`} fill alt={company} {...props} />
-    </div>
+    <>
+      {icon && (
+        <div className={styles.companyIcon}>
+          <Image
+            src={`/company-icon/icons/${icon}`}
+            fill
+            alt={company}
+            {...props}
+          />
+        </div>
+      )}
+    </>
   )
 }
 

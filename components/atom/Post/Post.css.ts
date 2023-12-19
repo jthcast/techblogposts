@@ -37,7 +37,7 @@ export const content = style({
 
 export const leftContent = style({
   display: 'flex',
-  gap: '0.5rem',
+  gap: '0.25rem',
   marginRight: 'auto',
   alignItems: 'center',
 })
@@ -47,6 +47,16 @@ export const rightContent = style({
   gap: '0.5rem',
   marginLeft: 'auto',
   alignItems: 'center',
+})
+
+export const companyIcon = style({
+  position: 'relative',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '1rem',
+  height: '1rem',
+  marginTop: '0.15rem',
 })
 
 export const viewCount = style({
