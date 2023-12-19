@@ -26,7 +26,8 @@ export default function ThemeProvider() {
       }
     }
     const theme = getInitialTheme()
-  
+
+    document.documentElement.setAttribute('data-theme', theme)
     document.documentElement.style.setProperty(
       'background-color',
       theme === 'light'
