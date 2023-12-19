@@ -5,7 +5,7 @@ const breakpoints = {
 }
 
 export const mediaQuery: { [key in keyof typeof breakpoints]: string } = {
-  mobile: `(max-width: ${breakpoints['mobile']})`,
+  mobile: `(max-width: ${breakpoints['tablet']})`,
   tablet: `(min-width: ${breakpoints['tablet']}) and (max-width: ${breakpoints['desktop']})`,
   desktop: `(min-width: ${breakpoints['desktop']})`,
 }
