@@ -12,7 +12,9 @@ export function Observer({
   callback,
   condition,
   indicator,
-  options = {},
+  options = {
+    rootMargin: '10%',
+  },
   ...props
 }: ObserverProps) {
   const ref = useRef<HTMLDivElement>(null)
