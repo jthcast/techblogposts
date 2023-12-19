@@ -1,24 +1,18 @@
-const withPWA = require('next-pwa');
+const { createVanillaExtractPlugin } = require('@vanilla-extract/next-plugin')
+const withNextIntl = require('next-intl/plugin')('./libs/i18n/i18n.ts')
 
-module.exports = withPWA({
-  pwa: {
-    dest: 'public',
-  },
-  env: {
-    FB_AUTH_API_KEY: process.env.FB_AUTH_API_KEY,
-    FB_AUTH_AUTH_DOMAIN: process.env.FB_AUTH_AUTH_DOMAIN,
-    FB_AUTH_PROJECT_ID: process.env.FB_AUTH_PROJECT_ID,
-    FB_AUTH_STORAGE_BUCKET: process.env.FB_AUTH_STORAGE_BUCKET,
-    FB_AUTH_MESSAGING_SENDER_ID: process.env.FB_AUTH_MESSAGING_SENDER_ID,
-    FB_AUTH_APP_ID: process.env.FB_AUTH_APP_ID,
-    FB_AUTH_MEASUREMENT_ID: process.env.FB_AUTH_MEASUREMENT_ID
-  },
+const withVanillaExtract = createVanillaExtractPlugin()
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   async rewrites() {
     return [
       {
         source: '/rss.xml',
-        destination: '/api/rss',
+        destination: '/api/v1/rss',
       },
     ]
-  }
-});
+  },
+}
+
+module.exports = withVanillaExtract(withNextIntl(nextConfig))

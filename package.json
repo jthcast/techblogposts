@@ -1,37 +1,60 @@
 {
   "name": "techblogposts",
   "version": "0.1.0",
+  "engines": {
+    "node": ">=18.17.0"
+  },
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "pnpm prepare && next dev",
+    "check-types": "tsc -p tsconfig.json",
     "build": "next build",
-    "postbuild": "next-sitemap --config next-sitemap.config.js",
-    "start": "next start"
-  },
-  "resolutions": {
-    "minipass": "2.7.0"
+    "start": "next start",
+    "lint": "next lint",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "prepare": "sucrase-node prepare.ts",
+    "assets": "sucrase-node scripts/makeAssets.ts",
+    "routes": "sucrase-node scripts/makeRoutes.ts"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.2.0",
     "@elastic/elasticsearch": "7.13.0",
-    "@emotion/css": "^11.1.3",
-    "@emotion/server": "^11.0.0",
-    "firebase": "^8.3.2",
-    "html-entities": "^2.0.2",
-    "idb": "^6.0.0",
-    "next": "^12.1.0",
-    "next-pwa": "^5.0.3",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "rss-parser": "^3.10.0"
+    "@tanstack/query-sync-storage-persister": "^5.12.1",
+    "@tanstack/react-query": "^5.12.2",
+    "@tanstack/react-query-devtools": "^5.12.2",
+    "@tanstack/react-query-persist-client": "^5.12.2",
+    "@vanilla-extract/css": "^1.14.0",
+    "date-fns": "^2.30.0",
+    "next": "14.0.3",
+    "next-intl": "^3.1.4",
+    "react": "^18",
+    "react-dom": "^18"
   },
   "devDependencies": {
-    "@emotion/babel-plugin": "^11.1.2",
-    "@types/gtag.js": "^0.0.4",
-    "@types/node": "^14.14.20",
-    "@types/react": "^17.0.0",
-    "@vercel/node": "^1.8.5",
-    "next-sitemap": "^1.4.17",
-    "typescript": "^4.4.4"
+    "@storybook/addon-essentials": "^7.5.3",
+    "@storybook/addon-interactions": "^7.5.3",
+    "@storybook/addon-links": "^7.5.3",
+    "@storybook/addon-onboarding": "^1.0.8",
+    "@storybook/blocks": "^7.5.3",
+    "@storybook/nextjs": "^7.5.3",
+    "@storybook/react": "^7.5.3",
+    "@storybook/testing-library": "^0.2.2",
+    "@tanstack/eslint-plugin-query": "^5.12.1",
+    "@types/node": "^20.10.5",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@typescript-eslint/eslint-plugin": "^6.12.0",
+    "@typescript-eslint/parser": "^6.12.0",
+    "@vanilla-extract/next-plugin": "^2.3.2",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.3",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-storybook": "^0.6.15",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.1.0",
+    "prettier": "^3.1.0",
+    "storybook": "^7.5.3",
+    "sucrase": "^3.34.0",
+    "typescript": "^5.3.3"
   }
 }
