@@ -1,5 +1,6 @@
 import { client } from '@/libs/elasticSearch/elasticSearch'
 import { SearchResponse } from '@elastic/elasticsearch/api/types.js'
+import { NextResponse } from 'next/server'
 
 interface PostsQuery {
   dataType: string
@@ -86,10 +87,10 @@ export async function GET(request: Request) {
       newCursor = `${publishDate}:${id}`
     }
 
-    return Response.json({ posts, cursor: newCursor })
+    return NextResponse.json({ posts, cursor: newCursor })
   }
 
-  return new Response(undefined, {
+  return NextResponse.json(undefined, {
     status: response.statusCode ?? 500,
   })
 }
