@@ -1,6 +1,7 @@
-const protocol = process.env.NEXT_PUBLIC_API_PROTOCOL
-const host = process.env.NEXT_PUBLIC_API_HOST
-const port = process.env.NEXT_PUBLIC_API_PORT
+const protocol = process.env.NEXT_PUBLIC_API_PROTOCOL || 'https'
+const host =
+  process.env.NEXT_PUBLIC_API_HOST || process.env.NEXT_PUBLIC_VERCEL_URL
+const port = process.env.NEXT_PUBLIC_API_PORT || 443
 
 type App = 'frontend' | 'backend'
 type ApiVersion = 'v1'
