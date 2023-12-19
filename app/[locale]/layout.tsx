@@ -1,11 +1,11 @@
 import ReactQueryClientProvider from '@/providers/ReactQueryClientProvider/ReactQueryClientProvider'
 import ThemeProvider from '@/providers/ThemeProvider/ThemeProvider'
 import { palette } from '@/providers/ThemeProvider/palette'
-import { notoSansKR } from '@/providers/ThemeProvider/typography'
 import { locales } from '@/libs/i18n/i18n'
 import { notFound } from 'next/navigation'
 import { ReactNode } from 'react'
 import { NextIntlClientProvider, useMessages } from 'next-intl'
+import { Noto_Sans_KR } from 'next/font/google'
 
 interface RootLayoutProps {
   children?: ReactNode
@@ -13,6 +13,14 @@ interface RootLayoutProps {
     locale: string
   }
 }
+
+const notoSansKr = Noto_Sans_KR({
+  weight: ['400', '700'],
+  style: ['normal'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-noto-sans-kr',
+})
 
 export const viewport = {
   themeColor: [
@@ -37,7 +45,7 @@ export default function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={notoSansKR.variable}>
+      <body className={notoSansKr.className}>
         <ThemeProvider />
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ReactQueryClientProvider>{children}</ReactQueryClientProvider>

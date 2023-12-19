@@ -1,14 +1,4 @@
-import { Noto_Sans_KR } from 'next/font/google'
-
-export const notoSansKR = Noto_Sans_KR({
-  weight: ['400', '700'],
-  style: ['normal'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-noto-sans-kr',
-})
-
-const fontFamily = {
+export const fontFamily = {
   notoSansKR: 'var(--font-noto-sans-kr)',
 } as const
 
@@ -110,7 +100,7 @@ export const typography = {
   headline: {
     regular: {
       fontFamily: fontFamily.notoSansKR,
-      fontWeight: 700,
+      fontWeight: 400,
       fontSize: '17px',
       lineHeight: '22px',
       letterSpacing: '-0.41px',
@@ -187,4 +177,4 @@ export const typography = {
       letterSpacing: '0.37px',
     },
   },
-}
+} as const
