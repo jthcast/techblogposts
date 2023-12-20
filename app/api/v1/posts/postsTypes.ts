@@ -36,3 +36,9 @@ export interface GetPostsResponse {
   }[]
   cursor?: string
 }
+
+export interface PostPostsViewCountRequest {
+  id: string
+}
+
+export type PostPostsViewCountResponse = null

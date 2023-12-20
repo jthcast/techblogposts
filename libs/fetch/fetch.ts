@@ -65,7 +65,7 @@ export const customFetch = async (
     }
   }
 
-  return response
+  return returnResponse(response)
 }
 
 export function useInterceptor() {

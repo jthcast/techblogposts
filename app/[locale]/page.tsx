@@ -1,9 +1,9 @@
 'use client'
 
-import { getPosts } from '@/app/api/v1/posts/posts'
+import { getPosts, putPostsViewCount } from '@/app/api/v1/posts/posts'
 import { Observer } from '@/components/atom/Observer/Observer'
 import { queryKeys } from '@/providers/ReactQueryClientProvider/ReactQueryClientProvider'
-import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
+import { useMutation, useSuspenseInfiniteQuery } from '@tanstack/react-query'
 // import { useTranslations } from 'next-intl'
 import * as Post from '@/components/atom/Post/Post'
 import * as styles from '@/app/[locale]/page.css'
@@ -17,6 +17,10 @@ export default function Root() {
     queryFn: ({ pageParam }) => getPosts({ cursor: pageParam }),
     initialPageParam: '',
     getNextPageParam: (lastPage) => lastPage.cursor,
+  })
+
+  const { mutate: putViewCount } = useMutation({
+    mutationFn: putPostsViewCount,
   })
 
   return (
@@ -35,8 +39,8 @@ export default function Root() {
                     <ExternalLink
                       href={id}
                       aria-label={title}
-                      // onClick={clickHandling}
-                      // onAuxClick={clickHandling}
+                      onClick={() => putViewCount({ id })}
+                      onAuxClick={() => putViewCount({ id })}
                       title={title}
                     >
                       <Post.Title>{title}</Post.Title>
