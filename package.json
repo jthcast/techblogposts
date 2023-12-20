@@ -18,6 +18,7 @@
     "routes": "sucrase-node scripts/makeRoutes.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.477.0",
     "@elastic/elasticsearch": "7.13.0",
     "@tanstack/query-sync-storage-persister": "^5.12.1",
     "@tanstack/react-query": "^5.12.2",

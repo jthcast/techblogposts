@@ -89,8 +89,4 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ posts, cursor: newCursor })
   }
-
-  return NextResponse.json(undefined, {
-    status: response.statusCode ?? 500,
-  })
 }

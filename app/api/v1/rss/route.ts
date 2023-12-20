@@ -1,6 +1,5 @@
 import { client } from '@/libs/elasticSearch/elasticSearch'
 import { SearchResponse } from '@elastic/elasticsearch/api/types.js'
-import { NextResponse } from 'next/server'
 
 interface RssQuery {
   dataType: string
@@ -96,8 +95,4 @@ export async function GET() {
       },
     })
   }
-
-  return NextResponse.json(undefined, {
-    status: response.statusCode ?? 500,
-  })
 }
