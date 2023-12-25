@@ -19,7 +19,7 @@ export default function Root() {
     getNextPageParam: (lastPage) => lastPage.cursor,
   })
 
-  const { mutate: putViewCount } = useMutation({
+  const { mutate: postsViewCount } = useMutation({
     mutationFn: putPostsViewCount,
   })
 
@@ -39,8 +39,8 @@ export default function Root() {
                     <ExternalLink
                       href={id}
                       aria-label={title}
-                      onClick={() => putViewCount({ id })}
-                      onAuxClick={() => putViewCount({ id })}
+                      onClick={() => postsViewCount({ id })}
+                      onAuxClick={() => postsViewCount({ id })}
                       title={title}
                     >
                       <Post.Title>{title}</Post.Title>

@@ -5,6 +5,7 @@ import { typography } from '@/providers/ThemeProvider/typography'
 import { style } from '@vanilla-extract/css'
 
 export const root = style({
+  display: 'flex',
   width: '100%',
   padding: '1.5rem 3rem',
   zIndex: Z_INDEX.content,
