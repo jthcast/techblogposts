@@ -3,6 +3,23 @@ import { createGlobalTheme, globalStyle } from '@vanilla-extract/css'
 
 export const vars = createGlobalTheme('[data-theme="light"]', {
   colors: {
+    system: {
+      red: palette.light.default.red,
+      orange: palette.light.default.orange,
+      yellow: palette.light.default.yellow,
+      green: palette.light.default.green,
+      mint: palette.light.default.mint,
+      teal: palette.light.default.teal,
+      cyan: palette.light.default.cyan,
+      blue: palette.light.default.blue,
+      indigo: palette.light.default.indigo,
+      purple: palette.light.default.purple,
+      pink: palette.light.default.pink,
+      brown: palette.light.default.brown,
+      gray: palette.light.default.gray,
+      white: palette.light.default.white,
+      black: palette.light.default.black,
+    },
     backgrounds: {
       primary: palette.light.default.white,
       secondary: palette.light.default.gray6,
@@ -29,11 +46,34 @@ export const vars = createGlobalTheme('[data-theme="light"]', {
       opaque: palette.light.default.separatorOpaque,
       nonOpaque: palette.light.default.separatorNonOpaque,
     },
+    accents: {
+      primary: `hsl(${palette.light.default.majorelleBlue})`,
+      primary_a90: `hsl(${palette.light.default.majorelleBlue} / 0.9)`,
+      secondary: `hsl(${palette.light.default.terraCotta})`,
+      secondary_a90: `hsl(${palette.light.default.terraCotta} / 0.9)`,
+    },
   },
 })
 
 export const darkVars = createGlobalTheme('[data-theme="dark"]', vars, {
   colors: {
+    system: {
+      red: palette.dark.default.red,
+      orange: palette.dark.default.orange,
+      yellow: palette.dark.default.yellow,
+      green: palette.dark.default.green,
+      mint: palette.dark.default.mint,
+      teal: palette.dark.default.teal,
+      cyan: palette.dark.default.cyan,
+      blue: palette.dark.default.blue,
+      indigo: palette.dark.default.indigo,
+      purple: palette.dark.default.purple,
+      pink: palette.dark.default.pink,
+      brown: palette.dark.default.brown,
+      gray: palette.dark.default.gray,
+      white: palette.dark.default.white,
+      black: palette.dark.default.black,
+    },
     backgrounds: {
       primary: palette.dark.default.black,
       secondary: palette.dark.default.gray6,
@@ -59,6 +99,12 @@ export const darkVars = createGlobalTheme('[data-theme="dark"]', vars, {
     separators: {
       opaque: palette.dark.default.separatorOpaque,
       nonOpaque: palette.dark.default.separatorNonOpaque,
+    },
+    accents: {
+      primary: `hsl(${palette.dark.default.majorelleBlue})`,
+      primary_a90: `hsl(${palette.dark.default.majorelleBlue} / 0.9)`,
+      secondary: `hsl(${palette.dark.default.terraCotta})`,
+      secondary_a90: `hsl(${palette.dark.default.terraCotta} / 0.9)`,
     },
   },
 })
