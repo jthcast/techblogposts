@@ -1,5 +1,5 @@
 import { useRef, useEffect, HTMLAttributes, ReactNode } from 'react'
-import * as styles from '@/components/atom/Observer/Observer.css'
+import * as styles from '@/components/atom/Observer/observer.css'
 
 interface ObserverProps extends HTMLAttributes<HTMLDivElement> {
   callback: () => void

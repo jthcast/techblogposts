@@ -1,5 +1,5 @@
 import { AnchorHTMLAttributes } from 'react'
-import * as styles from '@/components/atom/ExternalLink/ExternalLink.css'
+import * as styles from '@/components/atom/ExternalLink/externalLink.css'
 
 type ExternalLinkProps = AnchorHTMLAttributes<HTMLAnchorElement>
 

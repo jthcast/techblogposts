@@ -1,4 +1,4 @@
-import { vars } from '@/app/global.css'
+import { vars } from '@/app/app.css'
 import { RecipeVariants, recipe } from '@vanilla-extract/recipes'
 import { typography } from '@/providers/ThemeProvider/typography'
 

@@ -1,5 +1,5 @@
 import { ComponentPropsWithRef, HTMLAttributes } from 'react'
-import * as styles from '@/components/atom/Post/Post.css'
+import * as styles from '@/components/atom/Post/post.css'
 import { formatDistanceToNowStrict, formatISO } from 'date-fns'
 import { getDateFnsLocale } from '@/libs/date-fns/date-fns'
 import { useParams } from 'next/navigation'
