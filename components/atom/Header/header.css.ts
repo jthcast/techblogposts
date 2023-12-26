@@ -1,4 +1,4 @@
-import { vars } from '@/app/global.css'
+import { vars } from '@/app/app.css'
 import { Z_INDEX } from '@/constants/styles'
 import { mediaQuery } from '@/providers/ThemeProvider/queries'
 import { typography } from '@/providers/ThemeProvider/typography'

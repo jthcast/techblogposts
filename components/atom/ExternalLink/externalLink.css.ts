@@ -1,4 +1,4 @@
-import { vars } from '@/app/global.css'
+import { vars } from '@/app/app.css'
 import { style } from '@vanilla-extract/css'
 
 export const anchor = style({

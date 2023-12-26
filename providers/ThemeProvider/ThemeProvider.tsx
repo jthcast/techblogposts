@@ -1,6 +1,6 @@
 'use client'
 
-import '@/app/global.css'
+import '@/app/app.css'
 import { palette } from '@/providers/ThemeProvider/palette'
 import { useEffect } from 'react'
 

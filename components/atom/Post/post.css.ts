@@ -1,4 +1,4 @@
-import { vars } from '@/app/global.css'
+import { vars } from '@/app/app.css'
 import { typography } from '@/providers/ThemeProvider/typography'
 import { style } from '@vanilla-extract/css'
 

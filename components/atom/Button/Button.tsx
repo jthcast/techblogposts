@@ -1,6 +1,6 @@
-import { ButtonVariants } from '@/components/atom/Button/Button.css'
+import { ButtonVariants } from '@/components/atom/Button/button.css'
 import { ButtonHTMLAttributes, forwardRef } from 'react'
-import * as styles from '@/components/atom/Button/Button.css'
+import * as styles from '@/components/atom/Button/button.css'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean

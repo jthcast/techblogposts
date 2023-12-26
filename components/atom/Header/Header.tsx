@@ -1,5 +1,5 @@
 import { HTMLAttributes, SVGProps } from 'react'
-import * as styles from '@/components/atom/Header/Header.css'
+import * as styles from '@/components/atom/Header/header.css'
 import { Logo as LogoIcon } from '@/components/atom/Icon'
 
 type HeaderRootProps = HTMLAttributes<HTMLUListElement>
