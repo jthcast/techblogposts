@@ -28,7 +28,6 @@ export const content = style({
   display: 'grid',
   position: 'fixed',
   zIndex: Z_INDEX.layout,
-  // padding: '1.5rem',
   width: '100%',
   maxWidth: '32rem',
   border: `1px solid ${vars.colors.separators.opaque}`,
