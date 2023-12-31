@@ -20,6 +20,7 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.477.0",
     "@elastic/elasticsearch": "7.13.0",
+    "@radix-ui/react-dialog": "^1.0.5",
     "@tanstack/query-sync-storage-persister": "^5.12.1",
     "@tanstack/react-query": "^5.12.2",
     "@tanstack/react-query-devtools": "^5.12.2",
