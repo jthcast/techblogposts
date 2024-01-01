@@ -5,9 +5,10 @@ import { NextResponse } from 'next/server'
 interface PostsQuery {
   dataType: string
   isShow: boolean
-  publishDate: {
-    order: string
-  }
+  publishDate: string
+  company: string
+  title: string
+  id: string
 }
 
 export const dynamic = 'force-dynamic'
@@ -16,7 +17,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const cursor = searchParams.get('cursor')
 
-  const query = {
+  const searchQuery = {
     size: 10,
     body: {
       query: {
@@ -68,12 +69,12 @@ export async function GET(request: Request) {
   if (cursor) {
     const [publishDate, id] = cursor.split(':')
 
-    if (query.body) {
-      query.body['search_after'] = [Number(publishDate), id]
+    if (searchQuery.body) {
+      searchQuery.body['search_after'] = [Number(publishDate), id]
     }
   }
 
-  const response = await client.search<SearchResponse<PostsQuery>>(query)
+  const response = await client.search<SearchResponse<PostsQuery>>(searchQuery)
 
   if (response.statusCode === 200) {
     const hits = response.body.hits.hits

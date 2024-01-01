@@ -1,5 +1,11 @@
 {
   "Header": {
     "title": "TechBlogPosts"
+  },
+  "SearchCommandDialog": {
+    "placeholder": "검색어를 입력해주세요",
+    "recentPosts": "최근 포스트",
+    "results": "검색 결과",
+    "noResults": "검색 결과가 없습니다"
   }
 }

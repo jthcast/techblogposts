@@ -11,6 +11,7 @@ import { Metadata, Viewport } from 'next'
 import Link from 'next/link'
 import { routes } from '@/constants/routes'
 import * as styles from '@/app/[locale]/layout.css'
+import { SearchCommandDialog } from '@/app/[locale]/components/SearchCommandDialog/SearchCommandDialog'
 
 interface RootLayoutProps {
   children?: ReactNode
@@ -75,6 +76,9 @@ export default function RootLayout({
               </Header.LeftContent>
             </Header.Root>
             {children}
+            <div className={styles.floatingButtonGroup}>
+              <SearchCommandDialog />
+            </div>
           </ReactQueryClientProvider>
         </NextIntlClientProvider>
       </body>

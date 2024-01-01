@@ -72,6 +72,7 @@ export const empty = style({
   paddingTop: '1.5rem',
   paddingBottom: '1.5rem',
   textAlign: 'center',
+  color: vars.colors.labels.secondary,
   ...typography.footnote.regular,
 })
 

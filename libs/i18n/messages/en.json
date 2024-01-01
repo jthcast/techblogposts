@@ -1,5 +1,11 @@
 {
   "Header": {
     "title": "TechBlogPosts"
+  },
+  "SearchCommandDialog": {
+    "placeholder": "Type a search",
+    "recentPosts": "Recent Posts",
+    "results": "Results",
+    "noResults": "No results found"
   }
 }

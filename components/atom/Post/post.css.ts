@@ -13,6 +13,7 @@ export const item = style({
   flexDirection: 'column',
   gap: '0.25rem',
   padding: '1rem 0',
+  width: '100%',
   borderBottom: `1px solid ${vars.colors.separators.nonOpaque}`,
 
   selectors: {
