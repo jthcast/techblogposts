@@ -6,7 +6,7 @@ export const anchor = style({
   textDecoration: 'none',
 
   ':visited': {
-    color: vars.colors.labels.secondary,
+    color: vars.colors.labels.secondaryNonOpaque,
   },
   ':link': {
     color: vars.colors.labels.primary,
