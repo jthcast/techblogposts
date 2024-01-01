@@ -51,6 +51,7 @@ export const input = style({
   border: 0,
   background: 'transparent',
   outline: 'none',
+  color: vars.colors.labels.primary,
   ...typography.footnote.regular,
 
   '::placeholder': {
@@ -109,7 +110,7 @@ export const item = style({
 
   selectors: {
     '&[aria-selected="true"]': {
-      background: vars.colors.groupedBackgrounds.primary,
+      background: vars.colors.groupedBackgrounds.tertiary,
       color: vars.colors.labels.primary,
     },
     '&[aria-disabled="true"]': {
