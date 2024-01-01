@@ -44,11 +44,9 @@ export default function ${componentName}({ ...props }: SVGProps<SVGSVGElement>) 
 `.trim()
 }
 
-/* eslint-disable no-await-in-loop */
 async function convertFiles() {
   const files = await readDir(imagesDirPath)
 
-  // NOTE : 순서를 보장하기 위해 for loop를 이용합니다. - @Matt
   for (const file of files) {
     const fileName = file.split('/').pop()
 
