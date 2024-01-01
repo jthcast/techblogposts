@@ -4,14 +4,11 @@ import { getPosts, putPostsViewCount } from '@/app/api/v1/posts/posts'
 import { Observer } from '@/components/atom/Observer/Observer'
 import { queryKeys } from '@/providers/ReactQueryClientProvider/ReactQueryClientProvider'
 import { useMutation, useSuspenseInfiniteQuery } from '@tanstack/react-query'
-// import { useTranslations } from 'next-intl'
 import * as Post from '@/components/atom/Post/Post'
 import * as styles from '@/app/[locale]/page.css'
 import { ExternalLink } from '@/components/atom/ExternalLink/ExternalLink'
 
 export default function Root() {
-  // const t = useTranslations()
-
   const { data, hasNextPage, fetchNextPage } = useSuspenseInfiniteQuery({
     queryKey: queryKeys.getPosts({}),
     queryFn: ({ pageParam }) => getPosts({ cursor: pageParam }),
@@ -32,7 +29,6 @@ export default function Root() {
               posts.map((post) => {
                 const { company, id, publishDate, title, viewCount } =
                   post._source
-                // const bookmarkCount = post.inner_hits.bookmark.hits.total.value
 
                 return (
                   <Post.Item key={id}>
@@ -53,7 +49,6 @@ export default function Root() {
                       <Post.RightContent>
                         <Post.Time time={publishDate} />
                         <Post.ViewCount>{viewCount}</Post.ViewCount>
-                        {/* <Post.Bookmark id={id} /> */}
                       </Post.RightContent>
                     </Post.Content>
                   </Post.Item>
