@@ -110,7 +110,7 @@ export const item = style({
 
   selectors: {
     '&[aria-selected="true"]': {
-      background: vars.colors.groupedBackgrounds.primary,
+      background: vars.colors.groupedBackgrounds.tertiary,
       color: vars.colors.labels.primary,
     },
     '&[aria-disabled="true"]': {
