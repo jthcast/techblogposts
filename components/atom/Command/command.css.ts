@@ -51,6 +51,7 @@ export const input = style({
   border: 0,
   background: 'transparent',
   outline: 'none',
+  color: vars.colors.labels.primary,
   ...typography.footnote.regular,
 
   '::placeholder': {
