@@ -16,10 +16,10 @@ export const overlay = style({
 
   selectors: {
     '&[data-state="open"]': {
-      ...animations.fadeIn,
+      ...animations.fadeInAnimation,
     },
     '&[data-state="closed"]': {
-      ...animations.fadeOut,
+      ...animations.fadeOutAnimation,
     },
   },
 })
@@ -40,10 +40,10 @@ export const content = style({
 
   selectors: {
     '&[data-state="open"]': {
-      ...animations.fadeIn,
+      ...animations.fadeInAnimation,
     },
     '&[data-state="closed"]': {
-      ...animations.fadeOut,
+      ...animations.fadeOutAnimation,
     },
   },
 })

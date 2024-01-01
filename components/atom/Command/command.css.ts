@@ -31,7 +31,7 @@ globalStyle(`${root} [cmdk-loading]:after`, {
   height: '2px',
   bottom: '-1.5px',
   background: `linear-gradient(90deg, transparent 0, ${vars.colors.labels.primary} 50%, transparent 100%)`,
-  ...animations.moveRight,
+  ...animations.moveRightAnimation,
 })
 
 export const inputWrapper = style({
