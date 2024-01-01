@@ -1,8 +1,6 @@
 'use client'
 
-import { type DialogProps } from '@radix-ui/react-dialog'
 import { Command as CommandPrimitive } from 'cmdk'
-import * as DialogComponent from '@/components/atom/Dialog/Dialog'
 import {
   ComponentPropsWithoutRef,
   ElementRef,
@@ -19,18 +17,6 @@ export const Root = forwardRef<
 ))
 
 Root.displayName = CommandPrimitive.displayName
-
-interface CommandDialogProps extends DialogProps {}
-
-export const Dialog = ({ children, ...props }: CommandDialogProps) => {
-  return (
-    <DialogComponent.Root {...props}>
-      <DialogComponent.Content>
-        <Root>{children}</Root>
-      </DialogComponent.Content>
-    </DialogComponent.Root>
-  )
-}
 
 export const Input = forwardRef<
   ElementRef<typeof CommandPrimitive.Input>,
@@ -60,6 +46,12 @@ export const Empty = forwardRef<
 ))
 
 Empty.displayName = CommandPrimitive.Empty.displayName
+
+export const PureEmpty = ({ ...props }: HTMLAttributes<HTMLDivElement>) => {
+  return <div className={styles.empty} {...props} />
+}
+
+PureEmpty.displayName = 'CommandPureEmpty'
 
 export const Group = forwardRef<
   ElementRef<typeof CommandPrimitive.Group>,
