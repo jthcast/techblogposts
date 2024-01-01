@@ -1,6 +1,8 @@
 import {
   GetPostsRequest,
   GetPostsResponse,
+  GetPostsSearchRequest,
+  GetPostsSearchResponse,
   PostPostsViewCountRequest,
   PostPostsViewCountResponse,
 } from '@/app/api/v1/posts/postsTypes'
@@ -32,4 +34,14 @@ export async function putPostsViewCount({
       },
     },
   )
+}
+
+export async function getPostsSearch({
+  query,
+}: GetPostsSearchRequest): Promise<GetPostsSearchResponse> {
+  return await customFetch({
+    version: 'v1',
+    path: `/posts/search`,
+    params: { query },
+  })
 }
