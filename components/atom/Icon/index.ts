@@ -1,3 +1,6 @@
+export { default as Bars } from './Icons/Bars'
 export { default as Eye } from './Icons/Eye'
 export { default as Logo } from './Icons/Logo'
+export { default as PaperWithLinesColored } from './Icons/PaperWithLinesColored'
+export { default as PaperWithSignalColored } from './Icons/PaperWithSignalColored'
 export { default as Search } from './Icons/Search'

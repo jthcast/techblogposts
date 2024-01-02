@@ -7,5 +7,16 @@
     "recentPosts": "최근 포스트",
     "results": "검색 결과",
     "noResults": "검색 결과가 없습니다"
+  },
+  "MenuSheet": {
+    "title": "메뉴",
+    "postsPage": "포스트",
+    "blogsPage": "블로그"
+  },
+  "BlogsPage": {
+    "title": "현재 <blogCount>{count}</blogCount>개의 기술 블로그를 구독중입니다 ✨",
+    "contactTitle": "원하시는 기업의 기술 블로그가 목록에 없나요?",
+    "contactDescription": "저에게 알려주세요. 추가하겠습니다. 🙌",
+    "contactButton": "제보 하기 📧"
   }
 }

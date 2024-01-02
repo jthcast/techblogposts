@@ -62,6 +62,7 @@ export const queryKeys = {
     'getPostsSearch',
     { ...request },
   ],
+  getBlogs: () => ['getBlogs'],
 } as const
 
 export function setQueryData<T>({
