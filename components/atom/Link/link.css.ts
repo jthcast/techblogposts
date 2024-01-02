@@ -42,12 +42,33 @@ export const link = recipe({
     },
     isButton: {
       true: {
-        textDecoration: 'underline',
         borderRadius: 6,
         border: 0,
+        padding: '10px 16px',
       },
     },
   },
+  compoundVariants: [
+    {
+      variants: {
+        isButton: true,
+        color: 'accentPrimary',
+      },
+      style: {
+        background: vars.colors.accents.primary,
+        color: vars.colors.system.white,
+
+        ':hover': {
+          background: vars.colors.accents.primary_a90,
+          color: vars.colors.system.white,
+        },
+        ':active': {
+          background: vars.colors.accents.primary_a90,
+          color: vars.colors.system.white,
+        },
+      },
+    },
+  ],
   defaultVariants: {
     color: 'primary',
   },

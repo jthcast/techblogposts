@@ -34,6 +34,7 @@ export const content = recipe({
     zIndex: Z_INDEX.layout,
     padding: '1.5rem',
     background: vars.colors.backgrounds.primary,
+    outline: 'none',
   },
   variants: {
     side: {

@@ -12,5 +12,11 @@
     "title": "Menu",
     "postsPage": "Posts",
     "blogsPage": "Blogs"
+  },
+  "BlogsPage": {
+    "title": "Currently subscribed to <blogCount>{count}</blogCount> tech blogs ✨",
+    "contactTitle": "Is your company's tech blog not listed?",
+    "contactDescription": "Please let me know. I'll add it. 🙌",
+    "contactButton": "Contact 📧"
   }
 }
