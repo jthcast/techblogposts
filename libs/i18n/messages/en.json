@@ -7,5 +7,10 @@
     "recentPosts": "Recent Posts",
     "results": "Results",
     "noResults": "No results found"
+  },
+  "MenuSheet": {
+    "title": "Menu",
+    "postsPage": "Posts",
+    "blogsPage": "Blogs"
   }
 }
