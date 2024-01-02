@@ -29,6 +29,8 @@ export const overlay = style({
 export const content = recipe({
   base: {
     position: 'fixed',
+    display: 'flex',
+    flexDirection: 'column',
     zIndex: Z_INDEX.layout,
     padding: '1.5rem',
     background: vars.colors.backgrounds.primary,
@@ -84,10 +86,10 @@ export const content = recipe({
 
         '@media': {
           [mediaQuery['tablet']]: {
-            maxWidth: '24rem',
+            maxWidth: '15rem',
           },
           [mediaQuery['desktop']]: {
-            maxWidth: '24rem',
+            maxWidth: '15rem',
           },
         },
       },
@@ -110,10 +112,10 @@ export const content = recipe({
 
         '@media': {
           [mediaQuery['tablet']]: {
-            maxWidth: '24rem',
+            maxWidth: '15rem',
           },
           [mediaQuery['desktop']]: {
-            maxWidth: '24rem',
+            maxWidth: '15rem',
           },
         },
       },
@@ -135,6 +137,7 @@ export const footer = style({
   display: 'flex',
   flexDirection: 'column',
   textAlign: 'left',
+  marginTop: 'auto',
 })
 
 export const title = style({
