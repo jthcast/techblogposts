@@ -8,10 +8,11 @@ import { NextIntlClientProvider, useMessages, useTranslations } from 'next-intl'
 import { Noto_Sans_KR } from 'next/font/google'
 import * as Header from '@/components/atom/Header/Header'
 import { Metadata, Viewport } from 'next'
-import Link from 'next/link'
 import { routes } from '@/constants/routes'
 import * as styles from '@/app/[locale]/layout.css'
 import { SearchCommandDialog } from '@/app/[locale]/components/SearchCommandDialog/SearchCommandDialog'
+import { MenuSheet } from '@/app/[locale]/components/MenuSheet/MenuSheet'
+import { Link } from '@/components/atom/Link/Link'
 
 interface RootLayoutProps {
   children?: ReactNode
@@ -67,7 +68,7 @@ export default function RootLayout({
           <ReactQueryClientProvider>
             <Header.Root>
               <Header.LeftContent>
-                <Link className={styles.titleLink} href={routes.root}>
+                <Link href={routes.root}>
                   <Header.Title>
                     <Header.Logo />
                     {t('Header.title')}
@@ -78,6 +79,7 @@ export default function RootLayout({
             {children}
             <div className={styles.floatingButtonGroup}>
               <SearchCommandDialog />
+              <MenuSheet />
             </div>
           </ReactQueryClientProvider>
         </NextIntlClientProvider>
