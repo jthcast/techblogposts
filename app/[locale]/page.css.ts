@@ -8,11 +8,11 @@ export const section = style({
   width: '100%',
   padding: '0 6rem',
   margin: 'auto',
-  marginTop: '1rem',
+  marginTop: '2rem',
 
   '@media': {
     [mediaQuery['mobile']]: {
-      marginTop: 0,
+      marginTop: '1rem',
       padding: '0 1.25rem',
     },
     [mediaQuery['tablet']]: {
