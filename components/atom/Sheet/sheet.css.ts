@@ -137,6 +137,7 @@ export const header = style({
 export const footer = style({
   display: 'flex',
   flexDirection: 'column',
+  gap: '0.5rem',
   textAlign: 'left',
   marginTop: 'auto',
 })

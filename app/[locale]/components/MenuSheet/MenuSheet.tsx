@@ -4,13 +4,17 @@ import * as Sheet from '@/components/atom/Sheet/Sheet'
 import { Button } from '@/components/atom/Button/Button'
 import {
   Bars,
+  Github,
+  LinkedIn,
   PaperWithLinesColored,
   PaperWithSignalColored,
+  Rss,
 } from '@/components/atom/Icon'
 import { useTranslations } from 'next-intl'
 import { routes } from '@/constants/routes'
 import * as styles from '@/app/[locale]/components/MenuSheet/menuSheet.css'
 import { Link } from '@/components/atom/Link/Link'
+import { ExternalLink } from '@/components/atom/ExternalLink/ExternalLink'
 
 export function MenuSheet() {
   const t = useTranslations()
@@ -50,6 +54,24 @@ export function MenuSheet() {
             </li>
           </ul>
         </nav>
+        <Sheet.Footer>
+          <div className={styles.footerIcons}>
+            <ExternalLink href="https://github.com/jthcast/techblogposts">
+              <Github className={styles.footerIcon} />
+            </ExternalLink>
+            <ExternalLink href="https://linkedin.com/in/jthcast">
+              <LinkedIn className={styles.footerIcon} />
+            </ExternalLink>
+            <ExternalLink href="/rss.xml">
+              <Rss className={styles.footerIcon} />
+            </ExternalLink>
+          </div>
+          <Link href="mailto:jthcast@gmail.com" isUnderline>
+            <span className={styles.copyright}>
+              © {new Date().getFullYear()} JthCast
+            </span>
+          </Link>
+        </Sheet.Footer>
       </Sheet.Content>
     </Sheet.Root>
   )
