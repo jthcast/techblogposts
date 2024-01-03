@@ -1,3 +1,5 @@
+'use client'
+
 import { Link } from '@/components/atom/Link/Link'
 import { useTranslations } from 'next-intl'
 import * as styles from '@/app/not-found.css'
