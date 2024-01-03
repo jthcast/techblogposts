@@ -6,15 +6,14 @@ export const list = style({
   listStyle: 'none',
   display: 'flex',
   flexDirection: 'column',
+  gap: '1rem',
 })
 
 export const item = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '0.25rem',
-  padding: '1rem 0',
   width: '100%',
-  borderBottom: `1px solid ${vars.colors.separators.nonOpaque}`,
 
   selectors: {
     '&:last-child': {
@@ -24,7 +23,6 @@ export const item = style({
 })
 
 export const title = style({
-  // TODO
   ...typography.headline.regular,
 })
 
