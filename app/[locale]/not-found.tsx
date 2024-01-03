@@ -2,7 +2,7 @@
 
 import { Link } from '@/components/atom/Link/Link'
 import { useTranslations } from 'next-intl'
-import * as styles from '@/app/not-found.css'
+import * as styles from '@/app/[locale]/not-found.css'
 import { routes } from '@/constants/routes'
 
 export default function NotFoundPage() {
