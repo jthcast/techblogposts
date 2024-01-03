@@ -18,5 +18,10 @@
     "contactTitle": "Is your company's tech blog not listed?",
     "contactDescription": "Please let me know. I'll add it. 🙌",
     "contactButton": "Contact 📧"
+  },
+  "notFoundPage": {
+    "title": "404",
+    "description": "Sorry 😥 It looks like the page no longer exists or has been moved.",
+    "homeButton": "Go to Home"
   }
 }
