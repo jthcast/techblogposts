@@ -19,7 +19,7 @@
     "contactDescription": "저에게 알려주세요. 추가하겠습니다. 🙌",
     "contactButton": "제보 하기 📧"
   },
-  "notFoundPage": {
+  "LocaleNotFoundPage": {
     "title": "404",
     "description": "죄송합니다 😥 해당 페이지가 더는 존재하지 않거나 옮겨진 것 같습니다.",
     "homeButton": "시작 페이지로 가기"
