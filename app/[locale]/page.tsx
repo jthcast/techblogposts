@@ -8,6 +8,7 @@ import * as Post from '@/components/atom/Post/Post'
 import * as Separator from '@/components/atom/Separator/Separator'
 import * as styles from '@/app/[locale]/page.css'
 import { ExternalLink } from '@/components/atom/ExternalLink/ExternalLink'
+import { Fragment } from 'react'
 
 export default function LocalePage() {
   const { data, hasNextPage, fetchNextPage } = useSuspenseInfiniteQuery({
@@ -34,8 +35,8 @@ export default function LocalePage() {
                   postIndex + 1 === posts.length
 
                 return (
-                  <>
-                    <Post.Item key={id}>
+                  <Fragment key={id}>
+                    <Post.Item>
                       <ExternalLink
                         href={id}
                         aria-label={title}
@@ -57,7 +58,7 @@ export default function LocalePage() {
                       </Post.Content>
                     </Post.Item>
                     {!isLastItem && <Separator.Separator />}
-                  </>
+                  </Fragment>
                 )
               }),
             )}
