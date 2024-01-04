@@ -51,7 +51,7 @@ export const viewport: Viewport = {
   ],
 }
 
-export default function RootLayout({
+export default function LocaleLayout({
   children,
   params: { locale },
 }: RootLayoutProps) {

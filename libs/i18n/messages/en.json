@@ -19,9 +19,16 @@
     "contactDescription": "Please let me know. I'll add it. 🙌",
     "contactButton": "Contact 📧"
   },
-  "notFoundPage": {
+  "LocaleNotFoundPage": {
     "title": "404",
     "description": "Sorry 😥 It looks like the page no longer exists or has been moved.",
     "homeButton": "Go to Home"
+  },
+  "LocaleErrorPage": {
+    "title": "Error",
+    "description": "Sorry 😥 An error occurred.",
+    "errorCode": "({code})",
+    "homeButton": "Go to Home",
+    "redoButton": "redo"
   }
 }
