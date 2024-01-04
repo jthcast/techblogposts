@@ -9,7 +9,7 @@ import * as Separator from '@/components/atom/Separator/Separator'
 import * as styles from '@/app/[locale]/page.css'
 import { ExternalLink } from '@/components/atom/ExternalLink/ExternalLink'
 
-export default function Root() {
+export default function LocalePage() {
   const { data, hasNextPage, fetchNextPage } = useSuspenseInfiniteQuery({
     queryKey: queryKeys.getPosts({}),
     queryFn: ({ pageParam }) => getPosts({ cursor: pageParam }),
