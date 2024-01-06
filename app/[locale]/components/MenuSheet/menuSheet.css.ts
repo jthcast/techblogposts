@@ -18,6 +18,14 @@ export const menuItem = style({
   alignItems: 'center',
 })
 
+export const termsAccent = style({
+  ...typography.caption1.bold,
+})
+
+export const terms = style({
+  ...typography.caption1.regular,
+})
+
 export const footerIcons = style({
   display: 'flex',
   alignItems: 'center',

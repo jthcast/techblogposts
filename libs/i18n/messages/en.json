@@ -11,7 +11,9 @@
   "MenuSheet": {
     "title": "Menu",
     "postsPage": "Posts",
-    "blogsPage": "Blogs"
+    "blogsPage": "Blogs",
+    "termsServicePage": "Terms of service",
+    "termsPrivacyPage": "Privacy policy"
   },
   "BlogsPage": {
     "title": "Currently subscribed to <blogCount>{count}</blogCount> tech blogs ✨",
@@ -30,5 +32,53 @@
     "errorCode": "({code})",
     "homeButton": "Go to Home",
     "redoButton": "redo"
+  },
+  "TermsServicePage": {
+    "title": "Techblogposts Terms of Service",
+    "aboutTitle": "About Techblogposts",
+    "aboutDescription1": "Techblogposts is a site that provides a service that collects and displays posts from various technology blogs in one place.",
+    "aboutDescription2": "All posts provided are collected from blogs that provide RSS, and the copyright of the posts belongs to the owner of the blog, not Techblogposts.",
+    "memberTitle": "If you sign up as a member, you can use additional services.",
+    "memberDescription1": "You can view the list of posts and blogs without registering.",
+    "memberDescription2": "If you register as a member, you can use additional services such as bookmarks.",
+    "privacyTitle": "We only ask for the minimum amount of personal information and treat that information with care.",
+    "privacyDescription1": "An email address is required when signing up, and this is the minimum amount of information required to identify each member. Other than your email address, we store only the minimum information provided by the company providing login authentication.",
+    "privacyDescription2": "You can cancel your membership whenever you wish.",
+    "serviceTitle": "If use of the service is unavoidably restricted, reasonable procedures will be followed.",
+    "serviceDescription1": "If you violate the terms and conditions and operating policies, such as maliciously interfering with the service or seriously infringing on the freedom of other users, use of the service may be restricted in part or in full.",
+    "userTitle": "We will listen to your valuable opinions.",
+    "userDescription1": "You can convey your opinions or improvements related to the service at any time through email or through the established communication channels, and we will do our best to communicate the processing process and results."
+  },
+  "TermsPrivacyPage": {
+    "title": "Techblogposts Privacy Policy",
+    "aboutPrivacyPolicyTitle": "1. What is Privacy Policy?",
+    "aboutPrivacyPolicyDescription1": "Techblogposts ‘collects, uses and provides personal information based on users’ consent’ and ‘actively guarantees users’ rights (right to self-determination of personal information).’",
+    "aboutPrivacyPolicyDescription2": "Techblogposts complies with the relevant laws and personal information protection regulations and guidelines of the Republic of Korea that information and communication service providers must comply with.",
+    "aboutPrivacyPolicyDescription3": "'Privacy Policy' refers to the guidelines that Techblogposts must follow to protect users' valuable personal information so that users can use the service with peace of mind.",
+    "aboutPrivacyPolicyDescription4": "This Privacy Policy applies to Techblogposts.",
+    "collectPrivacyTitle": "2. Collection of personal information",
+    "collectPrivacyDescription1": "We collect the minimum amount of personal information necessary to provide services.",
+    "collectPrivacyDescription2": "All users can use the services provided by Techblogposts, and can receive more diverse services by registering as a member. If we collect a user's personal information, we will notify the user in advance and ask for their consent.",
+    "collectPrivacyDescription3": "The personal information we collect is as follows.",
+    "collectPrivacyDescription4": "We collect the following minimum personal information during membership registration and service use, and we do not collect sensitive information without the user's consent.",
+    "collectPrivacyDescription5": "What is required information? : Information to perform the essential functions of the service",
+    "collectPrivacyDescription6": "What is optional information? : Additional information collected to provide more specialized services (there are no restrictions on service use even if optional information is not entered.)",
+    "collectPrivacyDescription7": "What is sensitive information? : Information that may infringe on the user's privacy (race, ideology and creed, political inclination, criminal record, medical information, etc.)",
+    "collectPrivacyDescription8": "[When registering as a member]",
+    "collectPrivacyDescription9": "Required: Email address",
+    "collectPrivacyDescription10": "Here's how we collect personal information:",
+    "collectPrivacyDescription11": "When collecting personal information, we must notify users in advance and ask for their consent, and personal information is collected through the methods below.",
+    "collectPrivacyDescription12": "If the user agrees to the collection of personal information and enters the information directly during the process of signing up and using the service",
+    "collectPrivacyDescription13": "When personal information is provided by an affiliated service or organization, etc.",
+    "collectPrivacyDescription14": "The personal information collected from users in the process of using the service is as follows.",
+    "collectPrivacyDescription15": "In the process of using the PC web and mobile web/app, information such as terminal information (OS, screen size, device ID), IP address, cookies, date and time of visit, and service use records may be automatically generated and collected.",
+    "usePrivacyTitle": "3. Use of personal information",
+    "usePrivacyDescription1": "It is used for member management, service provision and improvement, and new service development.",
+    "usePrivacyDescription2": "When registering as a member or in the process of using the service, we collect the minimum personal information necessary to provide the service as follows through the website or individual applications or programs.",
+    "usePrivacyDescription3": "Member identification/confirmation of intent to sign up, identity verification, prevention of fraudulent use",
+    "usePrivacyDescription4": "Providing analysis and personalized services based on demographic characteristics",
+    "usePrivacyDescription5": "Developing new services, providing various services, handling inquiries or complaints, and delivering notices",
+    "usePrivacyDescription6": "Prevention and sanctions against actions that interfere with the smooth operation of the service (including account theft and fraudulent use)",
+    "usePrivacyDescription7": "Used for service use records, access frequency and service use statistics, provision of customized services, and service improvement"
   }
 }
