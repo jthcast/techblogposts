@@ -95,6 +95,7 @@ export function SearchCommandDialog() {
                             onClick={() => postsViewCount({ id })}
                             onAuxClick={() => postsViewCount({ id })}
                             title={title}
+                            isShowVisited
                           >
                             <Post.Title>{title}</Post.Title>
                           </ExternalLink>

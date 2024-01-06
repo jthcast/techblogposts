@@ -43,6 +43,7 @@ export default function LocalePage() {
                         onClick={() => postsViewCount({ id })}
                         onAuxClick={() => postsViewCount({ id })}
                         title={title}
+                        isShowVisited
                       >
                         <Post.Title>{title}</Post.Title>
                       </ExternalLink>
