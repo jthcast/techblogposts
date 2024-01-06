@@ -55,6 +55,20 @@ export function MenuSheet() {
           </ul>
         </nav>
         <Sheet.Footer>
+          <Sheet.Close asChild>
+            <Link href={routes.termsService}>
+              <span className={styles.terms}>
+                {t('MenuSheet.termsServicePage')}
+              </span>
+            </Link>
+          </Sheet.Close>
+          <Sheet.Close asChild>
+            <Link href={routes.termsPrivacy}>
+              <span className={styles.termsAccent}>
+                {t('MenuSheet.termsPrivacyPage')}
+              </span>
+            </Link>
+          </Sheet.Close>
           <div className={styles.footerIcons}>
             <ExternalLink href="https://github.com/jthcast/techblogposts">
               <Github className={styles.footerIcon} />
