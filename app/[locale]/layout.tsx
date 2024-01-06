@@ -30,6 +30,7 @@ const notoSansKr = Noto_Sans_KR({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://techblogposts.com'),
   title: {
     template: '%s | TechBlogPosts',
     default: 'TechBlogPosts',
