@@ -126,6 +126,7 @@ export const darkVars = createGlobalTheme('[data-theme="dark"]', vars, {
 globalStyle('html', {
   boxSizing: 'border-box',
   backgroundColor: vars.colors.backgrounds.primary,
+  color: vars.colors.labels.primary,
   height: '100%',
   lineHeight: '1.8',
   fontSize: '112.5%',
