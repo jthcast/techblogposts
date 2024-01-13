@@ -1,6 +1,8 @@
 export { default as Bars } from './Icons/Bars'
 export { default as Eye } from './Icons/Eye'
 export { default as Github } from './Icons/Github'
+export { default as GithubCircle } from './Icons/GithubCircle'
+export { default as GoogleColored } from './Icons/GoogleColored'
 export { default as LinkedIn } from './Icons/LinkedIn'
 export { default as Logo } from './Icons/Logo'
 export { default as PaperWithLinesColored } from './Icons/PaperWithLinesColored'

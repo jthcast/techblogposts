@@ -53,6 +53,14 @@ export const button = recipe({
           background: vars.colors.fills.primary,
         },
       },
+      google: {
+        background: '#4285f4',
+        color: vars.colors.system.white,
+      },
+      github: {
+        background: vars.colors.system.black,
+        color: vars.colors.system.white,
+      },
     },
     size: {
       small: { padding: '6px 10px' },

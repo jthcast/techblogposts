@@ -1,4 +1,7 @@
 {
+  "common": {
+    "ok": "확인"
+  },
   "Header": {
     "title": "TechBlogPosts"
   },
@@ -80,5 +83,13 @@
     "usePrivacyDescription5": "신규 서비스 개발, 다양한 서비스 제공, 문의사항 또는 불만처리, 공지사항 전달",
     "usePrivacyDescription6": "서비스의 원활한 운영에 지장을 주는 행위(계정 도용 및 부정 이용 행위 등 포함)에 대한 방지 및 제재",
     "usePrivacyDescription7": "서비스 이용 기록, 접속 빈도 및 서비스 이용에 대한 통계, 맞춤형 서비스 제공, 서비스 개선에 활용"
+  },
+  "LoginDialog": {
+    "login": "로그인",
+    "google": "Google",
+    "github": "Github"
+  },
+  "LogoutButton": {
+    "logout": "로그아웃"
   }
 }

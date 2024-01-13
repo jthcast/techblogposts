@@ -26,14 +26,17 @@
     "@tanstack/react-query": "^5.12.2",
     "@tanstack/react-query-devtools": "^5.12.2",
     "@tanstack/react-query-persist-client": "^5.12.2",
+    "@types/react": "^18.2.47",
+    "@types/react-dom": "^18.2.18",
     "@vanilla-extract/css": "^1.14.0",
     "@vanilla-extract/recipes": "^0.5.1",
     "cmdk": "^0.2.0",
     "date-fns": "^2.30.0",
     "next": "14.0.3",
+    "next-auth": "5.0.0-beta.4",
     "next-intl": "^3.1.4",
-    "react": "^18",
-    "react-dom": "^18"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.6.7",
@@ -48,8 +51,6 @@
     "@storybook/testing-library": "^0.2.2",
     "@tanstack/eslint-plugin-query": "^5.12.1",
     "@types/node": "^20.10.5",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
     "@typescript-eslint/eslint-plugin": "^6.12.0",
     "@typescript-eslint/parser": "^6.12.0",
     "@vanilla-extract/next-plugin": "^2.3.2",

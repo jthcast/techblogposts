@@ -1,4 +1,7 @@
 {
+  "common": {
+    "ok": "Okay"
+  },
   "Header": {
     "title": "TechBlogPosts"
   },
@@ -80,5 +83,13 @@
     "usePrivacyDescription5": "Developing new services, providing various services, handling inquiries or complaints, and delivering notices",
     "usePrivacyDescription6": "Prevention and sanctions against actions that interfere with the smooth operation of the service (including account theft and fraudulent use)",
     "usePrivacyDescription7": "Used for service use records, access frequency and service use statistics, provision of customized services, and service improvement"
+  },
+  "LoginDialog": {
+    "login": "Login",
+    "google": "Google",
+    "github": "Github"
+  },
+  "LogoutButton": {
+    "logout": "Logout"
   }
 }

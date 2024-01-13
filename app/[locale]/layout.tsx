@@ -13,6 +13,7 @@ import * as styles from '@/app/[locale]/layout.css'
 import { SearchCommandDialog } from '@/app/[locale]/components/SearchCommandDialog/SearchCommandDialog'
 import { MenuSheet } from '@/app/[locale]/components/MenuSheet/MenuSheet'
 import { Link } from '@/components/atom/Link/Link'
+import { Authentication } from '@/app/[locale]/components/Authentication/Authentication'
 
 interface RootLayoutProps {
   children?: ReactNode
@@ -76,6 +77,9 @@ export default function LocaleLayout({
                   </Header.Title>
                 </Link>
               </Header.LeftContent>
+              <Header.RightContent>
+                <Authentication />
+              </Header.RightContent>
             </Header.Root>
             {children}
             <div className={styles.floatingButtonGroup}>
