@@ -16,7 +16,8 @@
     "postsPage": "Posts",
     "blogsPage": "Blogs",
     "termsServicePage": "Terms of service",
-    "termsPrivacyPage": "Privacy policy"
+    "termsPrivacyPage": "Privacy policy",
+    "mypagePage": "Mypage"
   },
   "BlogsPage": {
     "title": "Currently subscribed to <blogCount>{count}</blogCount> tech blogs ✨",
@@ -85,11 +86,15 @@
     "usePrivacyDescription7": "Used for service use records, access frequency and service use statistics, provision of customized services, and service improvement"
   },
   "LoginDialog": {
-    "login": "Login",
+    "login": "SignIn",
     "google": "Google",
     "github": "Github"
   },
   "LogoutButton": {
-    "logout": "Logout"
+    "logout": "SignOut"
+  },
+  "MypagePage": {
+    "title": "Mypage",
+    "email": "Email"
   }
 }

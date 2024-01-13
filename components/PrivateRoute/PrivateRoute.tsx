@@ -1,14 +1,10 @@
-import { ReactNode } from 'react'
+import { PropsWithChildren } from 'react'
 import { routes } from '@/constants/routes'
 import { RedirectType, redirect } from 'next/navigation'
 import { auth } from '@/auth'
-import { SessionProvider } from 'next-auth/react'
+import { SessionProvider } from '@/providers/SessionProvider/SessionProvider'
 
-interface PrivateRouteProps {
-  children?: ReactNode
-}
-
-export async function PrivateRoute({ children }: PrivateRouteProps) {
+export async function PrivateRoute({ children }: PropsWithChildren) {
   const session = await auth()
 
   if (!session) {
@@ -16,6 +12,6 @@ export async function PrivateRoute({ children }: PrivateRouteProps) {
   }
 
   if (session) {
-    return <SessionProvider session={session}>{children}</SessionProvider>
+    return <SessionProvider>{children}</SessionProvider>
   }
 }

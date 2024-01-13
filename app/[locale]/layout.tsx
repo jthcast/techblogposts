@@ -11,9 +11,9 @@ import { Metadata, Viewport } from 'next'
 import { routes } from '@/constants/routes'
 import * as styles from '@/app/[locale]/layout.css'
 import { SearchCommandDialog } from '@/app/[locale]/components/SearchCommandDialog/SearchCommandDialog'
-import { MenuSheet } from '@/app/[locale]/components/MenuSheet/MenuSheet'
 import { Link } from '@/components/atom/Link/Link'
 import { Authentication } from '@/app/[locale]/components/Authentication/Authentication'
+import { Menu } from '@/app/[locale]/components/Menu/Menu'
 
 interface RootLayoutProps {
   children?: ReactNode
@@ -84,7 +84,7 @@ export default function LocaleLayout({
             {children}
             <div className={styles.floatingButtonGroup}>
               <SearchCommandDialog />
-              <MenuSheet />
+              <Menu />
             </div>
           </ReactQueryClientProvider>
         </NextIntlClientProvider>

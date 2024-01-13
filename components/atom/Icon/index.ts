@@ -1,4 +1,5 @@
 export { default as Bars } from './Icons/Bars'
+export { default as CogWithCardColored } from './Icons/CogWithCardColored'
 export { default as Eye } from './Icons/Eye'
 export { default as Github } from './Icons/Github'
 export { default as GithubCircle } from './Icons/GithubCircle'

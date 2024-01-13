@@ -4,6 +4,7 @@ import * as Sheet from '@/components/atom/Sheet/Sheet'
 import { Button } from '@/components/atom/Button/Button'
 import {
   Bars,
+  CogWithCardColored,
   Github,
   LinkedIn,
   PaperWithLinesColored,
@@ -15,9 +16,11 @@ import { routes } from '@/constants/routes'
 import * as styles from '@/app/[locale]/components/MenuSheet/menuSheet.css'
 import { Link } from '@/components/atom/Link/Link'
 import { ExternalLink } from '@/components/atom/ExternalLink/ExternalLink'
+import { useSession } from 'next-auth/react'
 
 export function MenuSheet() {
   const t = useTranslations()
+  const { status } = useSession()
 
   return (
     <Sheet.Root>
@@ -52,6 +55,18 @@ export function MenuSheet() {
                 </Link>
               </Sheet.Close>
             </li>
+            {status === 'authenticated' && (
+              <li>
+                <Sheet.Close asChild>
+                  <Link href={routes.mypage}>
+                    <div className={styles.menuItem}>
+                      <CogWithCardColored width="1.5rem" height="1.5rem" />
+                      {t('MenuSheet.mypagePage')}
+                    </div>
+                  </Link>
+                </Sheet.Close>
+              </li>
+            )}
           </ul>
         </nav>
         <Sheet.Footer>

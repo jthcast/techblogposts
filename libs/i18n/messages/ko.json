@@ -16,7 +16,8 @@
     "postsPage": "포스트",
     "blogsPage": "블로그",
     "termsServicePage": "서비스 이용약관",
-    "termsPrivacyPage": "개인정보 처리방침"
+    "termsPrivacyPage": "개인정보 처리방침",
+    "mypagePage": "마이페이지"
   },
   "BlogsPage": {
     "title": "현재 <blogCount>{count}</blogCount>개의 기술 블로그를 구독중입니다 ✨",
@@ -91,5 +92,9 @@
   },
   "LogoutButton": {
     "logout": "로그아웃"
+  },
+  "MypagePage": {
+    "title": "마이페이지",
+    "email": "이메일"
   }
 }
