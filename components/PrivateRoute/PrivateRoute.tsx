@@ -2,7 +2,7 @@ import { PropsWithChildren } from 'react'
 import { routes } from '@/constants/routes'
 import { RedirectType, redirect } from 'next/navigation'
 import { auth } from '@/auth'
-import { SessionProvider } from '@/providers/SessionProvider/SessionProvider'
+import { SessionProvider } from 'next-auth/react'
 
 export async function PrivateRoute({ children }: PropsWithChildren) {
   const session = await auth()
