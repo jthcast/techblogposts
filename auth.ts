@@ -74,8 +74,11 @@ const authConfig = {
       }
     },
     session: async ({ session }) => {
-      if (firebaseAuth.currentUser) {
-        const { uid, providerData, metadata } = firebaseAuth.currentUser
+      const auth = getAuth()
+      const user = auth.currentUser
+
+      if (user) {
+        const { uid, providerData, metadata } = user
         const { creationTime } = metadata
         const { providerId } = providerData[0]
 
