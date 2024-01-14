@@ -73,7 +73,7 @@ const authConfig = {
         return false
       }
     },
-    session: async ({ session }) => {
+    async session({ session }) {
       const auth = getAuth()
       const user = auth.currentUser
 
@@ -82,13 +82,12 @@ const authConfig = {
         const { creationTime } = metadata
         const { providerId } = providerData[0]
 
-        return Promise.resolve({
-          ...session,
-          user: { ...session.user, uid, creationTime, providerId },
-        })
+        session.user.uid = uid
+        session.user.creationTime = creationTime
+        session.user.providerId = providerId
       }
 
-      return Promise.resolve(session)
+      return session
     },
   },
   pages: {
