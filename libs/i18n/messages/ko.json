@@ -95,6 +95,9 @@
   },
   "MypagePage": {
     "title": "마이페이지",
-    "email": "이메일"
+    "email": "이메일",
+    "createdAt": "생성 일자",
+    "provider": "제공 업체",
+    "withdraw": "회원 탈퇴"
   }
 }

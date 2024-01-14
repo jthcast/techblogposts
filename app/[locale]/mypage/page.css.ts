@@ -30,6 +30,18 @@ export const section = style({
   },
 })
 
+export const items = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1rem',
+})
+
+export const item = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '0.25rem',
+})
+
 export const title = style({
   color: vars.colors.labels.primary,
   ...typography.title3.bold,

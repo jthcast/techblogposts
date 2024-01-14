@@ -95,6 +95,9 @@
   },
   "MypagePage": {
     "title": "Mypage",
-    "email": "Email"
+    "email": "Email",
+    "createdAt": "Created At",
+    "provider": "Provider",
+    "withdraw": "Account withdraw"
   }
 }

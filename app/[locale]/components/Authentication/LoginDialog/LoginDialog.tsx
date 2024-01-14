@@ -25,13 +25,13 @@ export function LoginDialog() {
           </Dialog.Title>
         </Dialog.Header>
         <Dialog.Footer>
-          <Button color="google" onClick={() => signIn('google')}>
+          <Button color="google" isFill onClick={() => signIn('google')}>
             <div className={styles.loginButton}>
               <GoogleColored />
               {t('LoginDialog.google')}
             </div>
           </Button>
-          <Button color="github" onClick={() => signIn('github')}>
+          <Button color="github" isFill onClick={() => signIn('github')}>
             <div className={styles.loginButton}>
               <GithubCircle />
               {t('LoginDialog.github')}

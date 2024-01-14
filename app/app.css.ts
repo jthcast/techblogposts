@@ -4,7 +4,8 @@ import { createGlobalTheme, globalStyle } from '@vanilla-extract/css'
 export const vars = createGlobalTheme('[data-theme="light"]', {
   colors: {
     system: {
-      red: palette.light.default.red,
+      red: `hsl(${palette.light.default.red})`,
+      red_90: `hsl(${palette.light.default.red} / 0.9)`,
       orange: palette.light.default.orange,
       yellow: palette.light.default.yellow,
       green: palette.light.default.green,
@@ -65,7 +66,8 @@ export const vars = createGlobalTheme('[data-theme="light"]', {
 export const darkVars = createGlobalTheme('[data-theme="dark"]', vars, {
   colors: {
     system: {
-      red: palette.dark.default.red,
+      red: `hsl(${palette.dark.default.red})`,
+      red_90: `hsl(${palette.dark.default.red} / 0.9)`,
       orange: palette.dark.default.orange,
       yellow: palette.dark.default.yellow,
       green: palette.dark.default.green,
