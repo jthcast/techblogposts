@@ -5,7 +5,7 @@ interface UseDebounceProps {
   delay?: number
 }
 
-export const useDebounce = ({ value, delay = 500 }: UseDebounceProps) => {
+export function useDebounce({ value, delay = 500 }: UseDebounceProps) {
   const [debouncedValue, setDebouncedValue] = useState('')
   const [isDebouncing, setIsDebouncing] = useState(false)
   const timerRef = useRef<NodeJS.Timeout>()

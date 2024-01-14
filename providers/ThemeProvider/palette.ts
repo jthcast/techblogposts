@@ -1,7 +1,7 @@
 export const palette = {
   light: {
     default: {
-      red: '#FF3B30',
+      red: '3 100% 59%',
       orange: '#FF9500',
       yellow: '#FFCC00',
       green: '#34C759',
@@ -75,7 +75,7 @@ export const palette = {
   },
   dark: {
     default: {
-      red: '#FF453A',
+      red: '3 100% 61%',
       orange: '#FF9F0A',
       yellow: '#FFD60A',
       green: '#30D158',

@@ -4,6 +4,10 @@ import { typography } from '@/providers/ThemeProvider/typography'
 
 export const button = recipe({
   base: {
+    display: 'inline-flex',
+    width: 'fit-content',
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 6,
     border: 0,
     cursor: 'pointer',
@@ -53,6 +57,25 @@ export const button = recipe({
           background: vars.colors.fills.primary,
         },
       },
+      destructive: {
+        background: vars.colors.system.red,
+        color: vars.colors.system.white,
+
+        ':hover': {
+          background: vars.colors.fills.primary,
+        },
+        ':active': {
+          background: vars.colors.fills.primary,
+        },
+      },
+      google: {
+        background: '#4285f4',
+        color: vars.colors.system.white,
+      },
+      github: {
+        background: vars.colors.system.black,
+        color: vars.colors.system.white,
+      },
     },
     size: {
       small: { padding: '6px 10px' },
@@ -69,6 +92,26 @@ export const button = recipe({
         borderStyle: 'solid',
       },
     },
+    isFill: {
+      true: {
+        width: '100%',
+        flexShrink: '0',
+      },
+    },
+    isGhost: {
+      true: {
+        border: 0,
+        padding: 0,
+        background: 'transparent',
+
+        ':hover': {
+          background: 'none',
+        },
+        ':active': {
+          background: 'none',
+        },
+      },
+    },
   },
   compoundVariants: [
     {
@@ -80,6 +123,22 @@ export const button = recipe({
         background: 'transparent',
         color: vars.colors.labels.primary,
         borderColor: vars.colors.separators.nonOpaque,
+      },
+    },
+    {
+      variants: {
+        color: 'destructive',
+        isGhost: true,
+      },
+      style: {
+        color: vars.colors.system.red,
+
+        ':hover': {
+          color: vars.colors.system.red_90,
+        },
+        ':active': {
+          color: vars.colors.system.red_90,
+        },
       },
     },
     {

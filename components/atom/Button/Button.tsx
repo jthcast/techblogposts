@@ -11,14 +11,32 @@ export const Button = forwardRef<
   ButtonProps & ButtonVariants
 >(
   (
-    { isLoading, disabled, children, color, size, shape, isOutline, ...props },
+    {
+      isLoading,
+      disabled,
+      children,
+      color,
+      size,
+      shape,
+      isOutline,
+      isFill,
+      isGhost,
+      ...props
+    },
     ref,
   ) => {
     return (
       <button
         disabled={isLoading || disabled}
         ref={ref}
-        className={styles.button({ color, size, shape, isOutline })}
+        className={styles.button({
+          color,
+          size,
+          shape,
+          isOutline,
+          isFill,
+          isGhost,
+        })}
         {...props}
       >
         {/* {isLoading && <Loader2Icon className={loaderIconCSS} />} TODO */}
