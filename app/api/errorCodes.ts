@@ -1,0 +1,2 @@
+export const UNAUTHORIZED = 401000
+export const NOT_EXIST_ID_TOKEN = 400001
