@@ -17,11 +17,13 @@ declare module 'next-auth' {
       uid?: string
       creationTime?: string
       providerId?: string
-    } & User
+      accessToken?: string
+      refreshToken?: string
+    } & Omit<User, 'id'>
   }
 }
 
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: process.env.FB_AUTH_API_KEY,
   authDomain: process.env.FB_AUTH_AUTH_DOMAIN,
   projectId: process.env.FB_AUTH_PROJECT_ID,
@@ -79,13 +81,15 @@ const authConfig = {
         const user = auth.currentUser
 
         if (user) {
-          const { uid, providerData, metadata } = user
+          const { providerData, metadata, uid, refreshToken } = user
           const { creationTime } = metadata
           const { providerId } = providerData[0]
 
           token.uid = uid
           token.creationTime = creationTime
           token.providerId = providerId
+          token.accessToken = account.access_token
+          token.refreshToken = refreshToken
         }
       }
 
@@ -95,6 +99,8 @@ const authConfig = {
       session.user.uid = token.uid as string
       session.user.creationTime = token.creationTime as string
       session.user.providerId = token.providerId as string
+      session.user.accessToken = token.accessToken as string
+      session.user.refreshToken = token.refreshToken as string
 
       return session
     },

@@ -12,13 +12,9 @@ export default function MypagePage() {
   const t = useTranslations()
   const { data } = useSession()
 
-  const withdraw = () => {
-    signOut()
-  }
-
   const { mutate: deleteAccount } = useMutation({
     mutationFn: deleteAuth,
-    onSuccess: withdraw,
+    onSuccess: () => signOut(),
   })
 
   return (
