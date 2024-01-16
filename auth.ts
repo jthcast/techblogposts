@@ -73,19 +73,28 @@ const authConfig = {
         return false
       }
     },
-    async session({ session }) {
-      const auth = getAuth()
-      const user = auth.currentUser
+    async jwt({ account, token }) {
+      if (account) {
+        const auth = getAuth()
+        const user = auth.currentUser
 
-      if (user) {
-        const { uid, providerData, metadata } = user
-        const { creationTime } = metadata
-        const { providerId } = providerData[0]
+        if (user) {
+          const { uid, providerData, metadata } = user
+          const { creationTime } = metadata
+          const { providerId } = providerData[0]
 
-        session.user.uid = uid
-        session.user.creationTime = creationTime
-        session.user.providerId = providerId
+          token.uid = uid
+          token.creationTime = creationTime
+          token.providerId = providerId
+        }
       }
+
+      return token
+    },
+    async session({ session, token }) {
+      session.user.uid = token.uid as string
+      session.user.creationTime = token.creationTime as string
+      session.user.providerId = token.providerId as string
 
       return session
     },
