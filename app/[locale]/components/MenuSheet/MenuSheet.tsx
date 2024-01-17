@@ -10,6 +10,7 @@ import {
   PaperWithLinesColored,
   PaperWithSignalColored,
   Rss,
+  StarInTheBookColored,
 } from '@/components/atom/Icon'
 import { useTranslations } from 'next-intl'
 import { routes } from '@/constants/routes'
@@ -56,16 +57,28 @@ export function MenuSheet() {
               </Sheet.Close>
             </li>
             {status === 'authenticated' && (
-              <li>
-                <Sheet.Close asChild>
-                  <Link href={routes.mypage}>
-                    <div className={styles.menuItem}>
-                      <CogWithCardColored width="1.5rem" height="1.5rem" />
-                      {t('MenuSheet.mypagePage')}
-                    </div>
-                  </Link>
-                </Sheet.Close>
-              </li>
+              <>
+                <li>
+                  <Sheet.Close asChild>
+                    <Link href={routes.bookmarks}>
+                      <div className={styles.menuItem}>
+                        <StarInTheBookColored width="1.5rem" height="1.5rem" />
+                        {t('MenuSheet.bookmarksPage')}
+                      </div>
+                    </Link>
+                  </Sheet.Close>
+                </li>
+                <li>
+                  <Sheet.Close asChild>
+                    <Link href={routes.mypage}>
+                      <div className={styles.menuItem}>
+                        <CogWithCardColored width="1.5rem" height="1.5rem" />
+                        {t('MenuSheet.mypagePage')}
+                      </div>
+                    </Link>
+                  </Sheet.Close>
+                </li>
+              </>
             )}
           </ul>
         </nav>

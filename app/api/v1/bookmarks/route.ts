@@ -3,10 +3,8 @@ import { SearchResponse } from '@elastic/elasticsearch/api/types.js'
 import { NextResponse } from 'next/server'
 
 interface BookmarksQuery {
-  _source: {
-    parent: string
-    publishDate: number
-  }
+  parent: string
+  publishDate: number
 }
 
 export async function GET(request: Request) {
