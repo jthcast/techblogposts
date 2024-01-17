@@ -1,17 +1,12 @@
 'use client'
 
-import { getPosts, postPostsViewCount } from '@/app/api/v1/posts/posts'
+import { getPosts } from '@/app/api/v1/posts/posts'
 import { Observer } from '@/components/atom/Observer/Observer'
 import { queryKeys } from '@/providers/ReactQueryClientProvider/ReactQueryClientProvider'
-import {
-  useMutation,
-  useQuery,
-  useSuspenseInfiniteQuery,
-} from '@tanstack/react-query'
+import { useQuery, useSuspenseInfiniteQuery } from '@tanstack/react-query'
 import * as Post from '@/components/atom/Post/Post'
 import * as Separator from '@/components/atom/Separator/Separator'
 import * as styles from '@/app/[locale]/page.css'
-import { ExternalLink } from '@/components/atom/ExternalLink/ExternalLink'
 import { Fragment } from 'react'
 import { useSession } from 'next-auth/react'
 import { getBookmarks } from '@/app/api/v1/bookmarks/bookmarks'
@@ -36,10 +31,6 @@ export default function LocalePage() {
     enabled: !!sessionData?.user.uid,
   })
 
-  const { mutate: postsViewCount } = useMutation({
-    mutationFn: postPostsViewCount,
-  })
-
   return (
     <main>
       <section className={styles.section}>
@@ -62,16 +53,9 @@ export default function LocalePage() {
                 return (
                   <Fragment key={id}>
                     <Post.Item>
-                      <ExternalLink
-                        href={id}
-                        aria-label={title}
-                        onClick={() => postsViewCount({ id })}
-                        onAuxClick={() => postsViewCount({ id })}
-                        title={title}
-                        isShowVisited
-                      >
-                        <Post.Title>{title}</Post.Title>
-                      </ExternalLink>
+                      <Post.Title id={id} title={title}>
+                        {title}
+                      </Post.Title>
                       <Post.Content>
                         <Post.LeftContent>
                           <Post.CompanyIcon company={company} />

@@ -7,13 +7,18 @@ import Image from 'next/image'
 import { Eye, Star, StarFilled } from '@/components/atom/Icon'
 import { companyIcons } from '@/public/company-icon'
 import { Button } from '@/components/atom/Button/Button'
-import { deletePostsBookmark, putPostsBookmark } from '@/app/api/v1/posts/posts'
+import {
+  deletePostsBookmark,
+  postPostsViewCount,
+  putPostsBookmark,
+} from '@/app/api/v1/posts/posts'
 import { useMutation } from '@tanstack/react-query'
 import {
   queryClient,
   queryKeys,
 } from '@/providers/ReactQueryClientProvider/ReactQueryClientProvider'
 import { ES_DELAY_TIME } from '@/constants/common'
+import { ExternalLink } from '@/components/atom/ExternalLink/ExternalLink'
 
 type PostListProps = HTMLAttributes<HTMLUListElement>
 
@@ -27,10 +32,28 @@ export function Item({ ...props }: PostItemProps) {
   return <li className={styles.item} {...props} />
 }
 
-type PostTitleProps = HTMLAttributes<HTMLParagraphElement>
+type PostTitleProps = HTMLAttributes<HTMLParagraphElement> & {
+  id: string
+  title: string
+}
 
-export function Title({ ...props }: PostTitleProps) {
-  return <p className={styles.title} {...props} />
+export function Title({ id, title, ...props }: PostTitleProps) {
+  const { mutate: postsViewCount } = useMutation({
+    mutationFn: postPostsViewCount,
+  })
+
+  return (
+    <ExternalLink
+      href={id}
+      aria-label={title}
+      onClick={() => postsViewCount({ id })}
+      onAuxClick={() => postsViewCount({ id })}
+      title={title}
+      isShowVisited
+    >
+      <p className={styles.title} {...props} />
+    </ExternalLink>
+  )
 }
 
 type PostContentProps = HTMLAttributes<HTMLDivElement>
