@@ -103,7 +103,7 @@
   },
   "BookmarksPage": {
     "title": "Bookmarks",
-    "emptyTitle": "포스트가 없습니다.",
-    "emptyDescription": "관심있는 포스트를 즐겨찾기 해 보세요."
+    "emptyTitle": "There are no posts.",
+    "emptyDescription": "Bookmark posts you are interested in."
   }
 }
