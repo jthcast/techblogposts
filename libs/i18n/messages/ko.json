@@ -100,5 +100,8 @@
     "createdAt": "생성 일자",
     "provider": "제공 업체",
     "withdraw": "회원 탈퇴"
+  },
+  "BookmarksPage": {
+    "title": "즐겨찾기"
   }
 }

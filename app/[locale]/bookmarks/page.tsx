@@ -4,15 +4,17 @@ import { queryKeys } from '@/providers/ReactQueryClientProvider/ReactQueryClient
 import { useQuery } from '@tanstack/react-query'
 import * as Post from '@/components/atom/Post/Post'
 import * as Separator from '@/components/atom/Separator/Separator'
-import * as styles from '@/app/[locale]/page.css'
+import * as styles from '@/app/[locale]/bookmarks/page.css'
 import { Fragment } from 'react'
 import { useSession } from 'next-auth/react'
 import {
   getBookmarks,
   getBookmarksPosts,
 } from '@/app/api/v1/bookmarks/bookmarks'
+import { useTranslations } from 'next-intl'
 
 export default function BookmarksPage() {
+  const t = useTranslations()
   const { data: sessionData } = useSession()
 
   const { data: postsData } = useQuery({
@@ -28,8 +30,9 @@ export default function BookmarksPage() {
   })
 
   return (
-    <main>
+    <main className={styles.main}>
       <section className={styles.section}>
+        <h1 className={styles.title}>{t('BookmarksPage.title')}</h1>
         {!!postsData?.posts.length && (
           <Post.List>
             {postsData?.posts.map(({ _source }, index) => {

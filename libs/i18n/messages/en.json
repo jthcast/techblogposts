@@ -100,5 +100,8 @@
     "createdAt": "Created At",
     "provider": "Provider",
     "withdraw": "Account withdraw"
+  },
+  "BookmarksPage": {
+    "title": "Bookmarks"
   }
 }
