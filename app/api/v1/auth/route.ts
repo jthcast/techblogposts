@@ -5,6 +5,32 @@ import { NextResponse } from 'next/server'
 
 export const dynamic = 'force-dynamic'
 
+export async function GET() {
+  const session = await auth()
+
+  if (!session) {
+    const response = {
+      isAuthenticated: false,
+      isMember: false,
+    }
+
+    return NextResponse.json({ ...response })
+  }
+
+  const response = {
+    isAuthenticated: true,
+    isMember: true,
+    user: {
+      email: session?.user.email,
+      creationTime: session?.user.creationTime,
+      providerId: session?.user.providerId,
+      uid: session?.user.uid,
+    },
+  }
+
+  return NextResponse.json({ ...response })
+}
+
 export async function DELETE() {
   const session = await auth()
 
