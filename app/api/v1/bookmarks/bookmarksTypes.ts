@@ -15,3 +15,26 @@ export interface GetBookmarksResponse {
     }
   }[]
 }
+
+export interface GetBookmarksPostsRequest {
+  uid: string
+}
+
+export interface GetBookmarksPostsResponse {
+  posts: {
+    _index: string
+    _type: string
+    _id: string
+    _score: number | null
+    _source: {
+      company: string
+      dataType: string
+      id: string
+      isShow: boolean
+      join: string
+      publishDate: number
+      title: string
+      viewCount: number
+    }
+  }[]
+}

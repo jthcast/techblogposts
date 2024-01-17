@@ -1,4 +1,6 @@
 import {
+  GetBookmarksPostsRequest,
+  GetBookmarksPostsResponse,
   GetBookmarksRequest,
   GetBookmarksResponse,
 } from '@/app/api/v1/bookmarks/bookmarksTypes'
@@ -10,6 +12,16 @@ export async function getBookmarks({
   return await customFetch({
     version: 'v1',
     path: `/bookmarks`,
+    params: { uid },
+  })
+}
+
+export async function getBookmarksPosts({
+  uid,
+}: GetBookmarksPostsRequest): Promise<GetBookmarksPostsResponse> {
+  return await customFetch({
+    version: 'v1',
+    path: `/bookmarks/posts`,
     params: { uid },
   })
 }

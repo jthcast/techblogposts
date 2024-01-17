@@ -14,7 +14,10 @@ import {
   GetPostsRequest,
   GetPostsSearchRequest,
 } from '@/app/api/v1/posts/postsTypes'
-import { GetBookmarksRequest } from '@/app/api/v1/bookmarks/bookmarksTypes'
+import {
+  GetBookmarksPostsRequest,
+  GetBookmarksRequest,
+} from '@/app/api/v1/bookmarks/bookmarksTypes'
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -65,6 +68,10 @@ export const queryKeys = {
   ],
   getBlogs: () => ['getBlogs'],
   getBookmarks: (request: GetBookmarksRequest) => ['getBookmarks', request],
+  getBookmarksPosts: (request: GetBookmarksPostsRequest) => [
+    'getBookmarksPosts',
+    request,
+  ],
 } as const
 
 export function setQueryData<T>({
