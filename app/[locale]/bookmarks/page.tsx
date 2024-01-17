@@ -22,7 +22,7 @@ export default function BookmarksPage() {
     queryFn: getAuth,
   })
 
-  const { data: postsData, isFetchedAfterMount } = useQuery({
+  const { data: postsData, isFetched } = useQuery({
     queryKey: queryKeys.getBookmarksPosts({ uid: data?.user?.uid! }),
     queryFn: () => getBookmarksPosts({ uid: data?.user?.uid! }),
     enabled: !!data?.user?.uid,
@@ -81,7 +81,7 @@ export default function BookmarksPage() {
             })}
           </Post.List>
         )}
-        {!postsData?.posts.length && isFetchedAfterMount && (
+        {!postsData?.posts.length && isFetched && (
           <Empty.Root>
             <Empty.Content>
               <Empty.Indicator />
