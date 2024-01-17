@@ -12,7 +12,7 @@ import { queryKeys } from '@/providers/ReactQueryClientProvider/ReactQueryClient
 import {
   getPosts,
   getPostsSearch,
-  putPostsViewCount,
+  postPostsViewCount,
 } from '@/app/api/v1/posts/posts'
 import { useDebounce } from '@/hooks/useDebounce/useDebounce'
 import { ExternalLink } from '@/components/atom/ExternalLink/ExternalLink'
@@ -36,7 +36,7 @@ export function SearchCommandDialog() {
   })
 
   const { mutate: postsViewCount } = useMutation({
-    mutationFn: putPostsViewCount,
+    mutationFn: postPostsViewCount,
   })
 
   const openCommandDialog = () => {

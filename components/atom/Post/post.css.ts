@@ -64,3 +64,7 @@ export const viewCount = style({
   alignItems: 'center',
   gap: '0.2rem',
 })
+
+export const bookmarkedIcon = style({
+  color: vars.colors.accents.primary,
+})

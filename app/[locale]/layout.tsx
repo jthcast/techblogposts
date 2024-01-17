@@ -14,6 +14,7 @@ import { SearchCommandDialog } from '@/app/[locale]/components/SearchCommandDial
 import { Link } from '@/components/atom/Link/Link'
 import { Authentication } from '@/app/[locale]/components/Authentication/Authentication'
 import { Menu } from '@/app/[locale]/components/Menu/Menu'
+import { SessionProvider } from '@/providers/SessionProvider/SessionProvider'
 
 interface RootLayoutProps {
   children?: ReactNode
@@ -68,24 +69,26 @@ export default function LocaleLayout({
         <ThemeProvider />
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ReactQueryClientProvider>
-            <Header.Root>
-              <Header.LeftContent>
-                <Link href={routes.root}>
-                  <Header.Title>
-                    <Header.Logo />
-                    {t('Header.title')}
-                  </Header.Title>
-                </Link>
-              </Header.LeftContent>
-              <Header.RightContent>
-                <Authentication />
-              </Header.RightContent>
-            </Header.Root>
-            {children}
-            <div className={styles.floatingButtonGroup}>
-              <SearchCommandDialog />
-              <Menu />
-            </div>
+            <SessionProvider>
+              <Header.Root>
+                <Header.LeftContent>
+                  <Link href={routes.root}>
+                    <Header.Title>
+                      <Header.Logo />
+                      {t('Header.title')}
+                    </Header.Title>
+                  </Link>
+                </Header.LeftContent>
+                <Header.RightContent>
+                  <Authentication />
+                </Header.RightContent>
+              </Header.Root>
+              {children}
+              <div className={styles.floatingButtonGroup}>
+                <SearchCommandDialog />
+                <Menu />
+              </div>
+            </SessionProvider>
           </ReactQueryClientProvider>
         </NextIntlClientProvider>
       </body>

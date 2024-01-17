@@ -4,8 +4,16 @@ import { formatDistanceToNowStrict, formatISO } from 'date-fns'
 import { getDateFnsLocale } from '@/libs/date-fns/date-fns'
 import { useParams } from 'next/navigation'
 import Image from 'next/image'
-import { Eye } from '@/components/atom/Icon'
+import { Eye, Star, StarFilled } from '@/components/atom/Icon'
 import { companyIcons } from '@/public/company-icon'
+import { Button } from '@/components/atom/Button/Button'
+import { deletePostsBookmark, putPostsBookmark } from '@/app/api/v1/posts/posts'
+import { useMutation } from '@tanstack/react-query'
+import {
+  queryClient,
+  queryKeys,
+} from '@/providers/ReactQueryClientProvider/ReactQueryClientProvider'
+import { ES_DELAY_TIME } from '@/constants/common'
 
 type PostListProps = HTMLAttributes<HTMLUListElement>
 
@@ -59,7 +67,8 @@ export function CompanyIcon({ company, ...props }: PostCompanyIconProps) {
         <div className={styles.companyIcon}>
           <Image
             src={`/company-icon/icons/${icon}`}
-            fill
+            width={18}
+            height={18}
             alt={company}
             {...props}
           />
@@ -103,18 +112,47 @@ export function ViewCount({ children, ...props }: PostViewCountProps) {
   )
 }
 
-type PostBookmarkProps = HTMLAttributes<HTMLButtonElement> & {
-  id: string
+type PostBookmarkProps = ComponentPropsWithRef<typeof Button> & {
+  uid: string
+  parent: string
+  isBookmarked?: boolean
 }
 
-export function Bookmark({ ...props }: PostBookmarkProps) {
-  const bookmark = () => {
-    // TODO
-  }
+export function Bookmark({
+  uid,
+  parent,
+  isBookmarked,
+  ...props
+}: PostBookmarkProps) {
+  const { mutate: bookmark } = useMutation({
+    mutationFn: putPostsBookmark,
+    onSuccess: () =>
+      setTimeout(() => {
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.getBookmarks({ uid }),
+        })
+      }, ES_DELAY_TIME),
+  })
+
+  const { mutate: deleteBookmark } = useMutation({
+    mutationFn: deletePostsBookmark,
+    onSuccess: () =>
+      setTimeout(() => {
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.getBookmarks({ uid }),
+        })
+      }, ES_DELAY_TIME),
+  })
 
   return (
-    <button onClick={bookmark} {...props}>
-      icon
-    </button>
+    <Button color="secondary" isGhost {...props}>
+      {!isBookmarked && <Star onClick={() => bookmark({ uid, parent })} />}
+      {isBookmarked && (
+        <StarFilled
+          className={styles.bookmarkedIcon}
+          onClick={() => deleteBookmark({ uid, parent })}
+        />
+      )}
+    </Button>
   )
 }

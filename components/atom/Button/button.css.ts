@@ -102,6 +102,7 @@ export const button = recipe({
       true: {
         border: 0,
         padding: 0,
+        color: 'inherit',
         background: 'transparent',
 
         ':hover': {
