@@ -154,6 +154,9 @@ export function Bookmark({
         queryClient.invalidateQueries({
           queryKey: queryKeys.getBookmarks({ uid }),
         })
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.getBookmarksPosts({ uid }),
+        })
       }, ES_DELAY_TIME),
   })
 
@@ -163,6 +166,9 @@ export function Bookmark({
       setTimeout(() => {
         queryClient.invalidateQueries({
           queryKey: queryKeys.getBookmarks({ uid }),
+        })
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.getBookmarksPosts({ uid }),
         })
       }, ES_DELAY_TIME),
   })

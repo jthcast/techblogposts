@@ -102,6 +102,8 @@
     "withdraw": "Account withdraw"
   },
   "BookmarksPage": {
-    "title": "Bookmarks"
+    "title": "Bookmarks",
+    "emptyTitle": "There are no posts.",
+    "emptyDescription": "Bookmark posts you are interested in."
   }
 }

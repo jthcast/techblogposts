@@ -4,6 +4,7 @@ import { queryKeys } from '@/providers/ReactQueryClientProvider/ReactQueryClient
 import { useQuery } from '@tanstack/react-query'
 import * as Post from '@/components/atom/Post/Post'
 import * as Separator from '@/components/atom/Separator/Separator'
+import * as Empty from '@/components/atom/Empty/Empty'
 import * as styles from '@/app/[locale]/bookmarks/page.css'
 import { Fragment } from 'react'
 import { useSession } from 'next-auth/react'
@@ -17,7 +18,7 @@ export default function BookmarksPage() {
   const t = useTranslations()
   const { data: sessionData } = useSession()
 
-  const { data: postsData } = useQuery({
+  const { data: postsData, isFetchedAfterMount } = useQuery({
     queryKey: queryKeys.getBookmarksPosts({ uid: sessionData?.user.uid! }),
     queryFn: () => getBookmarksPosts({ uid: sessionData?.user.uid! }),
     enabled: !!sessionData?.user.uid,
@@ -75,6 +76,17 @@ export default function BookmarksPage() {
               )
             })}
           </Post.List>
+        )}
+        {!postsData?.posts.length && isFetchedAfterMount && (
+          <Empty.Root>
+            <Empty.Content>
+              <Empty.Indicator />
+              <Empty.Title>{t('BookmarksPage.emptyTitle')}</Empty.Title>
+              <Empty.Description>
+                {t('BookmarksPage.emptyDescription')}
+              </Empty.Description>
+            </Empty.Content>
+          </Empty.Root>
         )}
       </section>
     </main>
