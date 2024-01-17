@@ -86,3 +86,10 @@ export interface PutPostsBookmarkRequest {
 }
 
 export type PutPostsBookmarkResponse = null
+
+export interface DeletePostsBookmarkRequest {
+  uid: string
+  parent: string
+}
+
+export type DeletePostsBookmarkResponse = null

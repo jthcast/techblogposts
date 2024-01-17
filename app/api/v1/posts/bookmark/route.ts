@@ -1,5 +1,10 @@
 import { client } from '@/libs/dynamoDb/dynamoDb'
-import { PutItemCommand, PutItemInput } from '@aws-sdk/client-dynamodb'
+import {
+  DeleteItemCommand,
+  DeleteItemInput,
+  PutItemCommand,
+  PutItemInput,
+} from '@aws-sdk/client-dynamodb'
 
 export const dynamic = 'force-dynamic'
 
@@ -29,6 +34,24 @@ export async function PUT(request: Request) {
   }
 
   await client.send(new PutItemCommand(params))
+
+  return new Response(null, { status: 204 })
+}
+
+export async function DELETE(request: Request) {
+  const { uid, parent } = await request.json()
+  const id = `${uid}-${parent}`
+
+  const params: DeleteItemInput = {
+    TableName: process.env.DB_TABLE_NAME,
+    Key: {
+      id: {
+        S: id + '',
+      },
+    },
+  }
+
+  await client.send(new DeleteItemCommand(params))
 
   return new Response(null, { status: 204 })
 }

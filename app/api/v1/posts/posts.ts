@@ -1,4 +1,6 @@
 import {
+  DeletePostsBookmarkRequest,
+  DeletePostsBookmarkResponse,
   GetPostsRequest,
   GetPostsResponse,
   GetPostsSearchRequest,
@@ -59,6 +61,25 @@ export async function putPostsBookmark({
     },
     {
       method: 'PUT',
+      body: JSON.stringify({ uid, parent }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  )
+}
+
+export async function deletePostsBookmark({
+  uid,
+  parent,
+}: DeletePostsBookmarkRequest): Promise<DeletePostsBookmarkResponse> {
+  return await customFetch(
+    {
+      version: 'v1',
+      path: `/posts/bookmark`,
+    },
+    {
+      method: 'DELETE',
       body: JSON.stringify({ uid, parent }),
       headers: {
         'Content-Type': 'application/json',
