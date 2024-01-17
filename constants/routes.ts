@@ -4,6 +4,7 @@ export const routes = {
   termsPrivacy: '/terms/privacy',
   mypage: '/mypage',
   landingError: '/landing/error',
+  bookmarks: '/bookmarks',
   blogs: '/blogs',
   '...rest': '/:...rest',
 } as const

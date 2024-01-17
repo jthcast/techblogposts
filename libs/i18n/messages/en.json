@@ -17,7 +17,8 @@
     "blogsPage": "Blogs",
     "termsServicePage": "Terms of service",
     "termsPrivacyPage": "Privacy policy",
-    "mypagePage": "Mypage"
+    "mypagePage": "Mypage",
+    "bookmarksPage": "Bookmarks"
   },
   "BlogsPage": {
     "title": "Currently subscribed to <blogCount>{count}</blogCount> tech blogs ✨",
