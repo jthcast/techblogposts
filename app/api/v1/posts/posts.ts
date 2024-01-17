@@ -1,10 +1,14 @@
 import {
+  DeletePostsBookmarkRequest,
+  DeletePostsBookmarkResponse,
   GetPostsRequest,
   GetPostsResponse,
   GetPostsSearchRequest,
   GetPostsSearchResponse,
   PostPostsViewCountRequest,
   PostPostsViewCountResponse,
+  PutPostsBookmarkRequest,
+  PutPostsBookmarkResponse,
 } from '@/app/api/v1/posts/postsTypes'
 import { customFetch } from '@/libs/fetch/fetch'
 
@@ -18,7 +22,7 @@ export async function getPosts({
   })
 }
 
-export async function putPostsViewCount({
+export async function postPostsViewCount({
   id,
 }: PostPostsViewCountRequest): Promise<PostPostsViewCountResponse> {
   return await customFetch(
@@ -27,7 +31,7 @@ export async function putPostsViewCount({
       path: `/posts/view-count`,
     },
     {
-      method: 'PUT',
+      method: 'POST',
       body: JSON.stringify({ id }),
       headers: {
         'Content-Type': 'application/json',
@@ -44,4 +48,42 @@ export async function getPostsSearch({
     path: `/posts/search`,
     params: { query },
   })
+}
+
+export async function putPostsBookmark({
+  uid,
+  parent,
+}: PutPostsBookmarkRequest): Promise<PutPostsBookmarkResponse> {
+  return await customFetch(
+    {
+      version: 'v1',
+      path: `/posts/bookmark`,
+    },
+    {
+      method: 'PUT',
+      body: JSON.stringify({ uid, parent }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  )
+}
+
+export async function deletePostsBookmark({
+  uid,
+  parent,
+}: DeletePostsBookmarkRequest): Promise<DeletePostsBookmarkResponse> {
+  return await customFetch(
+    {
+      version: 'v1',
+      path: `/posts/bookmark`,
+    },
+    {
+      method: 'DELETE',
+      body: JSON.stringify({ uid, parent }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  )
 }

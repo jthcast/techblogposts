@@ -5,17 +5,16 @@ import { PropsWithChildren } from 'react'
 export async function SessionProvider({ children }: PropsWithChildren) {
   const session = await auth()
 
-  const allowedSession = {
-    user: {
+  if (session?.user) {
+    session.user = {
       email: session?.user.email,
       creationTime: session?.user.creationTime,
       providerId: session?.user.providerId,
-    },
-    expires: session?.expires || '',
+    }
   }
 
   return (
-    <PrimitiveSessionProvider session={allowedSession}>
+    <PrimitiveSessionProvider session={session}>
       {children}
     </PrimitiveSessionProvider>
   )

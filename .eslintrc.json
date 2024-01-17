@@ -79,6 +79,7 @@
     "import/no-unresolved": "off",
     "import/newline-after-import": "error",
     "no-multiple-empty-lines": ["error", { "max": 1 }],
-    "@typescript-eslint/no-var-requires": 0
+    "@typescript-eslint/no-var-requires": 0,
+    "@typescript-eslint/no-non-null-asserted-optional-chain": "off"
   }
 }

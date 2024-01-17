@@ -1,20 +1,9 @@
-import {
-  DynamoDBClient,
-  UpdateItemCommand,
-  UpdateItemInput,
-} from '@aws-sdk/client-dynamodb'
-
-const dbclient = new DynamoDBClient({
-  region: process.env.DB_REGION,
-  credentials: {
-    accessKeyId: process.env.DB_ACCESSKEY_ID!,
-    secretAccessKey: process.env.DB_SECRETACCESS_KEY!,
-  },
-})
+import { client } from '@/libs/dynamoDb/dynamoDb'
+import { UpdateItemCommand, UpdateItemInput } from '@aws-sdk/client-dynamodb'
 
 export const dynamic = 'force-dynamic'
 
-export async function PUT(request: Request) {
+export async function POST(request: Request) {
   const { id } = await request.json()
 
   const params: UpdateItemInput = {
@@ -29,7 +18,7 @@ export async function PUT(request: Request) {
     },
   }
 
-  await dbclient.send(new UpdateItemCommand(params))
+  await client.send(new UpdateItemCommand(params))
 
-  return new Response(null, { status: 204 })
+  return new Response(null, { status: 201 })
 }

@@ -12,13 +12,15 @@ import { queryKeys } from '@/providers/ReactQueryClientProvider/ReactQueryClient
 import {
   getPosts,
   getPostsSearch,
-  putPostsViewCount,
+  postPostsViewCount,
 } from '@/app/api/v1/posts/posts'
 import { useDebounce } from '@/hooks/useDebounce/useDebounce'
-import { ExternalLink } from '@/components/atom/ExternalLink/ExternalLink'
+import { useSession } from 'next-auth/react'
+import { getBookmarks } from '@/app/api/v1/bookmarks/bookmarks'
 
 export function SearchCommandDialog() {
   const t = useTranslations()
+  const { data: sessionData } = useSession()
   const [isOpen, setIsOpen] = useState(false)
   const [value, setValue] = useState('')
   const { value: query } = useDebounce({ value })
@@ -35,8 +37,14 @@ export function SearchCommandDialog() {
     enabled: !!query,
   })
 
+  const { data: bookmarksData } = useQuery({
+    queryKey: queryKeys.getBookmarks({ uid: sessionData?.user.uid! }),
+    queryFn: () => getBookmarks({ uid: sessionData?.user.uid! }),
+    enabled: !!sessionData?.user.uid,
+  })
+
   const { mutate: postsViewCount } = useMutation({
-    mutationFn: putPostsViewCount,
+    mutationFn: postPostsViewCount,
   })
 
   const openCommandDialog = () => {
@@ -85,20 +93,20 @@ export function SearchCommandDialog() {
                   {results?.posts.map(({ _source }) => {
                     const { company, id, publishDate, title, viewCount } =
                       _source
+                    const isBookmarked = bookmarksData?.bookmarks.some(
+                      ({ _source }) => {
+                        const { parent } = _source
+
+                        return parent === id
+                      },
+                    )
 
                     return (
                       <Command.Item key={id} onSelect={() => openPost({ id })}>
                         <Post.Item key={id}>
-                          <ExternalLink
-                            href={id}
-                            aria-label={title}
-                            onClick={() => postsViewCount({ id })}
-                            onAuxClick={() => postsViewCount({ id })}
-                            title={title}
-                            isShowVisited
-                          >
-                            <Post.Title>{title}</Post.Title>
-                          </ExternalLink>
+                          <Post.Title id={id} title={title}>
+                            {title}
+                          </Post.Title>
                           <Post.Content>
                             <Post.LeftContent>
                               <Post.CompanyIcon company={company} />
@@ -107,6 +115,13 @@ export function SearchCommandDialog() {
                             <Post.RightContent>
                               <Post.Time time={publishDate} />
                               <Post.ViewCount>{viewCount}</Post.ViewCount>
+                              {sessionData?.user.uid && (
+                                <Post.Bookmark
+                                  isBookmarked={isBookmarked}
+                                  uid={sessionData.user.uid}
+                                  parent={id}
+                                />
+                              )}
                             </Post.RightContent>
                           </Post.Content>
                         </Post.Item>
@@ -126,6 +141,13 @@ export function SearchCommandDialog() {
                     {recentPosts?.posts.map(({ _source }) => {
                       const { company, id, publishDate, title, viewCount } =
                         _source
+                      const isBookmarked = bookmarksData?.bookmarks.some(
+                        ({ _source }) => {
+                          const { parent } = _source
+
+                          return parent === id
+                        },
+                      )
 
                       return (
                         <Command.Item
@@ -133,15 +155,9 @@ export function SearchCommandDialog() {
                           onSelect={() => openPost({ id })}
                         >
                           <Post.Item key={id}>
-                            <ExternalLink
-                              href={id}
-                              aria-label={title}
-                              onClick={() => postsViewCount({ id })}
-                              onAuxClick={() => postsViewCount({ id })}
-                              title={title}
-                            >
-                              <Post.Title>{title}</Post.Title>
-                            </ExternalLink>
+                            <Post.Title id={id} title={title}>
+                              {title}
+                            </Post.Title>
                             <Post.Content>
                               <Post.LeftContent>
                                 <Post.CompanyIcon company={company} />
@@ -150,6 +166,13 @@ export function SearchCommandDialog() {
                               <Post.RightContent>
                                 <Post.Time time={publishDate} />
                                 <Post.ViewCount>{viewCount}</Post.ViewCount>
+                                {sessionData?.user.uid && (
+                                  <Post.Bookmark
+                                    isBookmarked={isBookmarked}
+                                    uid={sessionData.user.uid}
+                                    parent={id}
+                                  />
+                                )}
                               </Post.RightContent>
                             </Post.Content>
                           </Post.Item>
