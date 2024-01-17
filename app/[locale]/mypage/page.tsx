@@ -2,15 +2,20 @@
 
 import * as styles from '@/app/[locale]/mypage/page.css'
 import { useTranslations } from 'next-intl'
-import { signOut, useSession } from 'next-auth/react'
+import { signOut } from 'next-auth/react'
 import { Button } from '@/components/atom/Button/Button'
 import { format, formatISO } from 'date-fns'
-import { useMutation } from '@tanstack/react-query'
-import { deleteAuth } from '@/app/api/v1/auth/auth'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { deleteAuth, getAuth } from '@/app/api/v1/auth/auth'
+import { queryKeys } from '@/providers/ReactQueryClientProvider/ReactQueryClientProvider'
 
 export default function MypagePage() {
   const t = useTranslations()
-  const { data } = useSession()
+
+  const { data } = useQuery({
+    queryKey: queryKeys.getAuth,
+    queryFn: getAuth,
+  })
 
   const { mutate: deleteAccount } = useMutation({
     mutationFn: deleteAuth,
@@ -25,10 +30,10 @@ export default function MypagePage() {
           <div className={styles.item}>
             <h3 className={styles.subTitle}>{t('MypagePage.email')}</h3>
             <p>
-              <span>{data?.user.email}</span>
+              <span>{data?.user?.email}</span>
             </p>
           </div>
-          {data?.user.creationTime && (
+          {data?.user?.creationTime && (
             <div className={styles.item}>
               <h3 className={styles.subTitle}>{t('MypagePage.createdAt')}</h3>
               <p>
@@ -41,7 +46,7 @@ export default function MypagePage() {
               </p>
             </div>
           )}
-          {data?.user.providerId && (
+          {data?.user?.providerId && (
             <div className={styles.item}>
               <h3 className={styles.subTitle}>{t('MypagePage.provider')}</h3>
               <p>

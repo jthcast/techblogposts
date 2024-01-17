@@ -17,11 +17,17 @@ import { routes } from '@/constants/routes'
 import * as styles from '@/app/[locale]/components/MenuSheet/menuSheet.css'
 import { Link } from '@/components/atom/Link/Link'
 import { ExternalLink } from '@/components/atom/ExternalLink/ExternalLink'
-import { useSession } from 'next-auth/react'
+import { useQuery } from '@tanstack/react-query'
+import { queryKeys } from '@/providers/ReactQueryClientProvider/ReactQueryClientProvider'
+import { getAuth } from '@/app/api/v1/auth/auth'
 
 export function MenuSheet() {
   const t = useTranslations()
-  const { status } = useSession()
+
+  const { data } = useQuery({
+    queryKey: queryKeys.getAuth,
+    queryFn: getAuth,
+  })
 
   return (
     <Sheet.Root>
@@ -56,7 +62,7 @@ export function MenuSheet() {
                 </Link>
               </Sheet.Close>
             </li>
-            {status === 'authenticated' && (
+            {data?.isMember && (
               <>
                 <li>
                   <Sheet.Close asChild>
