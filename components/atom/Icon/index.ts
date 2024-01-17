@@ -11,3 +11,5 @@ export { default as PaperWithSignalColored } from './Icons/PaperWithSignalColore
 export { default as Redo } from './Icons/Redo'
 export { default as Rss } from './Icons/Rss'
 export { default as Search } from './Icons/Search'
+export { default as Star } from './Icons/Star'
+export { default as StarFilled } from './Icons/StarFilled'
