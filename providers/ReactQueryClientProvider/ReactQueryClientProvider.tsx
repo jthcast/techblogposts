@@ -1,13 +1,12 @@
 'use client'
 
-import { ReactNode, useState } from 'react'
-import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
-import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
+import { ReactNode } from 'react'
 import {
   QueryClient,
   QueryKey,
   QueryObserverOptions,
   Updater,
+  QueryClientProvider,
 } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import {
@@ -41,22 +40,11 @@ interface ReactQueryClientProvider {
 export default function ReactQueryClientProvider({
   children,
 }: ReactQueryClientProvider) {
-  const [{ queryClientState, persister }] = useState(() => {
-    const primitivePersister = createSyncStoragePersister({
-      storage: typeof window === 'undefined' ? undefined : window.localStorage,
-    })
-
-    return { queryClientState: queryClient, persister: primitivePersister }
-  })
-
   return (
-    <PersistQueryClientProvider
-      client={queryClientState}
-      persistOptions={{ persister }}
-    >
+    <QueryClientProvider client={queryClient}>
       {children}
       <ReactQueryDevtools buttonPosition="bottom-left" initialIsOpen={false} />
-    </PersistQueryClientProvider>
+    </QueryClientProvider>
   )
 }
 
@@ -72,6 +60,7 @@ export const queryKeys = {
     'getBookmarksPosts',
     request,
   ],
+  getAuth: ['getAuth'],
 } as const
 
 export function setQueryData<T>({
