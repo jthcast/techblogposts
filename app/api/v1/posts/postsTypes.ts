@@ -79,3 +79,10 @@ export interface GetPostsSearchResponse {
   }[]
   cursor?: string
 }
+
+export interface PutPostsBookmarkRequest {
+  uid: string
+  parent: string
+}
+
+export type PutPostsBookmarkResponse = null
