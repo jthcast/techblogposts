@@ -7,27 +7,31 @@ import * as Separator from '@/components/atom/Separator/Separator'
 import * as Empty from '@/components/atom/Empty/Empty'
 import * as styles from '@/app/[locale]/bookmarks/page.css'
 import { Fragment } from 'react'
-import { useSession } from 'next-auth/react'
 import {
   getBookmarks,
   getBookmarksPosts,
 } from '@/app/api/v1/bookmarks/bookmarks'
 import { useTranslations } from 'next-intl'
+import { getAuth } from '@/app/api/v1/auth/auth'
 
 export default function BookmarksPage() {
   const t = useTranslations()
-  const { data: sessionData } = useSession()
+
+  const { data } = useQuery({
+    queryKey: queryKeys.getAuth,
+    queryFn: getAuth,
+  })
 
   const { data: postsData, isFetchedAfterMount } = useQuery({
-    queryKey: queryKeys.getBookmarksPosts({ uid: sessionData?.user.uid! }),
-    queryFn: () => getBookmarksPosts({ uid: sessionData?.user.uid! }),
-    enabled: !!sessionData?.user.uid,
+    queryKey: queryKeys.getBookmarksPosts({ uid: data?.user?.uid! }),
+    queryFn: () => getBookmarksPosts({ uid: data?.user?.uid! }),
+    enabled: !!data?.user?.uid,
   })
 
   const { data: bookmarksData } = useQuery({
-    queryKey: queryKeys.getBookmarks({ uid: sessionData?.user.uid! }),
-    queryFn: () => getBookmarks({ uid: sessionData?.user.uid! }),
-    enabled: !!sessionData?.user.uid,
+    queryKey: queryKeys.getBookmarks({ uid: data?.user?.uid! }),
+    queryFn: () => getBookmarks({ uid: data?.user?.uid! }),
+    enabled: !!data?.user?.uid,
   })
 
   return (
@@ -61,10 +65,10 @@ export default function BookmarksPage() {
                       <Post.RightContent>
                         <Post.Time time={publishDate} />
                         <Post.ViewCount>{viewCount}</Post.ViewCount>
-                        {sessionData?.user.uid && (
+                        {data?.user?.uid && (
                           <Post.Bookmark
                             isBookmarked={isBookmarked}
-                            uid={sessionData.user.uid}
+                            uid={data.user.uid}
                             parent={id}
                           />
                         )}

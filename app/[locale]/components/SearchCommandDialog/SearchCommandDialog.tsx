@@ -15,15 +15,19 @@ import {
   postPostsViewCount,
 } from '@/app/api/v1/posts/posts'
 import { useDebounce } from '@/hooks/useDebounce/useDebounce'
-import { useSession } from 'next-auth/react'
 import { getBookmarks } from '@/app/api/v1/bookmarks/bookmarks'
+import { getAuth } from '@/app/api/v1/auth/auth'
 
 export function SearchCommandDialog() {
   const t = useTranslations()
-  const { data: sessionData } = useSession()
   const [isOpen, setIsOpen] = useState(false)
   const [value, setValue] = useState('')
   const { value: query } = useDebounce({ value })
+
+  const { data: auth } = useQuery({
+    queryKey: queryKeys.getAuth,
+    queryFn: getAuth,
+  })
 
   const { data: recentPosts } = useQuery({
     queryKey: queryKeys.getPosts({ cursor: '' }),
@@ -38,9 +42,9 @@ export function SearchCommandDialog() {
   })
 
   const { data: bookmarksData } = useQuery({
-    queryKey: queryKeys.getBookmarks({ uid: sessionData?.user.uid! }),
-    queryFn: () => getBookmarks({ uid: sessionData?.user.uid! }),
-    enabled: !!sessionData?.user.uid,
+    queryKey: queryKeys.getBookmarks({ uid: auth?.user?.uid! }),
+    queryFn: () => getBookmarks({ uid: auth?.user?.uid! }),
+    enabled: !!auth?.user?.uid,
   })
 
   const { mutate: postsViewCount } = useMutation({
@@ -115,10 +119,10 @@ export function SearchCommandDialog() {
                             <Post.RightContent>
                               <Post.Time time={publishDate} />
                               <Post.ViewCount>{viewCount}</Post.ViewCount>
-                              {sessionData?.user.uid && (
+                              {auth?.user?.uid && (
                                 <Post.Bookmark
                                   isBookmarked={isBookmarked}
-                                  uid={sessionData.user.uid}
+                                  uid={auth.user.uid}
                                   parent={id}
                                 />
                               )}
@@ -166,10 +170,10 @@ export function SearchCommandDialog() {
                               <Post.RightContent>
                                 <Post.Time time={publishDate} />
                                 <Post.ViewCount>{viewCount}</Post.ViewCount>
-                                {sessionData?.user.uid && (
+                                {auth?.user?.uid && (
                                   <Post.Bookmark
                                     isBookmarked={isBookmarked}
-                                    uid={sessionData.user.uid}
+                                    uid={auth.user.uid}
                                     parent={id}
                                   />
                                 )}

@@ -8,11 +8,14 @@ import * as Post from '@/components/atom/Post/Post'
 import * as Separator from '@/components/atom/Separator/Separator'
 import * as styles from '@/app/[locale]/page.css'
 import { Fragment } from 'react'
-import { useSession } from 'next-auth/react'
 import { getBookmarks } from '@/app/api/v1/bookmarks/bookmarks'
+import { getAuth } from '@/app/api/v1/auth/auth'
 
 export default function LocalePage() {
-  const { data: sessionData } = useSession()
+  const { data } = useQuery({
+    queryKey: queryKeys.getAuth,
+    queryFn: getAuth,
+  })
 
   const {
     data: postsData,
@@ -26,9 +29,9 @@ export default function LocalePage() {
   })
 
   const { data: bookmarksData } = useQuery({
-    queryKey: queryKeys.getBookmarks({ uid: sessionData?.user.uid! }),
-    queryFn: () => getBookmarks({ uid: sessionData?.user.uid! }),
-    enabled: !!sessionData?.user.uid,
+    queryKey: queryKeys.getBookmarks({ uid: data?.user?.uid! }),
+    queryFn: () => getBookmarks({ uid: data?.user?.uid! }),
+    enabled: !!data?.user?.uid,
   })
 
   return (
@@ -64,10 +67,10 @@ export default function LocalePage() {
                         <Post.RightContent>
                           <Post.Time time={publishDate} />
                           <Post.ViewCount>{viewCount}</Post.ViewCount>
-                          {sessionData?.user.uid && (
+                          {data?.user?.uid && (
                             <Post.Bookmark
                               isBookmarked={isBookmarked}
-                              uid={sessionData.user.uid}
+                              uid={data.user.uid}
                               parent={id}
                             />
                           )}
