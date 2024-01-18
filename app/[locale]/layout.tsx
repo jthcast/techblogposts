@@ -16,13 +16,6 @@ import { Authentication } from '@/app/[locale]/components/Authentication/Authent
 import { Menu } from '@/app/[locale]/components/Menu/Menu'
 import { SessionProvider } from '@/providers/SessionProvider/SessionProvider'
 
-interface RootLayoutProps {
-  children?: ReactNode
-  params: {
-    locale: string
-  }
-}
-
 const notoSansKr = Noto_Sans_KR({
   weight: ['400', '700'],
   style: ['normal'],
@@ -31,7 +24,7 @@ const notoSansKr = Noto_Sans_KR({
   variable: '--font-noto-sans-kr',
 })
 
-export const metadata: Metadata = {
+export const metadata = {
   metadataBase: new URL('https://techblogposts.com'),
   title: {
     template: '%s | TechBlogPosts',
@@ -39,9 +32,9 @@ export const metadata: Metadata = {
     absolute: '기술 블로그 모음 - TechBlogPosts',
   },
   description: 'IT 기술 블로그들의 최신 포스트를 한곳에서 보세요.',
-}
+} satisfies Metadata
 
-export const viewport: Viewport = {
+export const viewport = {
   themeColor: [
     {
       media: '(prefers-color-scheme: light)',
@@ -52,6 +45,13 @@ export const viewport: Viewport = {
       color: palette.dark.default.black,
     },
   ],
+} satisfies Viewport
+
+interface RootLayoutProps {
+  children?: ReactNode
+  params: {
+    locale: string
+  }
 }
 
 export default function LocaleLayout({
