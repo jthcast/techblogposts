@@ -37,8 +37,7 @@ export async function cleanUpDirectory(path: string, options?: RmOptions) {
   try {
     await rm(path, options)
   } catch (e) {
-    // eslint-disable-next-line no-console
-    console.log(e)
+    console.error(e)
   }
 }
 
