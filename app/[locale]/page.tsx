@@ -25,7 +25,7 @@ export default function LocalePage() {
     queryKey: queryKeys.getPosts({}),
     queryFn: ({ pageParam }) => getPosts({ cursor: pageParam }),
     initialPageParam: '',
-    getNextPageParam: (lastPage) => lastPage.cursor,
+    getNextPageParam: ({ cursor }) => cursor,
   })
 
   const { data: bookmarksData } = useQuery({
@@ -37,7 +37,7 @@ export default function LocalePage() {
   return (
     <main>
       <section className={styles.section}>
-        {postsData?.pages.length > 0 && (
+        {!!postsData?.pages.length && (
           <Post.List>
             {postsData?.pages.map(({ posts }, pageIndex) =>
               posts.map(({ _source }, postIndex) => {
