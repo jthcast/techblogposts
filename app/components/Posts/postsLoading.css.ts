@@ -1,8 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import * as pageStyles from '@/app/[locale]/page.css'
 import * as postStyles from '@/components/atom/Post/post.css'
-
-export const section = pageStyles.section
 
 export const list = postStyles.list
 
