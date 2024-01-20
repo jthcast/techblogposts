@@ -1,7 +1,7 @@
 'use client'
 
 import { queryKeys } from '@/providers/ReactQueryClientProvider/ReactQueryClientProvider'
-import { useQuery } from '@tanstack/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import * as styles from '@/app/[locale]/blogs/page.css'
 import { ExternalLink } from '@/components/atom/ExternalLink/ExternalLink'
 import { getBlogs } from '@/app/api/v1/blogs/blogs'
@@ -12,10 +12,14 @@ import { useTranslations } from 'next-intl'
 export default function BlogsPage() {
   const t = useTranslations()
 
-  const { data } = useQuery({
+  const { data, error } = useSuspenseQuery({
     queryKey: queryKeys.getBlogs(),
     queryFn: getBlogs,
   })
+
+  if (error) {
+    throw error
+  }
 
   return (
     <main className={styles.main}>

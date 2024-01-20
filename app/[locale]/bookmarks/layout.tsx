@@ -1,4 +1,4 @@
-import { PrivateRoute } from '@/components/PrivateRoute/PrivateRoute'
+import { PrivateRoute } from '@/components/atom/PrivateRoute/PrivateRoute'
 import { ReactNode } from 'react'
 
 export default function BookmarksLayout({ children }: { children: ReactNode }) {

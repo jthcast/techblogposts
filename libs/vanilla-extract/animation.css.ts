@@ -89,67 +89,80 @@ const slideOutToRight = keyframes({
   },
 })
 
-export const fadeInAnimation: CSSProperties = {
+const pulse = keyframes({
+  '50%': {
+    opacity: '.5',
+  },
+})
+
+export const fadeInAnimation = {
   animationName: fadeIn,
   animationDuration: '0.25s',
-}
+} satisfies CSSProperties
 
-export const fadeOutAnimation: CSSProperties = {
+export const fadeOutAnimation = {
   animationName: fadeOut,
   animationDuration: '0.25s',
-}
+} satisfies CSSProperties
 
-export const moveRightAnimation: CSSProperties = {
+export const moveRightAnimation = {
   animationName: moveRight,
   animationDuration: '1.1s',
   animationTimingFunction: 'cubic-bezier(.455,.03,.515,.955)',
   animationIterationCount: 'infinite',
-}
+} satisfies CSSProperties
 
-export const slideInFromTopAnimation: CSSProperties = {
+export const slideInFromTopAnimation = {
   animationName: slideInFromTop,
   animationDuration: '.5s',
   animationTimingFunction: 'cubic-bezier(.4,0,.2,1)',
-}
+} satisfies CSSProperties
 
-export const slideOutToTopAnimation: CSSProperties = {
+export const slideOutToTopAnimation = {
   animationName: slideOutToTop,
   animationDuration: '.5s',
   animationTimingFunction: 'cubic-bezier(.4,0,.2,1)',
-}
+} satisfies CSSProperties
 
-export const slideInFromBottomAnimation: CSSProperties = {
+export const slideInFromBottomAnimation = {
   animationName: slideInFromBottom,
   animationDuration: '.5s',
   animationTimingFunction: 'cubic-bezier(.4,0,.2,1)',
-}
+} satisfies CSSProperties
 
-export const slideOutToBottomAnimation: CSSProperties = {
+export const slideOutToBottomAnimation = {
   animationName: slideOutToBottom,
   animationDuration: '.5s',
   animationTimingFunction: 'cubic-bezier(.4,0,.2,1)',
-}
+} satisfies CSSProperties
 
-export const slideInFromLeftAnimation: CSSProperties = {
+export const slideInFromLeftAnimation = {
   animationName: slideInFromLeft,
   animationDuration: '.5s',
   animationTimingFunction: 'cubic-bezier(.4,0,.2,1)',
-}
+} satisfies CSSProperties
 
-export const slideOutToLeftAnimation: CSSProperties = {
+export const slideOutToLeftAnimation = {
   animationName: slideOutToLeft,
   animationDuration: '.5s',
   animationTimingFunction: 'cubic-bezier(.4,0,.2,1)',
-}
+} satisfies CSSProperties
 
-export const slideInFromRightAnimation: CSSProperties = {
+export const slideInFromRightAnimation = {
   animationName: slideInFromRight,
   animationDuration: '.5s',
   animationTimingFunction: 'cubic-bezier(.4,0,.2,1)',
-}
+} satisfies CSSProperties
 
-export const slideOutToRightAnimation: CSSProperties = {
+export const slideOutToRightAnimation = {
   animationName: slideOutToRight,
   animationDuration: '.5s',
   animationTimingFunction: 'cubic-bezier(.4,0,.2,1)',
-}
+} satisfies CSSProperties
+
+export const pulseAnimation = {
+  animationName: pulse,
+  animationDuration: '2s',
+  animationTimingFunction: 'cubic-bezier(.4,0,.6,1)',
+  animationIterationCount: 'infinite',
+} satisfies CSSProperties
