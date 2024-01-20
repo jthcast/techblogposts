@@ -12,10 +12,14 @@ import { useTranslations } from 'next-intl'
 export default function BlogsPage() {
   const t = useTranslations()
 
-  const { data } = useSuspenseQuery({
+  const { data, error } = useSuspenseQuery({
     queryKey: queryKeys.getBlogs(),
     queryFn: getBlogs,
   })
+
+  if (error) {
+    throw error
+  }
 
   return (
     <main className={styles.main}>

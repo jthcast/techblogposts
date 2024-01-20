@@ -17,10 +17,17 @@ export default function LocalePage() {
     queryFn: getAuth,
   })
 
+  const { data: bookmarksData } = useQuery({
+    queryKey: queryKeys.getBookmarks({ uid: data?.user?.uid! }),
+    queryFn: () => getBookmarks({ uid: data?.user?.uid! }),
+    enabled: !!data?.user?.uid,
+  })
+
   const {
     data: postsData,
     hasNextPage,
     fetchNextPage,
+    error,
   } = useSuspenseInfiniteQuery({
     queryKey: queryKeys.getPosts({}),
     queryFn: ({ pageParam }) => getPosts({ cursor: pageParam }),
@@ -28,11 +35,9 @@ export default function LocalePage() {
     getNextPageParam: ({ cursor }) => cursor,
   })
 
-  const { data: bookmarksData } = useQuery({
-    queryKey: queryKeys.getBookmarks({ uid: data?.user?.uid! }),
-    queryFn: () => getBookmarks({ uid: data?.user?.uid! }),
-    enabled: !!data?.user?.uid,
-  })
+  if (error) {
+    throw error
+  }
 
   return (
     <main>
