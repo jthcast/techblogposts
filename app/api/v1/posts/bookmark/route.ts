@@ -1,3 +1,5 @@
+import { sleep } from '@/app/api/utils'
+import { ES_DELAY_TIME } from '@/constants/common'
 import { client } from '@/libs/dynamoDb/dynamoDb'
 import {
   DeleteItemCommand,
@@ -34,6 +36,7 @@ export async function PUT(request: Request) {
   }
 
   await client.send(new PutItemCommand(params))
+  await sleep(ES_DELAY_TIME)
 
   return new Response(null, { status: 204 })
 }
@@ -52,6 +55,7 @@ export async function DELETE(request: Request) {
   }
 
   await client.send(new DeleteItemCommand(params))
+  await sleep(ES_DELAY_TIME)
 
   return new Response(null, { status: 204 })
 }
