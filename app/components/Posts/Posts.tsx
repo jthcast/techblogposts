@@ -9,6 +9,7 @@ import * as Separator from '@/components/atom/Separator/Separator'
 import { Fragment } from 'react'
 import { getBookmarks } from '@/app/api/v1/bookmarks/bookmarks'
 import { getAuth } from '@/app/api/v1/auth/auth'
+import PostsLoading from '@/app/components/Posts/PostsLoading'
 
 export default function Posts() {
   const { data } = useQuery({
@@ -85,9 +86,11 @@ export default function Posts() {
               )
             }),
           )}
+          <Observer callback={fetchNextPage} condition={hasNextPage}>
+            <PostsLoading length={1} />
+          </Observer>
         </Post.List>
       )}
-      <Observer callback={fetchNextPage} condition={hasNextPage} />
     </>
   )
 }
