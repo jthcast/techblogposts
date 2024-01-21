@@ -1,17 +1,15 @@
-import { useRef, useEffect, HTMLAttributes, ReactNode } from 'react'
+import { useRef, useEffect, HTMLAttributes } from 'react'
 import * as styles from '@/components/atom/Observer/observer.css'
 
 interface ObserverProps extends HTMLAttributes<HTMLDivElement> {
   callback: () => void
   condition?: boolean
   options?: IntersectionObserverInit
-  indicator?: ReactNode
 }
 
 export function Observer({
   callback,
   condition,
-  indicator,
   options = {
     rootMargin: '30%',
   },
@@ -43,12 +41,6 @@ export function Observer({
   }, [options, condition, callback])
 
   return (
-    <>
-      {condition && (
-        <div className={styles.root} {...props}>
-          <div ref={ref}>{indicator}</div>
-        </div>
-      )}
-    </>
+    <>{condition && <div ref={ref} className={styles.root} {...props} />}</>
   )
 }

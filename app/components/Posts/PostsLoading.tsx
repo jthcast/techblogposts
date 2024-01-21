@@ -1,18 +1,18 @@
 import * as styles from '@/app/components/Posts/postsLoading.css'
 import { useRandom } from '@/hooks/useRandom/useRandom'
 import { Skeleton } from '@/components/atom/Skeleton/Skeleton'
-import * as Separator from '@/components/atom/Separator/Separator'
 import { Fragment } from 'react'
 
-export default function PostsLoading() {
+interface PostsLoadingProps {
+  length?: number
+}
+
+export default function PostsLoading({ length = 10 }: PostsLoadingProps) {
   const { getRandomNumber } = useRandom()
-  const length = 10
 
   return (
     <div className={styles.list}>
       {Array.from({ length }, (_, index) => index).map((key) => {
-        const isLastItem = key === length
-
         return (
           <Fragment key={key}>
             <div className={styles.item}>
@@ -52,7 +52,6 @@ export default function PostsLoading() {
                 </div>
               </div>
             </div>
-            {!isLastItem && <Separator.Separator />}
           </Fragment>
         )
       })}

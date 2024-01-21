@@ -7,6 +7,7 @@ export const list = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '1rem',
+  width: '100%',
 })
 
 export const item = style({

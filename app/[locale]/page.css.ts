@@ -7,15 +7,15 @@ export const section = style({
   flexDirection: 'column',
   width: '100%',
   padding: '0 6rem',
-  margin: 'auto',
-  marginTop: '2rem',
+  margin: '2rem auto 2rem auto',
 
   '@media': {
     [mediaQuery['mobile']]: {
-      marginTop: '1rem',
+      margin: '1rem auto 1rem auto',
       padding: '0 1.25rem',
     },
     [mediaQuery['tablet']]: {
+      margin: '1rem auto 1rem auto',
       padding: '0 3rem',
     },
   },
