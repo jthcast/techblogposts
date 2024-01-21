@@ -8,6 +8,7 @@ export default function Logo({ ...props }: SVGProps<SVGSVGElement>) {
       height="15"
       fill="currentColor"
       viewBox="0 0 512 512"
+      data-icon
       {...props}
     >
       <path fill="#F6A54C" d="M32 96V32h96v64H32zM384 96V32h96v64h-96z" />
