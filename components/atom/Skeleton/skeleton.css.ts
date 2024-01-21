@@ -14,6 +14,8 @@ export const skeleton = recipe({
         background: vars.colors.backgrounds.secondary,
       },
       icon: {
+        display: 'flex',
+
         selectors: {
           '&[data-icon]': {
             background: vars.colors.backgrounds.secondary,
