@@ -60,7 +60,7 @@ async function convertFiles() {
     const fileContent = await readFile(`${imagesDirPath}/${file}`, 'utf-8')
     const content = fileContent
       .replaceAll('clip-path', 'clipPath')
-      .replace('">', '" { ...props }>')
+      .replace('">', '"data-icon { ...props }>')
     const fileNameSnake = fileName.replace(/\.[^/.]+$/, '')
     const fileNamePascal = convert(fileNameSnake, 'pascal')
     const componentFileText = createComponentFileText(

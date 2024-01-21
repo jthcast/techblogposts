@@ -13,6 +13,7 @@ import {
 } from '@/app/api/v1/bookmarks/bookmarks'
 import { useTranslations } from 'next-intl'
 import { getAuth } from '@/app/api/v1/auth/auth'
+import PostsLoading from '@/app/components/Posts/PostsLoading'
 
 export default function BookmarksPage() {
   const t = useTranslations()
@@ -22,7 +23,11 @@ export default function BookmarksPage() {
     queryFn: getAuth,
   })
 
-  const { data: postsData, isFetched } = useQuery({
+  const {
+    data: postsData,
+    isFetched,
+    isPending,
+  } = useQuery({
     queryKey: queryKeys.getBookmarksPosts({ uid: data?.user?.uid! }),
     queryFn: () => getBookmarksPosts({ uid: data?.user?.uid! }),
     enabled: !!data?.user?.uid,
@@ -38,6 +43,7 @@ export default function BookmarksPage() {
     <main className={styles.main}>
       <section className={styles.section}>
         <h1 className={styles.title}>{t('BookmarksPage.title')}</h1>
+        {isPending && <PostsLoading />}
         {!!postsData?.posts.length && (
           <Post.List>
             {postsData?.posts.map(({ _source }, index) => {

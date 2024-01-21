@@ -10,6 +10,7 @@ export default function StarInTheBookColored({
       height="15"
       fill="currentColor"
       viewBox="0 0 512 512"
+      data-icon
       {...props}
     >
       <path

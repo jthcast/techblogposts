@@ -11,7 +11,7 @@ export function Observer({
   callback,
   condition,
   options = {
-    rootMargin: '30%',
+    rootMargin: '50%',
   },
   ...props
 }: ObserverProps) {

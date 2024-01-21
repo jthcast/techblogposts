@@ -1,5 +1,9 @@
 import * as styles from '@/components/atom/Skeleton/skeleton.css'
+import { SkeletonVariants } from '@/components/atom/Skeleton/skeleton.css'
+import { HTMLAttributes } from 'react'
 
-export function Skeleton({ ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={styles.skeleton} {...props} />
+type SkeletonProps = HTMLAttributes<HTMLDivElement> & SkeletonVariants
+
+export function Skeleton({ layout, ...props }: SkeletonProps) {
+  return <div className={styles.skeleton({ layout })} {...props} />
 }

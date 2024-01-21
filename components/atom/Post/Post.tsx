@@ -17,8 +17,8 @@ import {
   queryClient,
   queryKeys,
 } from '@/providers/ReactQueryClientProvider/ReactQueryClientProvider'
-import { ES_DELAY_TIME } from '@/constants/common'
 import { ExternalLink } from '@/components/atom/ExternalLink/ExternalLink'
+import { Skeleton } from '@/components/atom/Skeleton/Skeleton'
 
 type PostListProps = HTMLAttributes<HTMLUListElement>
 
@@ -147,41 +147,51 @@ export function Bookmark({
   isBookmarked,
   ...props
 }: PostBookmarkProps) {
-  const { mutate: bookmark } = useMutation({
+  const { mutate: bookmark, isPending: isBookmarkPending } = useMutation({
     mutationFn: putPostsBookmark,
-    onSuccess: () =>
-      setTimeout(() => {
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.getBookmarks({ uid }),
-        })
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.getBookmarksPosts({ uid }),
-        })
-      }, ES_DELAY_TIME),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.getBookmarks({ uid }),
+      })
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.getBookmarksPosts({ uid }),
+      })
+    },
   })
 
-  const { mutate: deleteBookmark } = useMutation({
-    mutationFn: deletePostsBookmark,
-    onSuccess: () =>
-      setTimeout(() => {
+  const { mutate: deleteBookmark, isPending: isDeleteBookmarkPending } =
+    useMutation({
+      mutationFn: deletePostsBookmark,
+      onSuccess: () => {
         queryClient.invalidateQueries({
           queryKey: queryKeys.getBookmarks({ uid }),
         })
         queryClient.invalidateQueries({
           queryKey: queryKeys.getBookmarksPosts({ uid }),
         })
-      }, ES_DELAY_TIME),
-  })
+      },
+    })
+
+  const isPending = isBookmarkPending || isDeleteBookmarkPending
 
   return (
-    <Button color="secondary" isGhost {...props}>
-      {!isBookmarked && <Star onClick={() => bookmark({ uid, parent })} />}
-      {isBookmarked && (
-        <StarFilled
-          className={styles.bookmarkedIcon}
-          onClick={() => deleteBookmark({ uid, parent })}
-        />
+    <>
+      {isPending && (
+        <Skeleton layout="icon">
+          <StarFilled />
+        </Skeleton>
       )}
-    </Button>
+      {!isPending && (
+        <Button color="secondary" isGhost {...props}>
+          {!isBookmarked && <Star onClick={() => bookmark({ uid, parent })} />}
+          {isBookmarked && (
+            <StarFilled
+              className={styles.bookmarkedIcon}
+              onClick={() => deleteBookmark({ uid, parent })}
+            />
+          )}
+        </Button>
+      )}
+    </>
   )
 }
