@@ -52,7 +52,7 @@ export async function GET() {
   if (response.statusCode === 200) {
     const posts = response.body.hits.hits
     const title = 'TechBlogPosts'
-    const siteUrl = 'https://techblogposts.com'
+    const siteUrl = 'https://techblogposts.com/'
     const lastModified = new Date(
       posts[0]._source?.publishDate || new Date(),
     ).toISOString()
@@ -71,9 +71,9 @@ export async function GET() {
 
           return `
         <entry>
-          <title>${title}</title>
-          <link href="${id}"/>
-          <id>${id}</id>
+          <title>${title.trim()}</title>
+          <link href="${id.trim()}"/>
+          <id>${id.trim()}</id>
           <author>
             <name>${company}</name>
           </author>
@@ -82,6 +82,8 @@ export async function GET() {
         }
       })
       .join('')
+      .replace(/&/g, '&amp;')
+      .replace(/-/g, '&#45;')
 
     const atom = `${xml}
       <feed xmlns="http://www.w3.org/2005/Atom">
