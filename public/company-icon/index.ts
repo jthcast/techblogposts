@@ -124,4 +124,6 @@ export const companyIcons = {
   쿼타랩: `quotalab.png`,
   CJ온스타일: `cjonstyle.png`,
   덴티움: `dentium.ico`,
+  AB180: `ab180.png`,
+  핏펫: 'fitpet.png',
 } as const
