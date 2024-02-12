@@ -1,26 +1,12 @@
-'use client'
-
 import * as styles from '@/app/[locale]/mypage/page.css'
-import { useTranslations } from 'next-intl'
-import { signOut } from 'next-auth/react'
-import { Button } from '@/components/atom/Button/Button'
 import { format, formatISO } from 'date-fns'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { deleteAuth, getAuth } from '@/app/api/v1/auth/auth'
-import { queryKeys } from '@/providers/ReactQueryClientProvider/ReactQueryClientProvider'
+import { auth } from '@/auth'
+import { getTranslations } from 'next-intl/server'
+import { DeleteAccountButton } from '@/app/[locale]/mypage/components/DeleteAccountButton/DeleteAccountButton'
 
-export default function MypagePage() {
-  const t = useTranslations()
-
-  const { data } = useQuery({
-    queryKey: queryKeys.getAuth,
-    queryFn: getAuth,
-  })
-
-  const { mutate: deleteAccount } = useMutation({
-    mutationFn: deleteAuth,
-    onSuccess: () => signOut(),
-  })
+export default async function MypagePage() {
+  const t = await getTranslations()
+  const data = await auth()
 
   return (
     <main className={styles.main}>
@@ -55,9 +41,7 @@ export default function MypagePage() {
             </div>
           )}
         </div>
-        <Button color="destructive" isGhost onClick={() => deleteAccount()}>
-          {t('MypagePage.withdraw')}
-        </Button>
+        <DeleteAccountButton />
       </section>
     </main>
   )
