@@ -1,5 +1,3 @@
-'use client'
-
 import * as Sheet from '@/components/atom/Sheet/Sheet'
 import { Button } from '@/components/atom/Button/Button'
 import {
@@ -12,22 +10,16 @@ import {
   Rss,
   StarInTheBookColored,
 } from '@/components/atom/Icon'
-import { useTranslations } from 'next-intl'
 import { routes } from '@/constants/routes'
 import * as styles from '@/app/[locale]/components/MenuSheet/menuSheet.css'
 import { Link } from '@/components/atom/Link/Link'
 import { ExternalLink } from '@/components/atom/ExternalLink/ExternalLink'
-import { useQuery } from '@tanstack/react-query'
-import { queryKeys } from '@/providers/ReactQueryClientProvider/ReactQueryClientProvider'
-import { getAuth } from '@/app/api/v1/auth/auth'
+import { auth } from '@/auth'
+import { getTranslations } from 'next-intl/server'
 
-export function MenuSheet() {
-  const t = useTranslations()
-
-  const { data } = useQuery({
-    queryKey: queryKeys.getAuth,
-    queryFn: getAuth,
-  })
+export async function MenuSheet() {
+  const t = await getTranslations()
+  const data = await auth()
 
   return (
     <Sheet.Root>
@@ -62,7 +54,7 @@ export function MenuSheet() {
                 </Link>
               </Sheet.Close>
             </li>
-            {data?.isMember && (
+            {data?.user && (
               <>
                 <li>
                   <Sheet.Close asChild>
