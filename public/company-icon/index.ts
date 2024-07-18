@@ -129,4 +129,5 @@ export const companyIcons = {
   카카오뱅크: 'kakaobank.png',
   더핑크퐁컴퍼니: 'pinkfong.png',
   네이버DnA팀: `naver.ico`,
+  펫프렌즈: `pet-friends.png`,
 } as const
