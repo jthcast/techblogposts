@@ -132,4 +132,5 @@ export const companyIcons = {
   펫프렌즈: `pet-friends.png`,
   올리브영: `oliveyoung.png`,
   한글과컴퓨터: `hancom.ico`,
+  삼성전자: `samsung.ico`,
 } as const
