@@ -133,4 +133,5 @@ export const companyIcons = {
   올리브영: `oliveyoung.png`,
   한글과컴퓨터: `hancom.ico`,
   삼성전자: `samsung.ico`,
+  부스터스: `boosters.ico`,
 } as const
