@@ -135,4 +135,5 @@ export const companyIcons = {
   삼성전자: `samsung.ico`,
   부스터스: `boosters.ico`,
   티맵모빌리티: `tmapmobility.ico`,
+  토니모리: `tonymoly.png`,
 } as const
