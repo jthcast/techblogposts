@@ -136,4 +136,5 @@ export const companyIcons = {
   부스터스: `boosters.ico`,
   티맵모빌리티: `tmapmobility.ico`,
   토니모리: `tonymoly.png`,
+  카카오모빌리티: `kakaomobility.ico`,
 } as const
